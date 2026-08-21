@@ -25,11 +25,22 @@ body {
   display: flex;
 }
 
-h1, h2 {
+/* --- TÍTULOS --- */
+h1 {
   text-align: center;
+  font-size: 28px;
+  margin: 16px 0 22px 0;  /* Más separación abajo */
+  color: #1f2937;
+  letter-spacing: 1px;
 }
 
-/* --- PANTALLA PRINCIPAL (nuevo diseño) --- */
+h2 {
+  text-align: center;
+  font-size: 22px;
+  color: #1f2937;
+}
+
+/* --- PANTALLA PRINCIPAL --- */
 #view-main {
   gap: 14px;
 }
@@ -37,29 +48,45 @@ h1, h2 {
 .row-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .row-buttons button {
-  background: #2563eb;
+  background: #4a6fa5; /* NUEVO COLOR */
   color: white;
   border: none;
-  padding: 16px 0;
-  border-radius: 14px;
-  font-size: 17px;
+  padding: 18px 8px;
+  border-radius: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.15s;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(74, 111, 165, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
 }
 .row-buttons button:active {
-  transform: scale(0.96);
-  background: #1d4ed8;
+  transform: scale(0.94);
+  background: #3a5a86;
+}
+
+.btn-title {
+  font-size: 18px;
+  display: block;
+}
+.btn-sub {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.85;
+  margin-top: 4px;
+  display: block;
 }
 
 .full-width {
   width: 100%;
-  background: white;
   border: none;
   padding: 16px;
   border-radius: 14px;
@@ -68,36 +95,39 @@ h1, h2 {
   cursor: pointer;
   transition: 0.15s;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 button.full-width {
-  background: #2563eb;
+  background: #4a6fa5;
   color: white;
 }
 button.full-width:active {
   transform: scale(0.98);
-  background: #1d4ed8;
+  background: #3a5a86;
 }
 
 #stats {
   background: white;
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   text-align: left;
+  cursor: default;
 }
 #stats strong {
   display: block;
   font-size: 18px;
   margin-bottom: 8px;
+  color: #1f2937;
 }
 #stats p {
   font-size: 16px;
   margin: 4px 0;
+  color: #374151;
 }
 
-/* --- Botón "Volver" --- */
+/* --- BOTÓN VOLVER --- */
 .back {
   background: #6b7280;
   color: white;
@@ -115,7 +145,7 @@ button.full-width:active {
   background: #4b5563;
 }
 
-/* --- Estantería --- */
+/* --- ESTANTERÍA --- */
 #search {
   padding: 12px;
   border-radius: 30px;
@@ -168,7 +198,7 @@ button.full-width:active {
   width: 0%;
 }
 
-/* --- Detalle (figuritas) --- */
+/* --- DETALLE (figuritas) --- */
 #detail-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -210,7 +240,7 @@ button.full-width:active {
   padding: 1px 6px;
 }
 
-/* --- Modal --- */
+/* --- MODAL --- */
 #confirm-modal {
   position: fixed;
   inset: 0;
