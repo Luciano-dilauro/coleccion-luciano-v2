@@ -442,3 +442,10 @@ body {
   border-radius: 12px;
   border: 1px solid #f0e8d8;
 }
+/* Bloquea el scroll en la pantalla principal */
+body.scroll-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
