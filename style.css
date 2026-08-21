@@ -2,17 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   user-select: none;
 }
 
+/* --- FONDO CON DEGRADADO SUTIL --- */
 body {
-  background: #f2f4f8;
+  background: linear-gradient(145deg, #e8edf5 0%, #d5dce6 100%);
+  min-height: 100vh;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #app {
   max-width: 480px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -20,18 +26,28 @@ body {
   display: none;
   flex-direction: column;
   gap: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 24px 20px;
+  border-radius: 32px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 .view.active {
   display: flex;
 }
 
-/* --- TÍTULOS --- */
+/* --- TÍTULO PRINCIPAL CON TIPOGRAFÍA MODERNA --- */
 h1 {
   text-align: center;
-  font-size: 28px;
-  margin: 16px 0 22px 0;  /* Más separación abajo */
-  color: #1f2937;
-  letter-spacing: 1px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(145deg, #2c3e50, #4a6fa5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 22px 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 h2 {
@@ -40,11 +56,7 @@ h2 {
   color: #1f2937;
 }
 
-/* --- PANTALLA PRINCIPAL --- */
-#view-main {
-  gap: 14px;
-}
-
+/* --- BOTONES CON SOMBRA REFORZADA --- */
 .row-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -52,30 +64,36 @@ h2 {
 }
 
 .row-buttons button {
-  background: #4a6fa5; /* NUEVO COLOR */
+  background: #4a6fa5;
   color: white;
   border: none;
   padding: 18px 8px;
-  border-radius: 16px;
+  border-radius: 20px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.15s;
+  transition: 0.2s ease;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(74, 111, 165, 0.25);
+  box-shadow: 0 8px 16px rgba(74, 111, 165, 0.3), 0 2px 4px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 90px;
+  min-height: 100px;
 }
 .row-buttons button:active {
   transform: scale(0.94);
+  box-shadow: 0 4px 8px rgba(74, 111, 165, 0.2);
   background: #3a5a86;
 }
 
 .btn-title {
   font-size: 18px;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-title .icon {
+  font-size: 24px;
 }
 .btn-sub {
   font-size: 13px;
@@ -89,18 +107,19 @@ h2 {
   width: 100%;
   border: none;
   padding: 16px;
-  border-radius: 14px;
+  border-radius: 20px;
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.15s;
+  transition: 0.2s ease;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 button.full-width {
   background: #4a6fa5;
   color: white;
+  box-shadow: 0 6px 14px rgba(74, 111, 165, 0.25);
 }
 button.full-width:active {
   transform: scale(0.98);
@@ -108,12 +127,14 @@ button.full-width:active {
 }
 
 #stats {
-  background: white;
-  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
   padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   text-align: left;
   cursor: default;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 #stats strong {
   display: block;
@@ -127,7 +148,7 @@ button.full-width:active {
   color: #374151;
 }
 
-/* --- BOTÓN VOLVER --- */
+/* --- RESTO DEL ESTILO (sin cambios) --- */
 .back {
   background: #6b7280;
   color: white;
@@ -145,7 +166,6 @@ button.full-width:active {
   background: #4b5563;
 }
 
-/* --- ESTANTERÍA --- */
 #search {
   padding: 12px;
   border-radius: 30px;
@@ -198,7 +218,6 @@ button.full-width:active {
   width: 0%;
 }
 
-/* --- DETALLE (figuritas) --- */
 #detail-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -240,7 +259,6 @@ button.full-width:active {
   padding: 1px 6px;
 }
 
-/* --- MODAL --- */
 #confirm-modal {
   position: fixed;
   inset: 0;
