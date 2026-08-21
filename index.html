@@ -12,79 +12,90 @@
     <!-- PANTALLA PRINCIPAL -->
     <div id="view-main" class="view active">
       <div class="header">
-        <h1 id="main-title">PRINCIPAL</h1>
+        <h1>Colecciones</h1>
+        <p class="subhead">Organiza tus álbumes</p>
       </div>
 
-      <div class="row-buttons">
-        <button data-view="collections">
-          <span class="btn-title"><span class="icon">📚</span> Mis colecciones</span>
-          <span class="btn-sub">ver álbumes</span>
-        </button>
-        <button data-view="manage">
-          <span class="btn-title"><span class="icon">✏️</span> Gestión</span>
-          <span class="btn-sub">carga, edición</span>
-        </button>
+      <div class="main-grid">
+        <div class="card-btn" data-view="collections">
+          <span class="card-icon">📚</span>
+          <span class="card-title">Mis colecciones</span>
+          <span class="card-desc">Ver todos tus álbumes</span>
+        </div>
+        <div class="card-btn" data-view="manage">
+          <span class="card-icon">⚙️</span>
+          <span class="card-title">Gestión</span>
+          <span class="card-desc">Crear, editar o eliminar</span>
+        </div>
       </div>
 
-      <button data-view="backup" class="full-width">💾 Backup</button>
+      <button data-view="backup" class="action-btn">💾 Backup</button>
 
-      <div id="stats" class="full-width">
-        <strong>📊 Estadísticas</strong>
-        <p>📚 Colecciones: <span id="stat-total">0</span></p>
-        <p>✅ Completas: <span id="stat-complete">0</span></p>
-        <p>⏳ Incompletas: <span id="stat-incomplete">0</span></p>
+      <div class="stats-panel">
+        <div class="stats-row">
+          <span class="stat-label">📚 Colecciones</span>
+          <span class="stat-value" id="stat-total">0</span>
+        </div>
+        <div class="stats-row">
+          <span class="stat-label">✅ Completas</span>
+          <span class="stat-value" id="stat-complete">0</span>
+        </div>
+        <div class="stats-row">
+          <span class="stat-label">⏳ Incompletas</span>
+          <span class="stat-value" id="stat-incomplete">0</span>
+        </div>
       </div>
     </div>
 
     <!-- MIS COLECCIONES -->
     <div id="view-collections" class="view">
       <div class="header">
-        <button class="back" data-view="main">←</button>
-        <h1 id="collections-title">Mis colecciones</h1>
+        <button class="back-btn" data-view="main">←</button>
+        <h1>Mis colecciones</h1>
       </div>
-      <input type="text" id="search" placeholder="🔍 Buscar (mínimo 3 letras)" />
+      <input type="text" id="search" placeholder="Buscar colección..." />
       <div id="shelf"></div>
     </div>
 
     <!-- GESTIÓN -->
     <div id="view-manage" class="view">
       <div class="header">
-        <button class="back" data-view="main">←</button>
-        <h1 id="manage-title">Gestión de colecciones</h1>
+        <button class="back-btn" data-view="main">←</button>
+        <h1>Gestión</h1>
       </div>
-      <button data-view="create">✨ Crear colección</button>
-      <button data-view="edit">✏️ Editar colección</button>
-      <button data-view="delete">🗑️ Eliminar colección</button>
+      <button data-view="create" class="manage-btn">➕ Crear colección</button>
+      <button data-view="edit" class="manage-btn">✏️ Editar colección</button>
+      <button data-view="delete" class="manage-btn danger">🗑️ Eliminar colección</button>
     </div>
 
     <!-- BACKUP -->
     <div id="view-backup" class="view">
       <div class="header">
-        <button class="back" data-view="main">←</button>
-        <h1 id="backup-title">Backup</h1>
+        <button class="back-btn" data-view="main">←</button>
+        <h1>Backup</h1>
       </div>
-      <button id="export-btn">⬇️ Exportar backup</button>
-      <p>Última exportación: <span id="last-export">—</span></p>
-      <p>Tamaño: <span id="export-size">—</span></p>
-      <button id="import-btn">📂 Importar backup</button>
+      <button id="export-btn" class="action-btn">⬇️ Exportar</button>
+      <p class="info-line">Última exportación: <span id="last-export">—</span></p>
+      <p class="info-line">Tamaño: <span id="export-size">—</span></p>
+      <button id="import-btn" class="action-btn secondary">📂 Importar</button>
       <input type="file" id="import-input" accept=".json" style="display:none" />
-      <p>Última importación: <span id="last-import">—</span></p>
-      <p><small>⚠️ Al importar se reemplazan todos los datos actuales.</small></p>
+      <p class="info-line">Última importación: <span id="last-import">—</span></p>
+      <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
     </div>
 
-    <!-- DETALLE DE COLECCIÓN -->
+    <!-- DETALLE -->
     <div id="view-detail" class="view">
       <div class="header">
-        <button class="back" data-view="collections">←</button>
+        <button class="back-btn" data-view="collections">←</button>
         <h1 id="detail-title">Colección</h1>
       </div>
-      <div id="detail-stats">
-        <span>Total: <span id="d-total">0</span></span>
-        <span>Tengo: <span id="d-have">0</span></span>
-        <span>Faltan: <span id="d-missing">0</span></span>
-        <span>Progreso: <span id="d-pct">0%</span></span>
+      <div class="detail-stats">
+        <span>Total: <strong id="d-total">0</strong></span>
+        <span>Tengo: <strong id="d-have">0</strong></span>
+        <span>Faltan: <strong id="d-missing">0</strong></span>
+        <span>Progreso: <strong id="d-pct">0%</strong></span>
       </div>
-      <div id="detail-filters">
+      <div class="filter-bar">
         <button class="filter active" data-filter="all">Todas</button>
         <button class="filter" data-filter="miss">Faltan</button>
         <button class="filter" data-filter="rep">Repetidas</button>
@@ -94,10 +105,12 @@
 
     <!-- MODAL -->
     <div id="confirm-modal" style="display:none">
-      <div class="modal-content">
+      <div class="modal-box">
         <p id="confirm-msg">¿Estás seguro?</p>
-        <button id="confirm-yes">Sí</button>
-        <button id="confirm-no">No</button>
+        <div class="modal-actions">
+          <button id="confirm-no" class="modal-btn cancel">No</button>
+          <button id="confirm-yes" class="modal-btn confirm">Sí</button>
+        </div>
       </div>
     </div>
   </div>
