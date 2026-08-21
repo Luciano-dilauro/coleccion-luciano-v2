@@ -6,8 +6,9 @@
   user-select: none;
 }
 
+/* --- FONDO BLANCO --- */
 body {
-  background: linear-gradient(145deg, #e8edf5 0%, #d5dce6 100%);
+  background: white;
   min-height: 100vh;
   padding: 0;
   display: flex;
@@ -20,6 +21,7 @@ body {
   width: 100%;
   min-height: 100vh;
   padding: 0 16px 20px 16px;
+  background: white;
 }
 
 .view {
@@ -32,16 +34,14 @@ body {
   display: flex;
 }
 
-/* --- HEADER FIJO --- */
+/* --- HEADER RECTO --- */
 .header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
+  background: white;
   padding: 16px 0 14px 0;
-  border-radius: 0 0 24px 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border-bottom: 1px solid #e5e7eb; /* línea gris sutil */
   margin: 0 -16px 16px -16px;
   padding-left: 16px;
   padding-right: 16px;
@@ -80,13 +80,6 @@ body {
 .header .back:active {
   background: rgba(0,0,0,0.04);
   transform: translateY(-50%) scale(0.92);
-}
-
-/* --- TÍTULOS DE PANTALLA (cuando no hay header) --- */
-h2 {
-  text-align: center;
-  font-size: 22px;
-  color: #1f2937;
 }
 
 /* --- BOTONES SUPERIORES --- */
@@ -163,14 +156,13 @@ button.full-width:active {
 
 /* --- PANEL DE ESTADÍSTICAS --- */
 #stats {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(2px);
+  background: white;
   border-radius: 20px;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   text-align: left;
   cursor: default;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #e5e7eb;
 }
 #stats strong {
   display: block;
