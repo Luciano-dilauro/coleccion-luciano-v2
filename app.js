@@ -153,7 +153,6 @@ function createCollection(name, cover) {
     cover: cover || null,
     items: []
   };
-  // Ejemplo: 100 figuritas numeradas
   for (let i = 1; i <= 100; i++) {
     col.items.push({ label: String(i), have: false, rep: 0 });
   }
@@ -212,9 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = prompt('Nombre de la nueva colección:');
         if (name && name.trim()) createCollection(name.trim(), null);
       } else if (v === 'edit') {
-        const id = prompt('ID de la colección a editar (no implementado aún)');
+        alert('Función de edición en desarrollo.');
       } else if (v === 'delete') {
-        const id = prompt('ID de la colección a eliminar (no implementado aún)');
+        alert('Función de eliminación en desarrollo.');
       }
     });
   });
@@ -250,12 +249,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Búsqueda en estantería
   document.getElementById('search').addEventListener('input', renderShelf);
-
-  // Botón "atrás" en detalle
-  document.querySelector('#view-detail .back').addEventListener('click', () => {
-    currentId = null;
-    showView('collections');
-  });
 
   showView('main');
 });
