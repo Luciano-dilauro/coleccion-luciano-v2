@@ -1,11 +1,8 @@
-// --- Estado global ---
 let data = { collections: [] };
 let currentId = null;
 let filter = 'all';
-let view = 'main';
 let confirmCallback = null;
 
-// --- Persistencia ---
 function load() {
   try { data = JSON.parse(localStorage.getItem('coleccion_v2')) || { collections: [] }; }
   catch { data = { collections: [] }; }
@@ -16,11 +13,8 @@ function save() {
 function getCurrent() {
   return data.collections.find(c => c.id === currentId) || null;
 }
-
-// --- Helpers ---
 function uid() { return Date.now() + '-' + Math.random().toString(36).slice(2,6); }
 
-// --- Estadísticas ---
 function updateStats() {
   const total = data.collections.length;
   let complete = 0, incomplete = 0;
@@ -34,9 +28,7 @@ function updateStats() {
   document.getElementById('stat-incomplete').textContent = incomplete;
 }
 
-// --- Navegación ---
 function showView(name) {
-  view = name;
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   const target = document.getElementById('view-' + name);
   if (target) target.classList.add('active');
@@ -44,7 +36,6 @@ function showView(name) {
   if (name === 'collections') renderShelf();
 }
 
-// --- Estantería ---
 function renderShelf() {
   const shelf = document.getElementById('shelf');
   const search = document.getElementById('search').value.trim().toLowerCase();
@@ -53,7 +44,7 @@ function renderShelf() {
   );
   shelf.innerHTML = '';
   if (filtered.length === 0) {
-    shelf.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#6b7280;">No hay colecciones que coincidan.</p>';
+    shelf.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#6b7a8a;padding:20px 0;">No hay colecciones</p>';
     return;
   }
   for (const c of filtered) {
@@ -71,7 +62,6 @@ function renderShelf() {
   }
 }
 
-// --- Detalle ---
 function openDetail(id) {
   currentId = id;
   const col = getCurrent();
@@ -105,9 +95,7 @@ function renderDetail() {
     if (it.rep > 0) div.classList.add('rep');
     if (it.rep > 0) div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
     div.textContent = it.label;
-    let timer = null;
-    let long = false;
-
+    let timer = null, long = false;
     const start = () => {
       long = false;
       timer = setTimeout(() => { long = true; handleLongPress(it); }, 500);
@@ -135,7 +123,7 @@ function handleTap(it) {
 function handleLongPress(it) {
   if (!it.have) return;
   if (it.rep > 0) { it.rep--; save(); renderDetail(); updateStats(); return; }
-  document.getElementById('confirm-msg').textContent = `¿Quitar "${it.label}" de tu colección? (no es repetida)`;
+  document.getElementById('confirm-msg').textContent = `¿Quitar "${it.label}"? (no es repetida)`;
   document.getElementById('confirm-modal').style.display = 'flex';
   confirmCallback = () => {
     it.have = false;
@@ -145,24 +133,15 @@ function handleLongPress(it) {
   };
 }
 
-// --- Gestión ---
 function createCollection(name, cover) {
-  const col = {
-    id: uid(),
-    name: name,
-    cover: cover || null,
-    items: []
-  };
-  for (let i = 1; i <= 100; i++) {
-    col.items.push({ label: String(i), have: false, rep: 0 });
-  }
+  const col = { id: uid(), name, cover: cover || null, items: [] };
+  for (let i = 1; i <= 100; i++) col.items.push({ label: String(i), have: false, rep: 0 });
   data.collections.unshift(col);
   save();
   updateStats();
   showView('collections');
 }
 
-// --- Backup ---
 function exportBackup() {
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
@@ -175,6 +154,7 @@ function exportBackup() {
   document.getElementById('last-export').textContent = new Date().toLocaleString();
   document.getElementById('export-size').textContent = (blob.size / 1024).toFixed(1) + ' KB';
 }
+
 function importBackup(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
@@ -187,19 +167,15 @@ function importBackup(file) {
       updateStats();
       document.getElementById('last-import').textContent = new Date().toLocaleString();
       alert('Backup importado correctamente ✅');
-    } catch {
-      alert('Error al leer el archivo.');
-    }
+    } catch { alert('Error al leer el archivo.'); }
   };
   reader.readAsText(file);
 }
 
-// --- Inicialización ---
 document.addEventListener('DOMContentLoaded', () => {
   load();
   updateStats();
 
-  // Navegación
   document.querySelectorAll('[data-view]').forEach(el => {
     el.addEventListener('click', () => {
       const v = el.getAttribute('data-view');
@@ -209,16 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (v === 'backup') showView('backup');
       else if (v === 'create') {
         const name = prompt('Nombre de la nueva colección:');
-        if (name && name.trim()) createCollection(name.trim(), null);
-      } else if (v === 'edit') {
-        alert('Función de edición en desarrollo.');
-      } else if (v === 'delete') {
-        alert('Función de eliminación en desarrollo.');
-      }
+        if (name?.trim()) createCollection(name.trim(), null);
+      } else if (v === 'edit') alert('Función en desarrollo.');
+      else if (v === 'delete') alert('Función en desarrollo.');
     });
   });
 
-  // Filtros en detalle
   document.querySelectorAll('.filter').forEach(el => {
     el.addEventListener('click', () => {
       document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
@@ -228,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Modal
   document.getElementById('confirm-no').addEventListener('click', () => {
     document.getElementById('confirm-modal').style.display = 'none';
     confirmCallback = null;
@@ -237,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (confirmCallback) confirmCallback();
   });
 
-  // Backup
   document.getElementById('export-btn').addEventListener('click', exportBackup);
   document.getElementById('import-btn').addEventListener('click', () => {
     document.getElementById('import-input').click();
@@ -246,8 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.files[0]) importBackup(e.target.files[0]);
     e.target.value = '';
   });
-
-  // Búsqueda en estantería
   document.getElementById('search').addEventListener('input', renderShelf);
 
   showView('main');
