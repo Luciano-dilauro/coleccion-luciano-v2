@@ -36,7 +36,7 @@ function updateStats() {
 }
 
 function showView(name) {
-  // --- Bloqueo de scroll según la pantalla ---
+  // Bloqueo de scroll según la pantalla
   if (name === 'main') {
     document.body.classList.add('scroll-lock');
   } else {
@@ -147,15 +147,227 @@ function handleLongPress(it) {
   };
 }
 
-function createCollection(name, cover) {
-  const col = { id: uid(), name, cover: cover || null, items: [] };
-  for (let i = 1; i <= 100; i++) col.items.push({ label: String(i), have: false, rep: 0 });
+// --- Variables de la pantalla de creación ---
+let specialSections = [];
+let coverDataUrl = null;
+
+function renderSpecialSections() {
+  const container = document.getElementById('create-special-sections');
+  container.innerHTML = '';
+  for (const sec of specialSections) {
+    const div = document.createElement('div');
+    div.className = 'special-item';
+    div.innerHTML = `
+      <span class="info">
+        <strong>${sec.name}</strong> (${sec.prefix}) → ${sec.from} a ${sec.to}
+      </span>
+      <button class="remove-special" data-index="${specialSections.indexOf(sec)}">✕</button>
+    `;
+    container.appendChild(div);
+  }
+  // Eventos para eliminar
+  container.querySelectorAll('.remove-special').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.index);
+      specialSections.splice(idx, 1);
+      renderSpecialSections();
+    });
+  });
+}
+
+function openSpecialModal() {
+  document.getElementById('special-modal').style.display = 'flex';
+  document.getElementById('special-name').value = '';
+  document.getElementById('special-prefix').value = '';
+  document.getElementById('special-from').value = 1;
+  document.getElementById('special-to').value = 20;
+  document.getElementById('special-name').focus();
+}
+
+function closeSpecialModal() {
+  document.getElementById('special-modal').style.display = 'none';
+}
+
+function addSpecialSection() {
+  const name = document.getElementById('special-name').value.trim();
+  const prefix = document.getElementById('special-prefix').value.trim().toUpperCase();
+  const from = parseInt(document.getElementById('special-from').value);
+  const to = parseInt(document.getElementById('special-to').value);
+
+  if (!name) { alert('El nombre es obligatorio.'); return; }
+  if (!prefix) { alert('El prefijo es obligatorio.'); return; }
+  if (isNaN(from) || isNaN(to) || from > to) {
+    alert('Rango inválido. Asegúrate de que "Desde" sea menor o igual que "Hasta".');
+    return;
+  }
+
+  specialSections.push({ name, prefix, from, to });
+  renderSpecialSections();
+  closeSpecialModal();
+}
+
+function createCollectionFromForm() {
+  const name = document.getElementById('create-name').value.trim();
+  const from = parseInt(document.getElementById('create-from').value);
+  const to = parseInt(document.getElementById('create-to').value);
+
+  if (!name) { alert('El nombre de la colección es obligatorio.'); return; }
+  if (isNaN(from) || isNaN(to) || from > to) {
+    alert('Rango general inválido. Asegúrate de que "Desde" sea menor o igual que "Hasta".');
+    return;
+  }
+
+  // Crear la colección
+  const col = {
+    id: uid(),
+    name: name,
+    cover: coverDataUrl || null,
+    items: []
+  };
+
+  // Sección normal
+  for (let i = from; i <= to; i++) {
+    col.items.push({
+      label: String(i),
+      have: false,
+      rep: 0,
+      special: false
+    });
+  }
+
+  // Secciones especiales
+  for (const sec of specialSections) {
+    for (let i = sec.from; i <= sec.to; i++) {
+      col.items.push({
+        label: `${sec.prefix}${i}`,
+        have: false,
+        rep: 0,
+        special: true,
+        section: sec.name
+      });
+    }
+  }
+
   data.collections.unshift(col);
   save();
   updateStats();
   showView('collections');
+
+  // Limpiar formulario
+  document.getElementById('create-name').value = '';
+  specialSections = [];
+  coverDataUrl = null;
+  renderSpecialSections();
+  document.getElementById('create-cover-preview').innerHTML = '';
+  document.getElementById('create-cover-clear').style.display = 'none';
 }
 
+// --- Inicialización ---
+document.addEventListener('DOMContentLoaded', () => {
+  load();
+  updateStats();
+
+  // Navegación general
+  document.querySelectorAll('[data-view]').forEach(el => {
+    el.addEventListener('click', () => {
+      const v = el.getAttribute('data-view');
+      if (v === 'main') showView('main');
+      else if (v === 'collections') showView('collections');
+      else if (v === 'manage') showView('manage');
+      else if (v === 'backup') showView('backup');
+      else if (v === 'create') {
+        showView('create');
+      } else if (v === 'edit') {
+        alert('Función en desarrollo.');
+      } else if (v === 'delete') {
+        alert('Función en desarrollo.');
+      }
+    });
+  });
+
+  // Filtros en detalle
+  document.querySelectorAll('.filter').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      filter = el.getAttribute('data-filter');
+      renderDetail();
+    });
+  });
+
+  // Modal de confirmación
+  document.getElementById('confirm-no').addEventListener('click', () => {
+    document.getElementById('confirm-modal').style.display = 'none';
+    confirmCallback = null;
+  });
+  document.getElementById('confirm-yes').addEventListener('click', () => {
+    if (confirmCallback) confirmCallback();
+  });
+
+  // Backup
+  document.getElementById('export-btn').addEventListener('click', exportBackup);
+  document.getElementById('import-btn').addEventListener('click', () => {
+    document.getElementById('import-input').click();
+  });
+  document.getElementById('import-input').addEventListener('change', (e) => {
+    if (e.target.files[0]) importBackup(e.target.files[0]);
+    e.target.value = '';
+  });
+  document.getElementById('search').addEventListener('input', renderShelf);
+
+  // --- Eventos de la pantalla de creación ---
+
+  // Botón "Agregar sección especial"
+  document.getElementById('create-add-special').addEventListener('click', openSpecialModal);
+
+  // Modal: cancelar
+  document.getElementById('special-cancel').addEventListener('click', closeSpecialModal);
+
+  // Modal: añadir
+  document.getElementById('special-add').addEventListener('click', addSpecialSection);
+
+  // Modal: cerrar al hacer clic fuera
+  document.getElementById('special-modal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeSpecialModal();
+  });
+
+  // Subir tapa
+  document.getElementById('create-cover-btn').addEventListener('click', () => {
+    document.getElementById('create-cover-input').click();
+  });
+
+  document.getElementById('create-cover-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      coverDataUrl = ev.target.result;
+      const preview = document.getElementById('create-cover-preview');
+      preview.innerHTML = `<img src="${coverDataUrl}" alt="Tapa" />`;
+      document.getElementById('create-cover-clear').style.display = 'inline-block';
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  });
+
+  document.getElementById('create-cover-clear').addEventListener('click', () => {
+    coverDataUrl = null;
+    document.getElementById('create-cover-preview').innerHTML = '';
+    document.getElementById('create-cover-clear').style.display = 'none';
+  });
+
+  // Botón "Crear colección"
+  document.getElementById('create-save').addEventListener('click', createCollectionFromForm);
+
+  // Volver a gestión desde creación
+  document.querySelector('#view-create .back-btn').addEventListener('click', () => {
+    showView('manage');
+  });
+
+  showView('main');
+});
+
+// --- Funciones de Backup (exportar/importar) ---
 function exportBackup() {
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
@@ -185,52 +397,3 @@ function importBackup(file) {
   };
   reader.readAsText(file);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  load();
-  updateStats();
-
-  document.querySelectorAll('[data-view]').forEach(el => {
-    el.addEventListener('click', () => {
-      const v = el.getAttribute('data-view');
-      if (v === 'main') showView('main');
-      else if (v === 'collections') showView('collections');
-      else if (v === 'manage') showView('manage');
-      else if (v === 'backup') showView('backup');
-      else if (v === 'create') {
-        const name = prompt('Nombre de la nueva colección:');
-        if (name?.trim()) createCollection(name.trim(), null);
-      } else if (v === 'edit') alert('Función en desarrollo.');
-      else if (v === 'delete') alert('Función en desarrollo.');
-    });
-  });
-
-  document.querySelectorAll('.filter').forEach(el => {
-    el.addEventListener('click', () => {
-      document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      filter = el.getAttribute('data-filter');
-      renderDetail();
-    });
-  });
-
-  document.getElementById('confirm-no').addEventListener('click', () => {
-    document.getElementById('confirm-modal').style.display = 'none';
-    confirmCallback = null;
-  });
-  document.getElementById('confirm-yes').addEventListener('click', () => {
-    if (confirmCallback) confirmCallback();
-  });
-
-  document.getElementById('export-btn').addEventListener('click', exportBackup);
-  document.getElementById('import-btn').addEventListener('click', () => {
-    document.getElementById('import-input').click();
-  });
-  document.getElementById('import-input').addEventListener('change', (e) => {
-    if (e.target.files[0]) importBackup(e.target.files[0]);
-    e.target.value = '';
-  });
-  document.getElementById('search').addEventListener('input', renderShelf);
-
-  showView('main');
-});
