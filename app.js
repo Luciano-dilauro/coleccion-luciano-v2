@@ -3,6 +3,13 @@ let currentId = null;
 let filter = 'all';
 let confirmCallback = null;
 
+// --- Desactiva el pull-to-refresh en móviles ---
+document.addEventListener('touchmove', function(e) {
+  if (document.body.classList.contains('scroll-lock')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
 function load() {
   try { data = JSON.parse(localStorage.getItem('coleccion_v2')) || { collections: [] }; }
   catch { data = { collections: [] }; }
@@ -29,6 +36,13 @@ function updateStats() {
 }
 
 function showView(name) {
+  // --- Bloqueo de scroll según la pantalla ---
+  if (name === 'main') {
+    document.body.classList.add('scroll-lock');
+  } else {
+    document.body.classList.remove('scroll-lock');
+  }
+
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   const target = document.getElementById('view-' + name);
   if (target) target.classList.add('active');
