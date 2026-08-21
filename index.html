@@ -11,11 +11,20 @@
   <!-- Pantalla principal -->
   <div id="app">
     <div id="view-main" class="view active">
-      <h1>📚 Mi Colección</h1>
-      <button data-view="collections">📖 Mis colecciones</button>
-      <button data-view="manage">✏️ Gestión de colecciones</button>
-      <button data-view="backup">💾 Backup</button>
-      <div id="stats">
+      <h1>PRINCIPAL</h1>
+
+      <!-- Fila de dos botones -->
+      <div class="row-buttons">
+        <button data-view="collections">📖 Mis colecciones</button>
+        <button data-view="manage">✏️ Gestión</button>
+      </div>
+
+      <!-- Backup (alargado) -->
+      <button data-view="backup" class="full-width">💾 Backup</button>
+
+      <!-- Panel de estadísticas (alargado) -->
+      <div id="stats" class="full-width">
+        <strong>📊 Estadísticas</strong>
         <p>📚 Colecciones: <span id="stat-total">0</span></p>
         <p>✅ Completas: <span id="stat-complete">0</span></p>
         <p>⏳ Incompletas: <span id="stat-incomplete">0</span></p>
