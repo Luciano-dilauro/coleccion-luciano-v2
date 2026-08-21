@@ -67,6 +67,80 @@
       <button data-view="delete" class="manage-btn danger">🗑️ Eliminar colección</button>
     </div>
 
+    <!-- CREAR COLECCIÓN (NUEVA PANTALLA) -->
+    <div id="view-create" class="view">
+      <div class="header">
+        <button class="back-btn" data-view="manage">←</button>
+        <h1>Crear colección</h1>
+      </div>
+
+      <div class="form-group">
+        <label>Nombre de la colección</label>
+        <input type="text" id="create-name" placeholder="Ej: Mundial 2026" />
+      </div>
+
+      <div class="form-group">
+        <label>Tapa del álbum (opcional)</label>
+        <div class="cover-upload">
+          <button id="create-cover-btn" class="action-btn secondary">📷 Subir imagen</button>
+          <button id="create-cover-clear" class="action-btn secondary" style="display:none">❌ Quitar</button>
+          <input type="file" id="create-cover-input" accept="image/*" style="display:none" />
+          <div id="create-cover-preview"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Numeración general</label>
+        <div class="range-inputs">
+          <div>
+            <label>Desde</label>
+            <input type="number" id="create-from" value="1" />
+          </div>
+          <div>
+            <label>Hasta</label>
+            <input type="number" id="create-to" value="100" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Secciones especiales</label>
+        <div id="create-special-sections"></div>
+        <button id="create-add-special" class="action-btn secondary">➕ Agregar sección especial</button>
+      </div>
+
+      <button id="create-save" class="action-btn">✨ Crear colección</button>
+    </div>
+
+    <!-- MODAL PARA AGREGAR SECCIÓN ESPECIAL -->
+    <div id="special-modal" style="display:none">
+      <div class="modal-box">
+        <h3>Agregar sección especial</h3>
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="special-name" placeholder="Ej: Equipo A" />
+        </div>
+        <div class="form-group">
+          <label>Prefijo</label>
+          <input type="text" id="special-prefix" placeholder="Ej: RIA" />
+        </div>
+        <div class="range-inputs">
+          <div>
+            <label>Desde</label>
+            <input type="number" id="special-from" value="1" />
+          </div>
+          <div>
+            <label>Hasta</label>
+            <input type="number" id="special-to" value="20" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="special-cancel" class="modal-btn cancel">Cancelar</button>
+          <button id="special-add" class="modal-btn confirm">Añadir</button>
+        </div>
+      </div>
+    </div>
+
     <!-- BACKUP -->
     <div id="view-backup" class="view">
       <div class="header">
@@ -102,7 +176,7 @@
       <div id="detail-grid"></div>
     </div>
 
-    <!-- MODAL -->
+    <!-- MODAL DE CONFIRMACIÓN -->
     <div id="confirm-modal" style="display:none">
       <div class="modal-box">
         <p id="confirm-msg">¿Estás seguro?</p>
