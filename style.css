@@ -33,14 +33,13 @@ body {
   display: flex;
 }
 
-/* --- HEADER --- */
+/* --- HEADER (actualizado) --- */
 .header {
-  background: #ffffff;
-  padding: 24px 0 16px;
+  background: #f5f7fa;
+  padding: 32px 0 24px;
   margin: 0 -20px 12px -20px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid #e9edf2;
   display: flex;
   align-items: center;
   justify-content: center;
