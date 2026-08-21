@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Mi Colección</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Pantalla principal -->
+  <div id="app">
+    <div id="view-main" class="view active">
+      <h1>📚 Mi Colección</h1>
+      <button data-view="collections">📖 Mis colecciones</button>
+      <button data-view="manage">✏️ Gestión de colecciones</button>
+      <button data-view="backup">💾 Backup</button>
+      <div id="stats">
+        <p>📚 Colecciones: <span id="stat-total">0</span></p>
+        <p>✅ Completas: <span id="stat-complete">0</span></p>
+        <p>⏳ Incompletas: <span id="stat-incomplete">0</span></p>
+      </div>
+    </div>
+
+    <!-- Mis colecciones (estantería) -->
+    <div id="view-collections" class="view">
+      <button class="back" data-view="main">← Volver</button>
+      <h2>📖 Mis colecciones</h2>
+      <input type="text" id="search" placeholder="🔍 Buscar (mínimo 3 letras)" />
+      <div id="shelf"></div>
+    </div>
+
+    <!-- Gestión -->
+    <div id="view-manage" class="view">
+      <button class="back" data-view="main">← Volver</button>
+      <h2>✏️ Gestión de colecciones</h2>
+      <button data-view="create">✨ Crear colección</button>
+      <button data-view="edit">✏️ Editar colección</button>
+      <button data-view="delete">🗑️ Eliminar colección</button>
+    </div>
+
+    <!-- Backup -->
+    <div id="view-backup" class="view">
+      <button class="back" data-view="main">← Volver</button>
+      <h2>💾 Backup</h2>
+      <button id="export-btn">⬇️ Exportar backup</button>
+      <p>Última exportación: <span id="last-export">—</span></p>
+      <p>Tamaño: <span id="export-size">—</span></p>
+      <button id="import-btn">📂 Importar backup</button>
+      <input type="file" id="import-input" accept=".json" style="display:none" />
+      <p>Última importación: <span id="last-import">—</span></p>
+      <p><small>⚠️ Al importar se reemplazan todos los datos actuales.</small></p>
+    </div>
+
+    <!-- Detalle de colección -->
+    <div id="view-detail" class="view">
+      <button class="back" data-view="collections">← Volver</button>
+      <h2 id="detail-title">Colección</h2>
+      <div id="detail-stats">
+        <span>Total: <span id="d-total">0</span></span>
+        <span>Tengo: <span id="d-have">0</span></span>
+        <span>Faltan: <span id="d-missing">0</span></span>
+        <span>Progreso: <span id="d-pct">0%</span></span>
+      </div>
+      <div id="detail-filters">
+        <button class="filter active" data-filter="all">Todas</button>
+        <button class="filter" data-filter="miss">Faltan</button>
+        <button class="filter" data-filter="rep">Repetidas</button>
+      </div>
+      <div id="detail-grid"></div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div id="confirm-modal" style="display:none">
+      <div class="modal-content">
+        <p id="confirm-msg">¿Estás seguro?</p>
+        <button id="confirm-yes">Sí</button>
+        <button id="confirm-no">No</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
