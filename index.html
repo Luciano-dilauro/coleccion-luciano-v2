@@ -11,7 +11,9 @@
   <div id="app">
     <!-- PANTALLA PRINCIPAL -->
     <div id="view-main" class="view active">
-      <h1>PRINCIPAL</h1>
+      <div class="header">
+        <h1 id="main-title">PRINCIPAL</h1>
+      </div>
 
       <div class="row-buttons">
         <button data-view="collections">
@@ -36,16 +38,20 @@
 
     <!-- MIS COLECCIONES -->
     <div id="view-collections" class="view">
-      <button class="back" data-view="main">← Volver</button>
-      <h2>📖 Mis colecciones</h2>
+      <div class="header">
+        <button class="back" data-view="main">←</button>
+        <h1 id="collections-title">Mis colecciones</h1>
+      </div>
       <input type="text" id="search" placeholder="🔍 Buscar (mínimo 3 letras)" />
       <div id="shelf"></div>
     </div>
 
     <!-- GESTIÓN -->
     <div id="view-manage" class="view">
-      <button class="back" data-view="main">← Volver</button>
-      <h2>✏️ Gestión de colecciones</h2>
+      <div class="header">
+        <button class="back" data-view="main">←</button>
+        <h1 id="manage-title">Gestión de colecciones</h1>
+      </div>
       <button data-view="create">✨ Crear colección</button>
       <button data-view="edit">✏️ Editar colección</button>
       <button data-view="delete">🗑️ Eliminar colección</button>
@@ -53,8 +59,10 @@
 
     <!-- BACKUP -->
     <div id="view-backup" class="view">
-      <button class="back" data-view="main">← Volver</button>
-      <h2>💾 Backup</h2>
+      <div class="header">
+        <button class="back" data-view="main">←</button>
+        <h1 id="backup-title">Backup</h1>
+      </div>
       <button id="export-btn">⬇️ Exportar backup</button>
       <p>Última exportación: <span id="last-export">—</span></p>
       <p>Tamaño: <span id="export-size">—</span></p>
@@ -66,8 +74,10 @@
 
     <!-- DETALLE DE COLECCIÓN -->
     <div id="view-detail" class="view">
-      <button class="back" data-view="collections">← Volver</button>
-      <h2 id="detail-title">Colección</h2>
+      <div class="header">
+        <button class="back" data-view="collections">←</button>
+        <h1 id="detail-title">Colección</h1>
+      </div>
       <div id="detail-stats">
         <span>Total: <span id="d-total">0</span></span>
         <span>Tengo: <span id="d-have">0</span></span>
