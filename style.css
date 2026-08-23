@@ -211,7 +211,7 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- ESTANTERÍA (tarjetas verticales) --- */
+/* --- ESTANTERÍA --- */
 #shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -236,7 +236,7 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 160px;  /* altura fija para la imagen */
+  height: 160px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -469,7 +469,6 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- RANGOS --- */
 .range-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
