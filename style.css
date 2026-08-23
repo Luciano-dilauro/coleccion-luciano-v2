@@ -298,6 +298,10 @@ body {
   padding: 16px;
   border: 1px solid #eef2f6;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin-top: 0;
 }
 
 .detail-cover {
@@ -347,6 +351,12 @@ body {
 .filter-bar {
   display: flex;
   gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: #f5f7fa;
+  padding: 8px 0;
+  margin-top: 0;
 }
 
 .filter {
@@ -405,8 +415,8 @@ body {
 
 /* --- MARCADAS (TENGO) --- */
 .sticker.have {
-  background: #d4edda; /* Verde claro */
-  border-color: #28a745; /* Verde oscuro */
+  background: #d4edda;
+  border-color: #28a745;
 }
 
 /* --- REPETIDAS (BADGE ROJO) --- */
