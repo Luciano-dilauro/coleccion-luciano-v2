@@ -211,7 +211,7 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- ESTANTERÍA (apaisada) --- */
+/* --- ESTANTERÍA (tarjetas verticales) --- */
 #shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -236,7 +236,7 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 120px;
+  height: 160px; /* Antes era 120px, ahora es más alto para darle verticalidad */
   width: 100%;
   display: flex;
   align-items: center;
