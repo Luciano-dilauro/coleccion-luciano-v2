@@ -36,7 +36,6 @@ function updateStats() {
 }
 
 function showView(name) {
-  // Bloqueo de scroll según la pantalla
   if (name === 'main') {
     document.body.classList.add('scroll-lock');
   } else {
@@ -66,8 +65,14 @@ function renderShelf() {
     const pct = c.items.length ? Math.round(have / c.items.length * 100) : 0;
     const div = document.createElement('div');
     div.className = 'card';
+
+    let coverHtml = '📘';
+    if (c.cover) {
+      coverHtml = `<img src="${c.cover}" alt="Tapa" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" />`;
+    }
+
     div.innerHTML = `
-      <div class="cover">${c.cover || '📘'}</div>
+      <div class="cover">${coverHtml}</div>
       <div class="name">${c.name}</div>
       <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
     `;
@@ -165,7 +170,6 @@ function renderSpecialSections() {
     `;
     container.appendChild(div);
   }
-  // Eventos para eliminar
   container.querySelectorAll('.remove-special').forEach(btn => {
     btn.addEventListener('click', () => {
       const idx = parseInt(btn.dataset.index);
@@ -217,7 +221,6 @@ function createCollectionFromForm() {
     return;
   }
 
-  // Crear la colección
   const col = {
     id: uid(),
     name: name,
@@ -225,7 +228,6 @@ function createCollectionFromForm() {
     items: []
   };
 
-  // Sección normal
   for (let i = from; i <= to; i++) {
     col.items.push({
       label: String(i),
@@ -235,7 +237,6 @@ function createCollectionFromForm() {
     });
   }
 
-  // Secciones especiales
   for (const sec of specialSections) {
     for (let i = sec.from; i <= sec.to; i++) {
       col.items.push({
@@ -253,7 +254,6 @@ function createCollectionFromForm() {
   updateStats();
   showView('collections');
 
-  // Limpiar formulario
   document.getElementById('create-name').value = '';
   specialSections = [];
   coverDataUrl = null;
@@ -267,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
   load();
   updateStats();
 
-  // Navegación general
   document.querySelectorAll('[data-view]').forEach(el => {
     el.addEventListener('click', () => {
       const v = el.getAttribute('data-view');
@@ -285,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Filtros en detalle
   document.querySelectorAll('.filter').forEach(el => {
     el.addEventListener('click', () => {
       document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
@@ -295,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Modal de confirmación
   document.getElementById('confirm-no').addEventListener('click', () => {
     document.getElementById('confirm-modal').style.display = 'none';
     confirmCallback = null;
@@ -304,7 +301,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (confirmCallback) confirmCallback();
   });
 
-  // Backup
   document.getElementById('export-btn').addEventListener('click', exportBackup);
   document.getElementById('import-btn').addEventListener('click', () => {
     document.getElementById('import-input').click();
@@ -315,27 +311,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('search').addEventListener('input', renderShelf);
 
-  // --- Eventos de la pantalla de creación ---
-
-  // Botón "Agregar sección especial"
   document.getElementById('create-add-special').addEventListener('click', openSpecialModal);
-
-  // Modal: cancelar
   document.getElementById('special-cancel').addEventListener('click', closeSpecialModal);
-
-  // Modal: añadir
   document.getElementById('special-add').addEventListener('click', addSpecialSection);
-
-  // Modal: cerrar al hacer clic fuera
   document.getElementById('special-modal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeSpecialModal();
   });
 
-  // Subir tapa
   document.getElementById('create-cover-btn').addEventListener('click', () => {
     document.getElementById('create-cover-input').click();
   });
-
   document.getElementById('create-cover-input').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -349,17 +334,12 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
     e.target.value = '';
   });
-
   document.getElementById('create-cover-clear').addEventListener('click', () => {
     coverDataUrl = null;
     document.getElementById('create-cover-preview').innerHTML = '';
     document.getElementById('create-cover-clear').style.display = 'none';
   });
-
-  // Botón "Crear colección"
   document.getElementById('create-save').addEventListener('click', createCollectionFromForm);
-
-  // Volver a gestión desde creación
   document.querySelector('#view-create .back-btn').addEventListener('click', () => {
     showView('manage');
   });
@@ -367,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
   showView('main');
 });
 
-// --- Funciones de Backup (exportar/importar) ---
 function exportBackup() {
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
