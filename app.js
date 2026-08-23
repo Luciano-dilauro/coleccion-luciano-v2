@@ -117,6 +117,7 @@ function renderDetail() {
     if (it.have) div.classList.add('have');
     if (it.rep > 0) div.classList.add('rep');
     if (it.rep > 0) div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
+    if (it.shiny) div.classList.add('shiny'); // ← NUEVO: clase para brillantes
     div.textContent = it.label;
     let timer = null, long = false;
     const start = () => {
@@ -169,6 +170,7 @@ function renderSpecialSections() {
     div.innerHTML = `
       <span class="info">
         <strong>${sec.name}</strong> (${sec.prefix}) → ${sec.from} a ${sec.to}
+        ${sec.shinyNumbers && sec.shinyNumbers.length > 0 ? ` ⭐ ${sec.shinyNumbers.join(', ')}` : ''}
       </span>
       <button class="remove-special" data-index="${specialSections.indexOf(sec)}">✕</button>
     `;
@@ -189,6 +191,7 @@ function openSpecialModal() {
   document.getElementById('special-prefix').value = '';
   document.getElementById('special-from').value = 1;
   document.getElementById('special-to').value = 20;
+  document.getElementById('special-shiny').value = '';
   document.getElementById('special-name').focus();
 }
 
@@ -201,6 +204,8 @@ function addSpecialSection() {
   const prefix = document.getElementById('special-prefix').value.trim().toUpperCase();
   const from = parseInt(document.getElementById('special-from').value);
   const to = parseInt(document.getElementById('special-to').value);
+  const shinyRaw = document.getElementById('special-shiny').value.trim();
+  const shinyNumbers = shinyRaw ? shinyRaw.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)) : [];
 
   if (!name) { alert('El nombre es obligatorio.'); return; }
   if (!prefix) { alert('El prefijo es obligatorio.'); return; }
@@ -209,7 +214,7 @@ function addSpecialSection() {
     return;
   }
 
-  specialSections.push({ name, prefix, from, to });
+  specialSections.push({ name, prefix, from, to, shinyNumbers });
   renderSpecialSections();
   closeSpecialModal();
 }
@@ -218,6 +223,8 @@ function createCollectionFromForm() {
   const name = document.getElementById('create-name').value.trim();
   const from = parseInt(document.getElementById('create-from').value);
   const to = parseInt(document.getElementById('create-to').value);
+  const shinyRaw = document.getElementById('create-shiny').value.trim();
+  const shinyNumbers = shinyRaw ? shinyRaw.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)) : [];
 
   if (!name) { alert('El nombre de la colección es obligatorio.'); return; }
   if (isNaN(from) || isNaN(to) || from > to) {
@@ -232,23 +239,29 @@ function createCollectionFromForm() {
     items: []
   };
 
+  // --- Sección general ---
+  const shinySet = new Set(shinyNumbers);
   for (let i = from; i <= to; i++) {
     col.items.push({
       label: String(i),
       have: false,
       rep: 0,
-      special: false
+      special: false,
+      shiny: shinySet.has(i) // ← marcamos si es brillante
     });
   }
 
+  // --- Secciones especiales ---
   for (const sec of specialSections) {
+    const shinySetSpecial = new Set(sec.shinyNumbers || []);
     for (let i = sec.from; i <= sec.to; i++) {
       col.items.push({
         label: `${sec.prefix}${i}`,
         have: false,
         rep: 0,
         special: true,
-        section: sec.name
+        section: sec.name,
+        shiny: shinySetSpecial.has(i) // ← marcamos si es brillante
       });
     }
   }
@@ -259,6 +272,7 @@ function createCollectionFromForm() {
   showView('collections');
 
   document.getElementById('create-name').value = '';
+  document.getElementById('create-shiny').value = '';
   specialSections = [];
   coverDataUrl = null;
   renderSpecialSections();
