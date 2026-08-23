@@ -211,7 +211,7 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- ESTANTERÍA --- */
+/* --- ESTANTERÍA (apaisada) --- */
 #shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -220,7 +220,7 @@ body {
 
 .card {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border: 1px solid #eef2f6;
@@ -236,12 +236,11 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 160px;
+  height: 120px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -252,8 +251,12 @@ body {
   object-fit: cover;
 }
 
+.card .cover .emoji {
+  font-size: 48px;
+}
+
 .card .info {
-  padding: 12px 10px 10px;
+  padding: 10px 10px 8px;
   text-align: center;
   flex: 1;
   display: flex;
@@ -265,7 +268,7 @@ body {
   font-weight: 600;
   font-size: 14px;
   color: #1a2634;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .card .bar {
