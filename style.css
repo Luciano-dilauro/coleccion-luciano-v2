@@ -242,6 +242,13 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 32px;
+  overflow: hidden;
+}
+
+.card .cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .card .name {
@@ -451,6 +458,7 @@ body {
   border-color: #b0c4d9;
 }
 
+/* --- RANGOS (con fuente más grande) --- */
 .range-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -464,8 +472,13 @@ body {
 }
 
 .range-inputs div label {
-  font-size: 12px;
+  font-size: 14px;
   color: #6b7a8a;
+}
+
+.range-inputs div input {
+  font-size: 18px;
+  padding: 10px 12px;
 }
 
 .cover-upload {
