@@ -347,7 +347,7 @@ body {
   border-radius: 12px;
   padding: 10px 0;
   text-align: center;
-  border: 2px solid #e9edf2;
+  border: 2px solid #d1d5db;
   font-size: 14px;
   font-weight: 500;
   color: #1a2634;
@@ -362,14 +362,14 @@ body {
 
 /* --- MARCADAS (TENGO) --- */
 .sticker.have {
-  background: #eaf7f0;
-  border-color: #2c7a5a;
+  background: #d4edda; /* Verde claro */
+  border-color: #28a745; /* Verde oscuro */
 }
 
 /* --- REPETIDAS (BADGE ROJO) --- */
 .sticker.rep {
-  background: #eaf7f0;
-  border-color: #2c7a5a;
+  background: #d4edda;
+  border-color: #28a745;
 }
 
 .sticker.rep::after {
@@ -377,7 +377,7 @@ body {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #e74c3c; /* ROJO */
+  background: #e74c3c;
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -385,26 +385,26 @@ body {
   padding: 1px 7px;
 }
 
-/* --- BRILLANTES --- */
+/* --- BRILLANTES (SOLO BORDE DORADO) --- */
 .sticker.shiny {
   border-color: #f1c40f !important;
-  background: #fef9e7 !important;
+  background: #ffffff !important;
 }
 
-/* Brillante marcada (verde + borde dorado) */
+/* Brillante marcada (fondo verde + borde dorado) */
 .sticker.shiny.have {
-  background: #eaf7f0 !important;
+  background: #d4edda !important;
   border-color: #f1c40f !important;
 }
 
-/* Brillante repetida (verde + borde dorado + badge rojo) */
+/* Brillante repetida (fondo verde + borde dorado + badge rojo) */
 .sticker.shiny.rep {
-  background: #eaf7f0 !important;
+  background: #d4edda !important;
   border-color: #f1c40f !important;
 }
 
 .sticker.shiny.rep::after {
-  background: #e74c3c !important; /* ROJO */
+  background: #e74c3c !important;
   color: white !important;
 }
 
