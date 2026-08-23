@@ -211,16 +211,16 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- ESTANTERÍA (tarjetas verticales) --- */
+/* --- ESTANTERÍA (3 columnas) --- */
 #shelf {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns: 1fr 1fr 1fr; /* ← 3 columnas */
+  gap: 10px; /* ← espacio reducido para que quepan bien */
 }
 
 .card {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border: 1px solid #eef2f6;
@@ -236,7 +236,7 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 160px; /* Antes era 120px, ahora es más alto para darle verticalidad */
+  height: 140px; /* ← altura para que sea vertical */
   width: 100%;
   display: flex;
   align-items: center;
@@ -252,11 +252,11 @@ body {
 }
 
 .card .cover .emoji {
-  font-size: 48px;
+  font-size: 36px;
 }
 
 .card .info {
-  padding: 10px 10px 8px;
+  padding: 8px 6px 6px;
   text-align: center;
   flex: 1;
   display: flex;
@@ -266,22 +266,23 @@ body {
 
 .card .name {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px; /* ← texto más pequeño para que quepa */
   color: #1a2634;
   margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .card .bar {
   background: #e9edf2;
-  height: 5px;
-  border-radius: 6px;
+  height: 4px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .card .bar .fill {
   background: #2c7a5a;
-  height: 5px;
-  border-radius: 6px;
+  height: 4px;
+  border-radius: 4px;
   width: 0%;
 }
 
