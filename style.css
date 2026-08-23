@@ -235,8 +235,8 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 80px;
-  border-radius: 12px;
+  height: 120px;  /* ← más alto para que sea vertical */
+  border-radius: 12px 12px 0 0;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -458,27 +458,29 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- RANGOS (con fuente más grande) --- */
+/* --- RANGOS (corregidos) --- */
 .range-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 8px;
 }
 
 .range-inputs div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .range-inputs div label {
-  font-size: 14px;
+  font-size: 12px;
   color: #6b7a8a;
 }
 
 .range-inputs div input {
-  font-size: 18px;
-  padding: 10px 12px;
+  font-size: 16px;
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cover-upload {
