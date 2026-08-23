@@ -66,13 +66,15 @@ function renderShelf() {
     const div = document.createElement('div');
     div.className = 'card';
 
-    let coverHtml = '📘';
+    let coverContent = '';
     if (c.cover) {
-      coverHtml = `<img src="${c.cover}" alt="Tapa" />`;
+      coverContent = `<img src="${c.cover}" alt="Tapa" />`;
+    } else {
+      coverContent = `<span class="emoji">📘</span>`;
     }
 
     div.innerHTML = `
-      <div class="cover">${coverHtml}</div>
+      <div class="cover">${coverContent}</div>
       <div class="info">
         <div class="name">${c.name}</div>
         <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
