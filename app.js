@@ -68,13 +68,15 @@ function renderShelf() {
 
     let coverHtml = '📘';
     if (c.cover) {
-      coverHtml = `<img src="${c.cover}" alt="Tapa" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" />`;
+      coverHtml = `<img src="${c.cover}" alt="Tapa" />`;
     }
 
     div.innerHTML = `
       <div class="cover">${coverHtml}</div>
-      <div class="name">${c.name}</div>
-      <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+      </div>
     `;
     div.addEventListener('click', () => openDetail(c.id));
     shelf.appendChild(div);
@@ -324,55 +326,3 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('create-cover-input').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      coverDataUrl = ev.target.result;
-      const preview = document.getElementById('create-cover-preview');
-      preview.innerHTML = `<img src="${coverDataUrl}" alt="Tapa" />`;
-      document.getElementById('create-cover-clear').style.display = 'inline-block';
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
-  });
-  document.getElementById('create-cover-clear').addEventListener('click', () => {
-    coverDataUrl = null;
-    document.getElementById('create-cover-preview').innerHTML = '';
-    document.getElementById('create-cover-clear').style.display = 'none';
-  });
-  document.getElementById('create-save').addEventListener('click', createCollectionFromForm);
-  document.querySelector('#view-create .back-btn').addEventListener('click', () => {
-    showView('manage');
-  });
-
-  showView('main');
-});
-
-function exportBackup() {
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'backup-coleccion-' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  document.getElementById('last-export').textContent = new Date().toLocaleString();
-  document.getElementById('export-size').textContent = (blob.size / 1024).toFixed(1) + ' KB';
-}
-
-function importBackup(file) {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const imported = JSON.parse(e.target.result);
-      if (!imported.collections) return alert('Archivo inválido.');
-      if (!confirm('Reemplazar todos los datos actuales?')) return;
-      data = imported;
-      save();
-      updateStats();
-      document.getElementById('last-import').textContent = new Date().toLocaleString();
-      alert('Backup importado correctamente ✅');
-    } catch { alert('Error al leer el archivo.'); }
-  };
-  reader.readAsText(file);
-}
