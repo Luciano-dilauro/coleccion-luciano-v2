@@ -214,8 +214,8 @@ body {
 /* --- ESTANTERÍA (3 columnas) --- */
 #shelf {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* ← 3 columnas */
-  gap: 10px; /* ← espacio reducido para que quepan bien */
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
 }
 
 .card {
@@ -236,7 +236,7 @@ body {
 
 .card .cover {
   background: #e9edf2;
-  height: 140px; /* ← altura para que sea vertical */
+  height: 140px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -266,7 +266,7 @@ body {
 
 .card .name {
   font-weight: 600;
-  font-size: 12px; /* ← texto más pequeño para que quepa */
+  font-size: 12px;
   color: #1a2634;
   margin-bottom: 4px;
   line-height: 1.2;
@@ -341,6 +341,7 @@ body {
   gap: 8px;
 }
 
+/* --- ESTILO BASE DE FIGURITAS --- */
 .sticker {
   background: #ffffff;
   border-radius: 12px;
@@ -359,14 +360,16 @@ body {
   transform: scale(0.92);
 }
 
+/* --- MARCADAS (TENGO) --- */
 .sticker.have {
-  border-color: #2c7a5a;
   background: #eaf7f0;
+  border-color: #2c7a5a;
 }
 
+/* --- REPETIDAS (BADGE) --- */
 .sticker.rep {
-  border-color: #d4875a;
-  background: #fdf0e8;
+  background: #eaf7f0;
+  border-color: #2c7a5a;
 }
 
 .sticker.rep::after {
@@ -374,12 +377,35 @@ body {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #d4875a;
+  background: #f97316;
   color: white;
   font-size: 10px;
   font-weight: 700;
   border-radius: 30px;
   padding: 1px 7px;
+}
+
+/* --- BRILLANTES --- */
+.sticker.shiny {
+  border-color: #f1c40f !important;
+  background: #fef9e7 !important;
+}
+
+/* Brillante marcada (verde + borde dorado) */
+.sticker.shiny.have {
+  background: #eaf7f0 !important;
+  border-color: #f1c40f !important;
+}
+
+/* Brillante repetida (verde + borde dorado + badge dorado) */
+.sticker.shiny.rep {
+  background: #eaf7f0 !important;
+  border-color: #f1c40f !important;
+}
+
+.sticker.shiny.rep::after {
+  background: #f1c40f !important;
+  color: #1a2634 !important;
 }
 
 /* --- MODAL GENERAL --- */
@@ -471,6 +497,12 @@ body {
 
 .form-group input:focus {
   border-color: #b0c4d9;
+}
+
+.hint {
+  font-size: 12px;
+  color: #6b7a8a;
+  margin-top: 2px;
 }
 
 .range-inputs {
@@ -596,20 +628,4 @@ body {
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #f0e8d8;
-}
-/* --- FIGURITAS BRILLANTES --- */
-.sticker.shiny {
-  background: #fef9e7 !important;
-  border-color: #f1c40f !important;
-  box-shadow: 0 0 8px rgba(241, 196, 15, 0.4);
-}
-
-.sticker.shiny.have {
-  background: #fef9e7 !important;
-  border-color: #2c7a5a !important;
-}
-
-.sticker.shiny.rep {
-  background: #fef9e7 !important;
-  border-color: #d4875a !important;
 }
