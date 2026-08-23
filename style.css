@@ -29,20 +29,18 @@ body {
 .view {
   display: none;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 20px 30px;
+  gap: 0; /* ← sin gap entre elementos */
+  padding: 0;
 }
 .view.active {
   display: flex;
 }
 
-/* --- HEADER SUPERIOR (sticky) --- */
+/* --- HEADER SUPERIOR (100% ancho) --- */
 .header {
   background: #f5f7fa;
-  padding: 16px 0 12px;
+  padding: 16px 20px 12px;
   margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +49,7 @@ body {
   z-index: 20;
   border-bottom: 1px solid #eef2f6;
   background: #f5f7fa;
+  width: 100%;
 }
 
 .header h1 {
@@ -80,6 +79,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-top: 4px;
+  padding: 0 20px;
 }
 
 .card-btn {
@@ -154,6 +154,7 @@ body {
   border-radius: 20px;
   padding: 16px 18px;
   border: 1px solid #eef2f6;
+  margin: 0 20px;
 }
 
 .stats-row {
@@ -190,6 +191,7 @@ body {
   cursor: pointer;
   transition: 0.1s;
   text-align: left;
+  margin: 0 20px;
 }
 
 .manage-btn:active {
@@ -211,6 +213,7 @@ body {
   width: 100%;
   background: #ffffff;
   outline: none;
+  margin: 0 20px;
 }
 
 #search:focus {
@@ -222,6 +225,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
+  padding: 0 20px 30px;
 }
 
 .card {
@@ -292,25 +296,27 @@ body {
   width: 0%;
 }
 
-/* --- SUPER-HEADER STICKY --- */
+/* --- BLOQUE FIJO DEL DETALLE (100% ancho) --- */
 .detail-sticky {
   position: sticky;
   top: 60px;
   z-index: 15;
   background: #f5f7fa;
-  padding: 0 0 8px 0;
+  padding: 0;
+  margin: 0;
 }
 
-/* --- DETALLE HEADER (PORTADA + INFO) --- */
+/* --- PORTADA + INFO (100% ancho) --- */
 .detail-header {
   display: flex;
   gap: 16px;
   background: #ffffff;
-  border-radius: 16px;
-  padding: 16px;
   border: 1px solid #eef2f6;
+  border-left: none;
+  border-right: none;
+  padding: 16px 20px;
   align-items: center;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .detail-cover {
@@ -356,12 +362,13 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS --- */
+/* --- FILTROS (100% ancho) --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 4px 0;
+  padding: 8px 20px;
+  margin: 0;
 }
 
 .filter {
@@ -388,13 +395,14 @@ body {
   transform: scale(0.96);
 }
 
-/* --- GRILLA DE FIGURITAS --- */
+/* --- GRILLA DE FIGURITAS (con padding lateral) --- */
 #detail-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   position: relative;
   z-index: 1;
+  padding: 8px 20px 30px;
 }
 
 /* --- ESTILO BASE DE FIGURITAS --- */
@@ -443,6 +451,7 @@ body {
   font-weight: 700;
   border-radius: 30px;
   padding: 1px 7px;
+  z-index: 5;
 }
 
 /* --- BRILLANTES (SOLO BORDE DORADO) --- */
@@ -466,6 +475,7 @@ body {
 .sticker.shiny.rep::after {
   background: #e74c3c !important;
   color: white !important;
+  z-index: 5;
 }
 
 /* --- MODAL GENERAL --- */
@@ -532,6 +542,7 @@ body {
 /* --- PANTALLA DE CREACIÓN --- */
 #view-create {
   gap: 16px;
+  padding: 0 20px 30px;
 }
 
 .form-group {
@@ -674,7 +685,11 @@ body {
   color: #1a2634;
 }
 
-/* --- INFO LINES --- */
+/* --- BACKUP --- */
+#view-backup {
+  padding: 0 20px 30px;
+}
+
 .info-line {
   font-size: 14px;
   color: #4a5a6a;
