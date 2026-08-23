@@ -101,11 +101,26 @@ function renderDetail() {
   const have = items.filter(it => it.have).length;
   const total = items.length;
   const pct = total ? Math.round(have / total * 100) : 0;
+
+  // Actualizar estadísticas
   document.getElementById('d-total').textContent = total;
   document.getElementById('d-have').textContent = have;
   document.getElementById('d-missing').textContent = total - have;
   document.getElementById('d-pct').textContent = pct + '%';
 
+  // Actualizar portada
+  const coverEmoji = document.getElementById('detail-cover-emoji');
+  const coverImg = document.getElementById('detail-cover-img');
+  if (col.cover) {
+    coverEmoji.style.display = 'none';
+    coverImg.style.display = 'block';
+    coverImg.src = col.cover;
+  } else {
+    coverEmoji.style.display = 'flex';
+    coverImg.style.display = 'none';
+  }
+
+  // Grilla
   const grid = document.getElementById('detail-grid');
   grid.innerHTML = '';
   let filtered = items;
@@ -117,7 +132,7 @@ function renderDetail() {
     if (it.have) div.classList.add('have');
     if (it.rep > 0) div.classList.add('rep');
     if (it.rep > 0) div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
-    if (it.shiny) div.classList.add('shiny'); // ← NUEVO: clase para brillantes
+    if (it.shiny) div.classList.add('shiny');
     div.textContent = it.label;
     let timer = null, long = false;
     const start = () => {
@@ -239,7 +254,6 @@ function createCollectionFromForm() {
     items: []
   };
 
-  // --- Sección general ---
   const shinySet = new Set(shinyNumbers);
   for (let i = from; i <= to; i++) {
     col.items.push({
@@ -247,11 +261,10 @@ function createCollectionFromForm() {
       have: false,
       rep: 0,
       special: false,
-      shiny: shinySet.has(i) // ← marcamos si es brillante
+      shiny: shinySet.has(i)
     });
   }
 
-  // --- Secciones especiales ---
   for (const sec of specialSections) {
     const shinySetSpecial = new Set(sec.shinyNumbers || []);
     for (let i = sec.from; i <= sec.to; i++) {
@@ -261,7 +274,7 @@ function createCollectionFromForm() {
         rep: 0,
         special: true,
         section: sec.name,
-        shiny: shinySetSpecial.has(i) // ← marcamos si es brillante
+        shiny: shinySetSpecial.has(i)
       });
     }
   }
