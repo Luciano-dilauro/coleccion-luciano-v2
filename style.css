@@ -366,7 +366,7 @@ body {
   border-color: #2c7a5a;
 }
 
-/* --- REPETIDAS (BADGE) --- */
+/* --- REPETIDAS (BADGE ROJO) --- */
 .sticker.rep {
   background: #eaf7f0;
   border-color: #2c7a5a;
@@ -377,7 +377,7 @@ body {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #f97316;
+  background: #e74c3c; /* ROJO */
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -397,15 +397,15 @@ body {
   border-color: #f1c40f !important;
 }
 
-/* Brillante repetida (verde + borde dorado + badge dorado) */
+/* Brillante repetida (verde + borde dorado + badge rojo) */
 .sticker.shiny.rep {
   background: #eaf7f0 !important;
   border-color: #f1c40f !important;
 }
 
 .sticker.shiny.rep::after {
-  background: #f1c40f !important;
-  color: #1a2634 !important;
+  background: #e74c3c !important; /* ROJO */
+  color: white !important;
 }
 
 /* --- MODAL GENERAL --- */
