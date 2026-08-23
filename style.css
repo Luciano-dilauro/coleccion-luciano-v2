@@ -597,3 +597,19 @@ body {
   border-radius: 12px;
   border: 1px solid #f0e8d8;
 }
+/* --- FIGURITAS BRILLANTES --- */
+.sticker.shiny {
+  background: #fef9e7 !important;
+  border-color: #f1c40f !important;
+  box-shadow: 0 0 8px rgba(241, 196, 15, 0.4);
+}
+
+.sticker.shiny.have {
+  background: #fef9e7 !important;
+  border-color: #2c7a5a !important;
+}
+
+.sticker.shiny.rep {
+  background: #fef9e7 !important;
+  border-color: #d4875a !important;
+}
