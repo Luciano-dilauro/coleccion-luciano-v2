@@ -174,38 +174,43 @@
         <h1 id="detail-title">Colección</h1>
       </div>
 
-      <!-- NUEVA SECCIÓN: PORTADA + INFO -->
-      <div id="detail-header" class="detail-header">
-        <div id="detail-cover" class="detail-cover">
-          <span id="detail-cover-emoji">📘</span>
-          <img id="detail-cover-img" src="" alt="Tapa" style="display:none;" />
+      <!-- SUPER-HEADER STICKY -->
+      <div class="detail-sticky">
+        <!-- Portada + info -->
+        <div id="detail-header" class="detail-header">
+          <div id="detail-cover" class="detail-cover">
+            <span id="detail-cover-emoji">📘</span>
+            <img id="detail-cover-img" src="" alt="Tapa" style="display:none;" />
+          </div>
+          <div id="detail-stats-grid" class="detail-stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">📊 Total</span>
+              <span class="stat-value" id="d-total">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">✅ Tengo</span>
+              <span class="stat-value" id="d-have">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">❌ Faltan</span>
+              <span class="stat-value" id="d-missing">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">📈 Progreso</span>
+              <span class="stat-value" id="d-pct">0%</span>
+            </div>
+          </div>
         </div>
-        <div id="detail-stats-grid" class="detail-stats-grid">
-          <div class="stat-item">
-            <span class="stat-label">📊 Total</span>
-            <span class="stat-value" id="d-total">0</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">✅ Tengo</span>
-            <span class="stat-value" id="d-have">0</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">❌ Faltan</span>
-            <span class="stat-value" id="d-missing">0</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">📈 Progreso</span>
-            <span class="stat-value" id="d-pct">0%</span>
-          </div>
+
+        <!-- Filtros -->
+        <div class="filter-bar">
+          <button class="filter active" data-filter="all">Todas</button>
+          <button class="filter" data-filter="miss">Faltan</button>
+          <button class="filter" data-filter="rep">Repetidas</button>
         </div>
       </div>
 
-      <div class="filter-bar">
-        <button class="filter active" data-filter="all">Todas</button>
-        <button class="filter" data-filter="miss">Faltan</button>
-        <button class="filter" data-filter="rep">Repetidas</button>
-      </div>
-
+      <!-- Grilla -->
       <div id="detail-grid"></div>
     </div>
 
