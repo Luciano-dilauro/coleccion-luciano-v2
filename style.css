@@ -25,7 +25,7 @@ html, body {
     flex-direction: column;
 }
 
-/* ===== HEADER (cambio 3: mismo gris que el fondo) ===== */
+/* ===== HEADER ===== */
 header {
     background: #f2f4f8;
     padding: 16px 20px;
@@ -81,18 +81,17 @@ header h1 {
     gap: 14px;
 }
 
-/* ===== BOTONES PRINCIPALES (cambio 1: blancos) ===== */
+/* ===== BOTONES PRINCIPALES (blancos + alineación izquierda) ===== */
 .main-btn {
     background: #ffffff;
     color: #1f2937;
     border: none;
     border-radius: 16px;
-    padding: 20px 14px;
+    padding: 20px 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     cursor: pointer;
     transition: 0.15s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -139,7 +138,6 @@ header h1 {
 .btn-primary:active {
     background: #3a5a86;
 }
-/* ===== BOTÓN BACKUP (cambio 2: negro) ===== */
 .btn-backup {
     background: #1a2634;
     color: white;
