@@ -169,7 +169,18 @@ body {
   transform: scale(0.96);
 }
 
-/* --- PANTALLA PRINCIPAL --- */
+/* --- GRILLA DE FIGURITAS --- */
+#detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  padding: 12px 20px 30px;
+  overscroll-behavior: none; /* ← desactiva el pull-to-refresh */
+}
+
+/* --- RESTO DEL ESTILO (sin cambios) --- */
 .main-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -244,7 +255,6 @@ body {
   background: #dce1e8;
 }
 
-/* --- ESTADÍSTICAS --- */
 .stats-panel {
   background: #ffffff;
   border-radius: 20px;
@@ -275,7 +285,6 @@ body {
   font-size: 16px;
 }
 
-/* --- GESTIÓN --- */
 .manage-btn {
   background: #ffffff;
   border: 1px solid #e9edf2;
@@ -300,7 +309,6 @@ body {
   border-color: #f5d6d1;
 }
 
-/* --- BÚSQUEDA --- */
 #search {
   padding: 14px 16px;
   border-radius: 40px;
@@ -316,7 +324,6 @@ body {
   border-color: #b0c4d9;
 }
 
-/* --- ESTANTERÍA (3 columnas) --- */
 #shelf {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -392,17 +399,6 @@ body {
   width: 0%;
 }
 
-/* --- GRILLA DE FIGURITAS --- */
-#detail-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  position: relative;
-  z-index: 1;
-  padding: 12px 20px 30px; /* ← ajuste: 12px de padding superior */
-}
-
-/* --- ESTILO BASE DE FIGURITAS --- */
 .sticker {
   background: #ffffff;
   border-radius: 12px;
@@ -425,13 +421,11 @@ body {
   transform: scale(0.92);
 }
 
-/* --- MARCADAS (TENGO) --- */
 .sticker.have {
   background: #d4edda;
   border-color: #28a745;
 }
 
-/* --- REPETIDAS (BADGE ROJO) --- */
 .sticker.rep {
   background: #d4edda;
   border-color: #28a745;
@@ -451,19 +445,16 @@ body {
   z-index: 5;
 }
 
-/* --- BRILLANTES (SOLO BORDE DORADO) --- */
 .sticker.shiny {
   border-color: #f1c40f !important;
   background: #ffffff !important;
 }
 
-/* Brillante marcada (fondo verde + borde dorado) */
 .sticker.shiny.have {
   background: #d4edda !important;
   border-color: #f1c40f !important;
 }
 
-/* Brillante repetida (fondo verde + borde dorado + badge rojo) */
 .sticker.shiny.rep {
   background: #d4edda !important;
   border-color: #f1c40f !important;
@@ -475,7 +466,6 @@ body {
   z-index: 5;
 }
 
-/* --- MODAL GENERAL --- */
 #confirm-modal {
   position: fixed;
   inset: 0;
@@ -536,7 +526,6 @@ body {
   color: white;
 }
 
-/* --- PANTALLA DE CREACIÓN --- */
 #view-create {
   gap: 16px;
   padding: 0 20px 30px;
@@ -657,7 +646,6 @@ body {
   padding: 0 4px;
 }
 
-/* --- MODAL DE SECCIÓN ESPECIAL --- */
 #special-modal {
   position: fixed;
   inset: 0;
@@ -682,7 +670,6 @@ body {
   color: #1a2634;
 }
 
-/* --- BACKUP --- */
 #view-backup {
   padding: 0 20px 30px;
 }
