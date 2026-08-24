@@ -91,11 +91,13 @@ header h1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     text-align: left;
     cursor: pointer;
     transition: 0.15s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     min-height: 100px;
+    width: 100%;
 }
 .main-btn:active {
     transform: scale(0.94);
