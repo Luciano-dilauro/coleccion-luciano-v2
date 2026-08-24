@@ -118,6 +118,9 @@ function renderDetail() {
     document.getElementById('dMissing').textContent = total - have;
     document.getElementById('dPct').textContent = pct + '%';
 
+    // Actualizar barra de progreso
+    document.getElementById('progressFill').style.width = pct + '%';
+
     const coverEl = document.getElementById('detailCover');
     if (col.cover) {
         coverEl.innerHTML = `<img src="${col.cover}" alt="Tapa" />`;
