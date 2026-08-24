@@ -383,17 +383,17 @@ header h1 {
     background: #f2f4f8;
     padding: 14px 0;
     border: none;
-    align-items: center;
+    align-items: stretch;
 }
 .detail-cover {
-    width: 70px;
-    height: 100px;
+    width: 85px;
+    height: 120px;
     border-radius: 12px;
     background: #e5e7eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 36px;
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -402,8 +402,13 @@ header h1 {
     height: 100%;
     object-fit: cover;
 }
-.detail-stats {
+.detail-stats-wrapper {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.detail-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px 16px;
@@ -417,15 +422,13 @@ header h1 {
 .detail-stats strong {
     color: #1f2937;
 }
-
-/* ===== BARRA DE PROGRESO ===== */
 .progress-bar {
     width: 100%;
     height: 6px;
     background: #e5e7eb;
     border-radius: 4px;
     overflow: hidden;
-    margin: 4px 0 8px 0;
+    margin-top: 8px;
 }
 .progress-fill {
     height: 100%;
