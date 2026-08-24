@@ -3,9 +3,22 @@ let currentId = null;
 let filter = 'all';
 let confirmCallback = null;
 
-// --- Desactiva el pull-to-refresh en toda la app ---
+// --- Desactiva el pull-to-refresh solo en el borde superior ---
+let startY = 0;
+
+document.addEventListener('touchstart', function(e) {
+  startY = e.touches[0].pageY;
+}, { passive: true });
+
 document.addEventListener('touchmove', function(e) {
-  if (e.target.closest('.view')) {
+  const target = e.target.closest('.view');
+  if (!target) return;
+
+  const scrollTop = target.scrollTop;
+  const currentY = e.touches[0].pageY;
+
+  // Si estamos en el borde superior y el usuario intenta hacer scroll hacia abajo (pull-to-refresh)
+  if (scrollTop === 0 && currentY > startY) {
     e.preventDefault();
   }
 }, { passive: false });
