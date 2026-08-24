@@ -138,6 +138,12 @@ header h1 {
 .btn-primary:active {
     background: #3a5a86;
 }
+.btn-backup {
+    background: #1a2634;
+}
+.btn-backup:active {
+    background: #2c3e50;
+}
 .btn-secondary {
     background: #e5e7eb;
     color: #1f2937;
