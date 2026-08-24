@@ -142,23 +142,40 @@ function renderDetail() {
         div.textContent = it.label;
 
         let startX = 0, startY = 0, isSwiping = false;
+        let longPressTimer = null;
+        let longPressFired = false;
+
         const onTouchStart = (e) => {
             const touch = e.touches[0];
             startX = touch.clientX;
             startY = touch.clientY;
             isSwiping = false;
+            longPressFired = false;
+
+            longPressTimer = setTimeout(() => {
+                longPressFired = true;
+                handleLongPress(it);
+            }, 500);
         };
+
         const onTouchMove = (e) => {
             if (!startX || !startY) return;
             const touch = e.touches[0];
             const deltaX = Math.abs(touch.clientX - startX);
             const deltaY = Math.abs(touch.clientY - startY);
-            if (deltaX > 10 || deltaY > 10) isSwiping = true;
+            if (deltaX > 10 || deltaY > 10) {
+                isSwiping = true;
+                clearTimeout(longPressTimer);
+            }
         };
+
         const onTouchEnd = () => {
-            if (isSwiping) return;
-            handleTap(it);
+            clearTimeout(longPressTimer);
+            if (!isSwiping && !longPressFired) {
+                handleTap(it);
+            }
         };
+
         div.addEventListener('touchstart', onTouchStart, { passive: true });
         div.addEventListener('touchmove', onTouchMove, { passive: true });
         div.addEventListener('touchend', onTouchEnd, { passive: true });
@@ -172,13 +189,6 @@ function renderDetail() {
             }
         });
         div.addEventListener('mouseleave', () => { mouseDown = false; });
-
-        let longPressTimer = null;
-        div.addEventListener('touchstart', () => {
-            longPressTimer = setTimeout(() => handleLongPress(it), 500);
-        }, { passive: true });
-        div.addEventListener('touchend', () => clearTimeout(longPressTimer), { passive: true });
-        div.addEventListener('touchcancel', () => clearTimeout(longPressTimer), { passive: true });
 
         grid.appendChild(div);
     }
@@ -354,7 +364,7 @@ function exportBackup() {
     URL.revokeObjectURL(url);
     document.getElementById('lastExport').textContent = new Date().toLocaleString();
     document.getElementById('exportSize').textContent = (blob.size / 1024).toFixed(1) + ' KB';
-    goMain(); // ← redirige a la pantalla principal
+    goMain();
 }
 
 function importBackup(file) {
@@ -369,7 +379,7 @@ function importBackup(file) {
             updateStats();
             document.getElementById('lastImport').textContent = new Date().toLocaleString();
             alert('Backup importado correctamente ✅');
-            goMain(); // ← redirige a la pantalla principal
+            goMain();
         } catch { alert('Error al leer el archivo.'); }
     };
     reader.readAsText(file);
