@@ -136,17 +136,24 @@
                 <div class="detail-header">
                     <div id="detailCover" class="detail-cover">📘</div>
                     <div class="detail-stats">
-                        <div><span>Total</span> <strong id="dTotal">0</strong></div>
-                        <div><span>Tengo</span> <strong id="dHave">0</strong></div>
-                        <div><span>Faltan</span> <strong id="dMissing">0</strong></div>
-                        <div><span>Progreso</span> <strong id="dPct">0%</strong></div>
+                        <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
+                        <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
+                        <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
+                        <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
                     </div>
                 </div>
-                <div class="tabs">
-                    <button class="tab active" data-filter="all">Todas</button>
-                    <button class="tab" data-filter="miss">Faltan</button>
-                    <button class="tab" data-filter="rep">Repetidas</button>
+
+                <!-- Barra de progreso -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width:0%;"></div>
                 </div>
+
+                <div class="tabs">
+                    <button class="tab active btn-white" data-filter="all">Todas</button>
+                    <button class="tab btn-white" data-filter="miss">Faltan</button>
+                    <button class="tab btn-white" data-filter="rep">Repetidas</button>
+                </div>
+
                 <div id="detailGrid" class="grid-4"></div>
             </section>
 
