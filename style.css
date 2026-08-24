@@ -376,17 +376,17 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE ===== */
+/* ===== DETALLE (nueva distribución) ===== */
 .detail-header {
     display: flex;
-    gap: 16px;
+    gap: 15%; /* ← espacio de respiro entre portada e info */
     background: #f2f4f8;
     padding: 14px 0;
     border: none;
     align-items: stretch;
 }
 .detail-cover {
-    width: 40%;
+    width: 35%; /* ← portada ocupa 35% */
     aspect-ratio: 3 / 4;
     border-radius: 12px;
     background: #e5e7eb;
@@ -403,15 +403,15 @@ header h1 {
     object-fit: cover;
 }
 .detail-stats-wrapper {
-    flex: 1;
+    flex: 1; /* ← ocupa el 50% restante (35% portada + 15% gap = 50%) */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .detail-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 16px;
+    display: flex;
+    flex-direction: column; /* ← una sola columna */
+    gap: 2px;
 }
 .detail-stats div {
     display: flex;
