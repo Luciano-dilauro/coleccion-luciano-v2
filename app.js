@@ -3,9 +3,9 @@ let currentId = null;
 let filter = 'all';
 let confirmCallback = null;
 
-// --- Desactiva el pull-to-refresh en móviles ---
+// --- Desactiva el pull-to-refresh en toda la app ---
 document.addEventListener('touchmove', function(e) {
-  if (document.body.classList.contains('scroll-lock')) {
+  if (e.target.closest('.view')) {
     e.preventDefault();
   }
 }, { passive: false });
@@ -102,13 +102,11 @@ function renderDetail() {
   const total = items.length;
   const pct = total ? Math.round(have / total * 100) : 0;
 
-  // Actualizar estadísticas
   document.getElementById('d-total').textContent = total;
   document.getElementById('d-have').textContent = have;
   document.getElementById('d-missing').textContent = total - have;
   document.getElementById('d-pct').textContent = pct + '%';
 
-  // Actualizar portada
   const coverEmoji = document.getElementById('detail-cover-emoji');
   const coverImg = document.getElementById('detail-cover-img');
   if (col.cover) {
@@ -120,7 +118,6 @@ function renderDetail() {
     coverImg.style.display = 'none';
   }
 
-  // Grilla
   const grid = document.getElementById('detail-grid');
   grid.innerHTML = '';
   let filtered = items;
