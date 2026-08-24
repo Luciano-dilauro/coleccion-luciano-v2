@@ -153,12 +153,6 @@ header h1 {
     background: #dc2626;
 }
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
 /* ===== CAMPOS ===== */
 .field {
     display: flex;
