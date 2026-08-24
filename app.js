@@ -3,25 +3,27 @@ let currentId = null;
 let filter = 'all';
 let confirmCallback = null;
 
-// --- Desactiva el pull-to-refresh solo en el borde superior ---
-let startY = 0;
+// --- Desactiva el pull-to-refresh solo en la grilla ---
+document.addEventListener('DOMContentLoaded', function() {
+  const grid = document.getElementById('detail-grid');
+  if (grid) {
+    let startY = 0;
 
-document.addEventListener('touchstart', function(e) {
-  startY = e.touches[0].pageY;
-}, { passive: true });
+    grid.addEventListener('touchstart', function(e) {
+      startY = e.touches[0].pageY;
+    }, { passive: true });
 
-document.addEventListener('touchmove', function(e) {
-  const target = e.target.closest('.view');
-  if (!target) return;
+    grid.addEventListener('touchmove', function(e) {
+      const scrollTop = grid.scrollTop;
+      const currentY = e.touches[0].pageY;
 
-  const scrollTop = target.scrollTop;
-  const currentY = e.touches[0].pageY;
-
-  // Si estamos en el borde superior y el usuario intenta hacer scroll hacia abajo (pull-to-refresh)
-  if (scrollTop === 0 && currentY > startY) {
-    e.preventDefault();
+      // Solo bloqueamos si estamos en el borde superior y tiramos hacia abajo (pull-to-refresh)
+      if (scrollTop === 0 && currentY > startY) {
+        e.preventDefault();
+      }
+    }, { passive: false });
   }
-}, { passive: false });
+});
 
 function load() {
   try { data = JSON.parse(localStorage.getItem('coleccion_v2')) || { collections: [] }; }
