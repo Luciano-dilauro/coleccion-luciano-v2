@@ -10,32 +10,43 @@
   touch-action: manipulation;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background: #f5f7fa;
-  min-height: 100vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 0;
-  overscroll-behavior: none; /* ← solución pull-to-refresh */
 }
 
 #app {
   max-width: 420px;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: #f5f7fa;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .view {
   display: none;
   flex-direction: column;
-  gap: 0;
-  padding: 0;
+  height: 100%;
 }
 .view.active {
   display: flex;
+}
+
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px 30px;
 }
 
 /* --- HEADER SUPERIOR --- */
@@ -46,11 +57,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: sticky;
-  top: 0;
-  z-index: 20;
   border-bottom: 1px solid #e5e7eb;
-  width: 100%;
+  flex-shrink: 0;
 }
 
 .header h1 {
@@ -75,12 +83,10 @@ body {
 
 /* --- BLOQUE FIJO --- */
 .detail-sticky {
-  position: sticky;
-  top: 57px;
-  z-index: 19;
   background: #f5f7fa;
   padding: 0;
   margin: 0;
+  flex-shrink: 0;
 }
 
 /* --- PORTADA + INFO --- */
@@ -177,7 +183,7 @@ body {
   gap: 8px;
   position: relative;
   z-index: 1;
-  padding: 12px 20px 30px;
+  padding: 12px 0 30px;
 }
 
 /* --- RESTO DEL ESTILO --- */
@@ -186,7 +192,6 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-top: 4px;
-  padding: 0 20px;
 }
 
 .card-btn {
@@ -260,7 +265,7 @@ body {
   border-radius: 20px;
   padding: 16px 18px;
   border: 1px solid #eef2f6;
-  margin: 0 20px;
+  margin: 0;
 }
 
 .stats-row {
@@ -296,7 +301,7 @@ body {
   cursor: pointer;
   transition: 0.1s;
   text-align: left;
-  margin: 0 20px;
+  margin: 0;
 }
 
 .manage-btn:active {
@@ -317,7 +322,7 @@ body {
   width: 100%;
   background: #ffffff;
   outline: none;
-  margin: 0 20px;
+  margin: 0;
 }
 
 #search:focus {
@@ -328,7 +333,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
-  padding: 0 20px 30px;
+  padding: 0 0 30px;
 }
 
 .card {
@@ -474,6 +479,7 @@ body {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(4px);
+  z-index: 100;
 }
 
 #confirm-modal[style*="display:flex"] {
@@ -528,7 +534,6 @@ body {
 
 #view-create {
   gap: 16px;
-  padding: 0 20px 30px;
 }
 
 .form-group {
@@ -654,6 +659,7 @@ body {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(4px);
+  z-index: 100;
 }
 
 #special-modal[style*="display:flex"] {
@@ -671,7 +677,7 @@ body {
 }
 
 #view-backup {
-  padding: 0 20px 30px;
+  gap: 16px;
 }
 
 .info-line {
