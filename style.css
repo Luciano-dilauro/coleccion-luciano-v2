@@ -81,7 +81,6 @@ header h1 {
     gap: 14px;
 }
 
-/* ===== BOTONES PRINCIPALES (blancos + alineación izquierda) ===== */
 .main-btn {
     background: #ffffff;
     color: #1f2937;
@@ -160,6 +159,47 @@ header h1 {
 }
 .btn-danger:active {
     background: #dc2626;
+}
+
+/* ===== PANTALLA DE GESTIÓN ===== */
+#view-manage {
+    gap: 16px; /* más espacio entre botones */
+}
+#view-manage .btn-white {
+    background: #ffffff;
+    color: #1f2937;
+    border: none;
+    border-radius: 14px;
+    padding: 18px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    text-align: left;
+}
+#view-manage .btn-white:active {
+    transform: scale(0.96);
+    background: #f8fafc;
+}
+#view-manage .btn-soft-red {
+    background: #fca5a5;
+    color: #1f2937;
+    border: none;
+    border-radius: 14px;
+    padding: 18px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    text-align: left;
+}
+#view-manage .btn-soft-red:active {
+    transform: scale(0.96);
+    background: #f87171;
 }
 
 /* ===== CAMPOS ===== */
