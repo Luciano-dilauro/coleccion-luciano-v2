@@ -337,7 +337,7 @@ header h1 {
 
 .shelf-card .cover {
     height: 120px;
-    background: #ffffff; /* ← fondo blanco */
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -380,11 +380,9 @@ header h1 {
 .detail-header {
     display: flex;
     gap: 16px;
-    background: white;
-    padding: 14px;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    background: #f2f4f8;
+    padding: 14px 0;
+    border: none;
     align-items: center;
 }
 .detail-cover {
@@ -420,22 +418,38 @@ header h1 {
     color: #1f2937;
 }
 
-/* ===== TABS ===== */
+/* ===== BARRA DE PROGRESO ===== */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 4px 0 8px 0;
+}
+.progress-fill {
+    height: 100%;
+    background: #22c55e;
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.2s ease;
+}
+
+/* ===== FILTROS (botones blancos) ===== */
 .tabs {
     display: flex;
     gap: 8px;
 }
 .tab {
-    flex: 1;
-    padding: 8px;
+    padding: 10px 0;
     border: none;
     border-radius: 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.15s;
-    background: #f3f4f6;
-    color: #4b5563;
+    flex: 1;
+    text-align: center;
 }
 .tab.active {
     background: #4a6fa5;
@@ -443,6 +457,15 @@ header h1 {
 }
 .tab:active {
     transform: scale(0.94);
+}
+.tab.btn-white {
+    background: #ffffff;
+    color: #1f2937;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.tab.btn-white.active {
+    background: #4a6fa5;
+    color: white;
 }
 
 /* ===== GRILLA FIGURITAS ===== */
