@@ -117,6 +117,69 @@ header h1 {
     margin-top: 2px;
 }
 
+/* ===== PANTALLA DE GESTIÓN ===== */
+.manage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.manage-btn {
+    background: #ffffff;
+    color: #1f2937;
+    border: none;
+    border-radius: 16px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    min-height: 100px;
+    width: 100%;
+}
+.manage-btn:active {
+    transform: scale(0.94);
+    background: #f8fafc;
+}
+.manage-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+.manage-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+.manage-sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+/* ===== BOTÓN ELIMINAR (rojo suave) ===== */
+.btn-soft-red {
+    background: #fca5a5;
+    color: #1f2937;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    text-align: center;
+}
+.btn-soft-red:active {
+    transform: scale(0.96);
+    background: #f87171;
+}
+
 /* ===== BOTONES GENERALES ===== */
 .btn-primary, .btn-secondary, .btn-danger {
     padding: 14px;
@@ -159,47 +222,6 @@ header h1 {
 }
 .btn-danger:active {
     background: #dc2626;
-}
-
-/* ===== PANTALLA DE GESTIÓN ===== */
-#view-manage {
-    gap: 16px; /* más espacio entre botones */
-}
-#view-manage .btn-white {
-    background: #ffffff;
-    color: #1f2937;
-    border: none;
-    border-radius: 14px;
-    padding: 18px 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    width: 100%;
-    text-align: left;
-}
-#view-manage .btn-white:active {
-    transform: scale(0.96);
-    background: #f8fafc;
-}
-#view-manage .btn-soft-red {
-    background: #fca5a5;
-    color: #1f2937;
-    border: none;
-    border-radius: 14px;
-    padding: 18px 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    width: 100%;
-    text-align: left;
-}
-#view-manage .btn-soft-red:active {
-    transform: scale(0.96);
-    background: #f87171;
 }
 
 /* ===== CAMPOS ===== */
