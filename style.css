@@ -386,8 +386,8 @@ header h1 {
     align-items: stretch;
 }
 .detail-cover {
-    width: 85px;
-    height: 120px;
+    width: 40%;
+    aspect-ratio: 3 / 4;
     border-radius: 12px;
     background: #e5e7eb;
     display: flex;
