@@ -25,9 +25,9 @@ html, body {
     flex-direction: column;
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER (cambio 3: mismo gris que el fondo) ===== */
 header {
-    background: white;
+    background: #f2f4f8;
     padding: 16px 20px;
     border-bottom: 1px solid #e5e7eb;
     display: flex;
@@ -50,7 +50,7 @@ header h1 {
     font-size: 24px;
     cursor: pointer;
     padding: 0 8px;
-    color: #4a6fa5;
+    color: #1a2634;
 }
 #backBtn.hidden {
     visibility: hidden;
@@ -81,9 +81,10 @@ header h1 {
     gap: 14px;
 }
 
+/* ===== BOTONES PRINCIPALES (cambio 1: blancos) ===== */
 .main-btn {
-    background: #4a6fa5;
-    color: white;
+    background: #ffffff;
+    color: #1f2937;
     border: none;
     border-radius: 16px;
     padding: 20px 14px;
@@ -94,12 +95,12 @@ header h1 {
     text-align: center;
     cursor: pointer;
     transition: 0.15s;
-    box-shadow: 0 4px 12px rgba(74, 111, 165, 0.25);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     min-height: 100px;
 }
 .main-btn:active {
     transform: scale(0.94);
-    background: #3a5a86;
+    background: #f8fafc;
 }
 .main-icon {
     font-size: 28px;
@@ -112,11 +113,11 @@ header h1 {
 .main-sub {
     font-size: 13px;
     font-weight: 400;
-    opacity: 0.85;
+    color: #6b7280;
     margin-top: 2px;
 }
 
-/* ===== BOTONES ===== */
+/* ===== BOTONES GENERALES ===== */
 .btn-primary, .btn-secondary, .btn-danger {
     padding: 14px;
     border: none;
@@ -138,8 +139,10 @@ header h1 {
 .btn-primary:active {
     background: #3a5a86;
 }
+/* ===== BOTÓN BACKUP (cambio 2: negro) ===== */
 .btn-backup {
     background: #1a2634;
+    color: white;
 }
 .btn-backup:active {
     background: #2c3e50;
