@@ -37,7 +37,7 @@ body {
   display: flex;
 }
 
-/* --- HEADER SUPERIOR (sin borde inferior) --- */
+/* --- HEADER SUPERIOR --- */
 .header {
   background: #f5f7fa;
   padding: 16px 20px 0px;
@@ -73,23 +73,23 @@ body {
   padding: 4px 8px;
 }
 
-/* --- BLOQUE FIJO DEL DETALLE (fondo unificado) --- */
+/* --- BLOQUE FIJO DEL DETALLE --- */
 .detail-sticky {
   position: sticky;
-  top: 0;
+  top: 50px;
   z-index: 15;
   background: #f5f7fa;
   padding: 0;
   margin: 0;
 }
 
-/* --- PORTADA + INFO (sin padding vertical) --- */
+/* --- PORTADA + INFO --- */
 .detail-header {
   display: flex;
   gap: 16px;
   background: #f5f7fa;
   border: none;
-  padding: 4px 20px 0px;
+  padding: 0 20px;
   align-items: center;
   margin: 0;
 }
@@ -137,12 +137,12 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS (sin padding vertical) --- */
+/* --- FILTROS --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 4px 20px 8px;
+  padding: 0 20px;
   margin: 0;
 }
 
