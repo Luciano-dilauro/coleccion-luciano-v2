@@ -186,6 +186,7 @@ header h1 {
 .btn-primary {
     background: #4a6fa5;
     color: white;
+    padding: 16px;
 }
 .btn-primary:active {
     background: #3a5a86;
@@ -194,6 +195,7 @@ header h1 {
 .btn-backup {
     background: #1a2634;
     color: white;
+    padding: 16px;
 }
 .btn-backup:active {
     background: #2c3e50;
@@ -202,6 +204,7 @@ header h1 {
 .btn-secondary {
     background: #e5e7eb;
     color: #1f2937;
+    padding: 16px;
 }
 .btn-secondary:active {
     background: #d1d5db;
@@ -210,6 +213,7 @@ header h1 {
 .btn-danger {
     background: #ef4444;
     color: white;
+    padding: 16px;
 }
 .btn-danger:active {
     background: #dc2626;
@@ -229,7 +233,7 @@ header h1 {
 .btn-soft-red {
     background: #fca5a5;
     color: #1f2937;
-    padding: 14px;
+    padding: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .btn-soft-red:active {
