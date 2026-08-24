@@ -157,44 +157,103 @@ function renderDetail() {
         const div = document.createElement('div');
         div.className = 'sticker';
         if (it.have) div.classList.add('have');
-        if (it.rep > 0) div.classList.add('rep');
-        if (it.rep > 0) div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
+        if (it.rep > 0) {
+            div.classList.add('rep');
+            div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
+        }
         if (it.shiny) div.classList.add('shiny');
         div.textContent = it.label;
-        let timer = null, long = false;
-        const start = () => {
-            long = false;
-            timer = setTimeout(() => { long = true; handleLongPress(it); }, 500);
+
+        // --- EVENTOS TÁCTILES (corregidos para evitar marcas al hacer scroll) ---
+        let startX = 0, startY = 0, isSwiping = false;
+
+        const onTouchStart = (e) => {
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            isSwiping = false;
         };
-        const end = () => {
-            clearTimeout(timer);
-            if (!long) handleTap(it);
+
+        const onTouchMove = (e) => {
+            if (!startX || !startY) return;
+            const touch = e.touches[0];
+            const deltaX = Math.abs(touch.clientX - startX);
+            const deltaY = Math.abs(touch.clientY - startY);
+            if (deltaX > 10 || deltaY > 10) {
+                isSwiping = true;
+            }
         };
-        div.addEventListener('touchstart', start, { passive: true });
-        div.addEventListener('touchend', end, { passive: true });
-        div.addEventListener('touchcancel', () => clearTimeout(timer));
-        div.addEventListener('mousedown', start);
-        div.addEventListener('mouseup', end);
-        div.addEventListener('mouseleave', () => clearTimeout(timer));
+
+        const onTouchEnd = (e) => {
+            if (isSwiping) return;
+            handleTap(it);
+        };
+
+        div.addEventListener('touchstart', onTouchStart, { passive: true });
+        div.addEventListener('touchmove', onTouchMove, { passive: true });
+        div.addEventListener('touchend', onTouchEnd, { passive: true });
+
+        // Mouse events (para escritorio)
+        let mouseDown = false;
+        div.addEventListener('mousedown', () => { mouseDown = true; });
+        div.addEventListener('mouseup', () => {
+            if (mouseDown) {
+                mouseDown = false;
+                handleTap(it);
+            }
+        });
+        div.addEventListener('mouseleave', () => { mouseDown = false; });
+
+        // Long press (para desmarcar)
+        let longPressTimer = null;
+        div.addEventListener('touchstart', () => {
+            longPressTimer = setTimeout(() => {
+                handleLongPress(it);
+            }, 500);
+        }, { passive: true });
+        div.addEventListener('touchend', () => {
+            clearTimeout(longPressTimer);
+        }, { passive: true });
+        div.addEventListener('touchcancel', () => {
+            clearTimeout(longPressTimer);
+        }, { passive: true });
+
         grid.appendChild(div);
     }
 }
 
 function handleTap(it) {
-    if (!it.have) { it.have = true; it.rep = 0; save(); renderDetail(); updateStats(); return; }
+    if (!it.have) {
+        it.have = true;
+        it.rep = 0;
+        save();
+        renderDetail();
+        updateStats();
+        return;
+    }
     it.rep = (it.rep || 0) + 1;
-    save(); renderDetail(); updateStats();
+    save();
+    renderDetail();
+    updateStats();
 }
 
 function handleLongPress(it) {
     if (!it.have) return;
-    if (it.rep > 0) { it.rep--; save(); renderDetail(); updateStats(); return; }
+    if (it.rep > 0) {
+        it.rep--;
+        save();
+        renderDetail();
+        updateStats();
+        return;
+    }
     document.getElementById('confirmMsg').textContent = `¿Quitar "${it.label}"? (no es repetida)`;
     document.getElementById('confirmModal').classList.remove('hidden');
     confirmCallback = () => {
         it.have = false;
         it.rep = 0;
-        save(); renderDetail(); updateStats();
+        save();
+        renderDetail();
+        updateStats();
         document.getElementById('confirmModal').classList.add('hidden');
     };
 }
