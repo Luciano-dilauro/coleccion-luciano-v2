@@ -14,34 +14,35 @@
       <div class="header">
         <h1>Principal</h1>
       </div>
+      <div class="scroll-container">
+        <div class="main-grid">
+          <div class="card-btn" data-view="collections">
+            <span class="card-icon">📚</span>
+            <span class="card-title">Mis colecciones</span>
+            <span class="card-desc">Ver todos tus álbumes</span>
+          </div>
+          <div class="card-btn" data-view="manage">
+            <span class="card-icon">⚙️</span>
+            <span class="card-title">Gestión</span>
+            <span class="card-desc">Crear, editar o eliminar</span>
+          </div>
+        </div>
 
-      <div class="main-grid">
-        <div class="card-btn" data-view="collections">
-          <span class="card-icon">📚</span>
-          <span class="card-title">Mis colecciones</span>
-          <span class="card-desc">Ver todos tus álbumes</span>
-        </div>
-        <div class="card-btn" data-view="manage">
-          <span class="card-icon">⚙️</span>
-          <span class="card-title">Gestión</span>
-          <span class="card-desc">Crear, editar o eliminar</span>
-        </div>
-      </div>
+        <button data-view="backup" class="action-btn">💾 Backup</button>
 
-      <button data-view="backup" class="action-btn">💾 Backup</button>
-
-      <div class="stats-panel">
-        <div class="stats-row">
-          <span class="stat-label">📚 Colecciones</span>
-          <span class="stat-value" id="stat-total">0</span>
-        </div>
-        <div class="stats-row">
-          <span class="stat-label">✅ Completas</span>
-          <span class="stat-value" id="stat-complete">0</span>
-        </div>
-        <div class="stats-row">
-          <span class="stat-label">⏳ Incompletas</span>
-          <span class="stat-value" id="stat-incomplete">0</span>
+        <div class="stats-panel">
+          <div class="stats-row">
+            <span class="stat-label">📚 Colecciones</span>
+            <span class="stat-value" id="stat-total">0</span>
+          </div>
+          <div class="stats-row">
+            <span class="stat-label">✅ Completas</span>
+            <span class="stat-value" id="stat-complete">0</span>
+          </div>
+          <div class="stats-row">
+            <span class="stat-label">⏳ Incompletas</span>
+            <span class="stat-value" id="stat-incomplete">0</span>
+          </div>
         </div>
       </div>
     </div>
@@ -52,8 +53,10 @@
         <button class="back-btn" data-view="main">←</button>
         <h1>Mis colecciones</h1>
       </div>
-      <input type="text" id="search" placeholder="Buscar colección..." />
-      <div id="shelf"></div>
+      <div class="scroll-container">
+        <input type="text" id="search" placeholder="Buscar colección..." />
+        <div id="shelf"></div>
+      </div>
     </div>
 
     <!-- GESTIÓN -->
@@ -62,9 +65,11 @@
         <button class="back-btn" data-view="main">←</button>
         <h1>Gestión</h1>
       </div>
-      <button data-view="create" class="manage-btn">➕ Crear colección</button>
-      <button data-view="edit" class="manage-btn">✏️ Editar colección</button>
-      <button data-view="delete" class="manage-btn danger">🗑️ Eliminar colección</button>
+      <div class="scroll-container">
+        <button data-view="create" class="manage-btn">➕ Crear colección</button>
+        <button data-view="edit" class="manage-btn">✏️ Editar colección</button>
+        <button data-view="delete" class="manage-btn danger">🗑️ Eliminar colección</button>
+      </div>
     </div>
 
     <!-- CREAR COLECCIÓN -->
@@ -73,49 +78,50 @@
         <button class="back-btn" data-view="manage">←</button>
         <h1>Crear colección</h1>
       </div>
-
-      <div class="form-group">
-        <label>Nombre de la colección</label>
-        <input type="text" id="create-name" placeholder="Ej: Mundial 2026" />
-      </div>
-
-      <div class="form-group">
-        <label>Tapa del álbum (opcional)</label>
-        <div class="cover-upload">
-          <button id="create-cover-btn" class="action-btn secondary">📷 Subir imagen</button>
-          <button id="create-cover-clear" class="action-btn secondary" style="display:none">❌ Quitar</button>
-          <input type="file" id="create-cover-input" accept="image/*" style="display:none" />
-          <div id="create-cover-preview"></div>
+      <div class="scroll-container">
+        <div class="form-group">
+          <label>Nombre de la colección</label>
+          <input type="text" id="create-name" placeholder="Ej: Mundial 2026" />
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Numeración general</label>
-        <div class="range-inputs">
-          <div>
-            <label>Desde</label>
-            <input type="number" id="create-from" value="1" />
-          </div>
-          <div>
-            <label>Hasta</label>
-            <input type="number" id="create-to" value="100" />
+        <div class="form-group">
+          <label>Tapa del álbum (opcional)</label>
+          <div class="cover-upload">
+            <button id="create-cover-btn" class="action-btn secondary">📷 Subir imagen</button>
+            <button id="create-cover-clear" class="action-btn secondary" style="display:none">❌ Quitar</button>
+            <input type="file" id="create-cover-input" accept="image/*" style="display:none" />
+            <div id="create-cover-preview"></div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>⭐ Brillantes (opcional)</label>
-        <input type="text" id="create-shiny" placeholder="Ej: 7, 12, 45, 99" />
-        <span class="hint">Números separados por comas</span>
-      </div>
+        <div class="form-group">
+          <label>Numeración general</label>
+          <div class="range-inputs">
+            <div>
+              <label>Desde</label>
+              <input type="number" id="create-from" value="1" />
+            </div>
+            <div>
+              <label>Hasta</label>
+              <input type="number" id="create-to" value="100" />
+            </div>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label>Secciones especiales</label>
-        <div id="create-special-sections"></div>
-        <button id="create-add-special" class="action-btn secondary">➕ Agregar sección especial</button>
-      </div>
+        <div class="form-group">
+          <label>⭐ Brillantes (opcional)</label>
+          <input type="text" id="create-shiny" placeholder="Ej: 7, 12, 45, 99" />
+          <span class="hint">Números separados por comas</span>
+        </div>
 
-      <button id="create-save" class="action-btn">✨ Crear colección</button>
+        <div class="form-group">
+          <label>Secciones especiales</label>
+          <div id="create-special-sections"></div>
+          <button id="create-add-special" class="action-btn secondary">➕ Agregar sección especial</button>
+        </div>
+
+        <button id="create-save" class="action-btn">✨ Crear colección</button>
+      </div>
     </div>
 
     <!-- MODAL PARA AGREGAR SECCIÓN ESPECIAL -->
@@ -158,13 +164,15 @@
         <button class="back-btn" data-view="main">←</button>
         <h1>Backup</h1>
       </div>
-      <button id="export-btn" class="action-btn">⬇️ Exportar</button>
-      <p class="info-line">Última exportación: <span id="last-export">—</span></p>
-      <p class="info-line">Tamaño: <span id="export-size">—</span></p>
-      <button id="import-btn" class="action-btn secondary">📂 Importar</button>
-      <input type="file" id="import-input" accept=".json" style="display:none" />
-      <p class="info-line">Última importación: <span id="last-import">—</span></p>
-      <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
+      <div class="scroll-container">
+        <button id="export-btn" class="action-btn">⬇️ Exportar</button>
+        <p class="info-line">Última exportación: <span id="last-export">—</span></p>
+        <p class="info-line">Tamaño: <span id="export-size">—</span></p>
+        <button id="import-btn" class="action-btn secondary">📂 Importar</button>
+        <input type="file" id="import-input" accept=".json" style="display:none" />
+        <p class="info-line">Última importación: <span id="last-import">—</span></p>
+        <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
+      </div>
     </div>
 
     <!-- DETALLE DE COLECCIÓN -->
