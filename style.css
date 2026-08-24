@@ -36,10 +36,10 @@ body {
   display: flex;
 }
 
-/* --- HEADER SUPERIOR (100% ancho) --- */
+/* --- HEADER SUPERIOR (sin borde inferior) --- */
 .header {
   background: #f5f7fa;
-  padding: 16px 20px 12px;
+  padding: 16px 20px 0px; /* ← sin padding inferior */
   margin: 0;
   display: flex;
   align-items: center;
@@ -47,8 +47,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid #eef2f6;
-  background: #f5f7fa;
+  border-bottom: none; /* ← sin línea de separación */
   width: 100%;
 }
 
@@ -296,23 +295,23 @@ body {
   width: 0%;
 }
 
-/* --- BLOQUE FIJO DEL DETALLE (100% ancho) --- */
+/* --- BLOQUE FIJO DEL DETALLE (sin separación) --- */
 .detail-sticky {
   position: sticky;
-  top: 60px;
+  top: 56px; /* ajustado a la altura real del header */
   z-index: 15;
   background: #f5f7fa;
   padding: 0;
   margin: 0;
 }
 
-/* --- PORTADA + INFO (100% ancho, sin padding vertical) --- */
+/* --- PORTADA + INFO (sin padding vertical) --- */
 .detail-header {
   display: flex;
   gap: 16px;
   background: #f5f7fa;
   border: none;
-  padding: 0 20px; /* ← solo padding lateral */
+  padding: 0 20px;
   align-items: center;
   margin: 0;
 }
@@ -360,12 +359,12 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS (100% ancho, sin padding vertical) --- */
+/* --- FILTROS (sin padding vertical) --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 0 20px; /* ← solo padding lateral */
+  padding: 0 20px;
   margin: 0;
 }
 
