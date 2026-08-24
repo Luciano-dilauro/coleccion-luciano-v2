@@ -306,13 +306,13 @@ body {
   margin: 0;
 }
 
-/* --- PORTADA + INFO (100% ancho, fondo integrado) --- */
+/* --- PORTADA + INFO (100% ancho, sin padding vertical) --- */
 .detail-header {
   display: flex;
   gap: 16px;
-  background: #f5f7fa; /* ← mismo color que el fondo */
-  border: none; /* ← sin borde */
-  padding: 8px 20px 8px; /* ← reducimos el padding para que esté más pegado al header */
+  background: #f5f7fa;
+  border: none;
+  padding: 0 20px; /* ← solo padding lateral */
   align-items: center;
   margin: 0;
 }
@@ -360,12 +360,12 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS (100% ancho) --- */
+/* --- FILTROS (100% ancho, sin padding vertical) --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 4px 20px 12px; /* ← reducimos el padding superior para que esté más pegado */
+  padding: 0 20px; /* ← solo padding lateral */
   margin: 0;
 }
 
