@@ -7,6 +7,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  touch-action: manipulation;
 }
 
 body {
@@ -39,7 +40,7 @@ body {
 /* --- HEADER SUPERIOR (sin borde inferior) --- */
 .header {
   background: #f5f7fa;
-  padding: 16px 20px 0px; /* ← sin padding inferior */
+  padding: 16px 20px 0px;
   margin: 0;
   display: flex;
   align-items: center;
@@ -47,7 +48,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: none; /* ← sin línea de separación */
+  border-bottom: none;
   width: 100%;
 }
 
@@ -298,7 +299,7 @@ body {
 /* --- BLOQUE FIJO DEL DETALLE (sin separación) --- */
 .detail-sticky {
   position: sticky;
-  top: 56px; /* ajustado a la altura real del header */
+  top: 50px; /* ← ajustado al nuevo tamaño del header */
   z-index: 15;
   background: #f5f7fa;
   padding: 0;
