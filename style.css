@@ -337,7 +337,7 @@ header h1 {
 
 .shelf-card .cover {
     height: 120px;
-    background: #e5e7eb;
+    background: #ffffff; /* ← fondo blanco */
     display: flex;
     align-items: center;
     justify-content: center;
