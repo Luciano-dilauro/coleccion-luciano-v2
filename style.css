@@ -40,7 +40,7 @@ body {
 /* --- HEADER SUPERIOR --- */
 .header {
   background: #f5f7fa;
-  padding: 16px 20px 0px;
+  padding: 16px 20px 8px;
   margin: 0;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: none;
+  border-bottom: 1px solid #e5e7eb;
   width: 100%;
 }
 
@@ -56,7 +56,6 @@ body {
   font-size: 24px;
   font-weight: 700;
   color: #1a2634;
-  letter-spacing: -0.5px;
   margin: 0;
 }
 
@@ -73,11 +72,11 @@ body {
   padding: 4px 8px;
 }
 
-/* --- BLOQUE FIJO DEL DETALLE --- */
+/* --- BLOQUE FIJO --- */
 .detail-sticky {
   position: sticky;
-  top: 50px;
-  z-index: 15;
+  top: 57px;
+  z-index: 19;
   background: #f5f7fa;
   padding: 0;
   margin: 0;
@@ -137,12 +136,12 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS (con padding inferior) --- */
+/* --- FILTROS --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 0 20px 10px; /* ← padding inferior de 10px */
+  padding: 0 20px 10px;
   margin: 0;
 }
 
@@ -400,7 +399,7 @@ body {
   gap: 8px;
   position: relative;
   z-index: 1;
-  padding: 0 20px 30px;
+  padding: 12px 20px 30px; /* ← ajuste: 12px de padding superior */
 }
 
 /* --- ESTILO BASE DE FIGURITAS --- */
