@@ -376,7 +376,7 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE ===== */
+/* ===== DETALLE (grid) ===== */
 .detail-header {
     display: flex;
     gap: 15%;
@@ -404,16 +404,13 @@ header h1 {
 }
 .detail-stats-wrapper {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr auto;
     height: 100%;
+    gap: 0;
 }
 .detail-stats {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: space-between;
+    display: contents;
 }
 .detail-stats div {
     display: flex;
@@ -431,8 +428,7 @@ header h1 {
     background: #e5e7eb;
     border-radius: 4px;
     overflow: hidden;
-    flex-shrink: 0;
-    margin-top: 4px;
+    align-self: center;
 }
 .progress-fill {
     height: 100%;
