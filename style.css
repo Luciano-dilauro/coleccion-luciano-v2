@@ -137,12 +137,12 @@ body {
   color: #1a2634;
 }
 
-/* --- FILTROS --- */
+/* --- FILTROS (con padding inferior) --- */
 .filter-bar {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 0 20px;
+  padding: 0 20px 10px; /* ← padding inferior de 10px */
   margin: 0;
 }
 
@@ -400,7 +400,7 @@ body {
   gap: 8px;
   position: relative;
   z-index: 1;
-  padding: 8px 20px 30px;
+  padding: 0 20px 30px;
 }
 
 /* --- ESTILO BASE DE FIGURITAS --- */
