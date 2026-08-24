@@ -17,6 +17,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   padding: 0;
+  overscroll-behavior: none; /* ← desactiva pull-to-refresh y recargo */
 }
 
 #app {
@@ -177,7 +178,6 @@ body {
   position: relative;
   z-index: 1;
   padding: 12px 20px 30px;
-  overscroll-behavior: none; /* ← desactiva el pull-to-refresh */
 }
 
 /* --- RESTO DEL ESTILO (sin cambios) --- */
