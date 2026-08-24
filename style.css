@@ -29,7 +29,7 @@ body {
 .view {
   display: none;
   flex-direction: column;
-  gap: 0; /* ← sin gap entre elementos */
+  gap: 0;
   padding: 0;
 }
 .view.active {
@@ -306,15 +306,13 @@ body {
   margin: 0;
 }
 
-/* --- PORTADA + INFO (100% ancho) --- */
+/* --- PORTADA + INFO (100% ancho, fondo integrado) --- */
 .detail-header {
   display: flex;
   gap: 16px;
-  background: #ffffff;
-  border: 1px solid #eef2f6;
-  border-left: none;
-  border-right: none;
-  padding: 16px 20px;
+  background: #f5f7fa; /* ← mismo color que el fondo */
+  border: none; /* ← sin borde */
+  padding: 8px 20px 8px; /* ← reducimos el padding para que esté más pegado al header */
   align-items: center;
   margin: 0;
 }
@@ -367,7 +365,7 @@ body {
   display: flex;
   gap: 8px;
   background: #f5f7fa;
-  padding: 8px 20px;
+  padding: 4px 20px 12px; /* ← reducimos el padding superior para que esté más pegado */
   margin: 0;
 }
 
