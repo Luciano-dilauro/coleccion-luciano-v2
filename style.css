@@ -313,9 +313,10 @@ header h1 {
     background: #dcfce7;
     border-color: #22c55e;
 }
+/* Repetidas mantienen fondo verde (solo cambia el badge) */
 .sticker.rep {
-    background: #ffedd5;
-    border-color: #f97316;
+    background: #dcfce7;
+    border-color: #22c55e;
 }
 .sticker.rep::after {
     content: attr(data-rep);
@@ -338,7 +339,7 @@ header h1 {
     border-color: #f1c40f !important;
 }
 .sticker.shiny.rep {
-    background: #ffedd5 !important;
+    background: #dcfce7 !important;
     border-color: #f1c40f !important;
 }
 
