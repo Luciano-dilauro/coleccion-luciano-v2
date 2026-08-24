@@ -1,6 +1,3 @@
-// ============================================================
-//  ESTADO
-// ============================================================
 let data = { collections: [] };
 let currentId = null;
 let filter = 'all';
@@ -8,9 +5,6 @@ let confirmCallback = null;
 let specialSections = [];
 let coverDataUrl = null;
 
-// ============================================================
-//  PERSISTENCIA
-// ============================================================
 const LS_KEY = 'coleccion_v2';
 const LAST_KEY = 'ultima_coleccion';
 
@@ -26,14 +20,6 @@ function getCurrent() {
 }
 function uid() { return Date.now() + '-' + Math.random().toString(36).slice(2,6); }
 
-// ============================================================
-//  HELPERS
-// ============================================================
-function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
-
-// ============================================================
-//  ESTADÍSTICAS
-// ============================================================
 function updateStats() {
     const total = data.collections.length;
     let complete = 0, incomplete = 0;
@@ -47,9 +33,6 @@ function updateStats() {
     document.getElementById('statIncomplete').textContent = incomplete;
 }
 
-// ============================================================
-//  NAVEGACIÓN
-// ============================================================
 function showView(name) {
     document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
     const target = document.getElementById('view-' + name);
@@ -92,9 +75,6 @@ function goDetail(id) {
     localStorage.setItem(LAST_KEY, id);
 }
 
-// ============================================================
-//  ESTANTERÍA
-// ============================================================
 function renderShelf() {
     const shelf = document.getElementById('shelf');
     const search = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -125,9 +105,6 @@ function renderShelf() {
     }
 }
 
-// ============================================================
-//  DETALLE
-// ============================================================
 function renderDetail() {
     const col = getCurrent();
     if (!col) return;
@@ -164,36 +141,28 @@ function renderDetail() {
         if (it.shiny) div.classList.add('shiny');
         div.textContent = it.label;
 
-        // --- EVENTOS TÁCTILES (corregidos para evitar marcas al hacer scroll) ---
         let startX = 0, startY = 0, isSwiping = false;
-
         const onTouchStart = (e) => {
             const touch = e.touches[0];
             startX = touch.clientX;
             startY = touch.clientY;
             isSwiping = false;
         };
-
         const onTouchMove = (e) => {
             if (!startX || !startY) return;
             const touch = e.touches[0];
             const deltaX = Math.abs(touch.clientX - startX);
             const deltaY = Math.abs(touch.clientY - startY);
-            if (deltaX > 10 || deltaY > 10) {
-                isSwiping = true;
-            }
+            if (deltaX > 10 || deltaY > 10) isSwiping = true;
         };
-
-        const onTouchEnd = (e) => {
+        const onTouchEnd = () => {
             if (isSwiping) return;
             handleTap(it);
         };
-
         div.addEventListener('touchstart', onTouchStart, { passive: true });
         div.addEventListener('touchmove', onTouchMove, { passive: true });
         div.addEventListener('touchend', onTouchEnd, { passive: true });
 
-        // Mouse events (para escritorio)
         let mouseDown = false;
         div.addEventListener('mousedown', () => { mouseDown = true; });
         div.addEventListener('mouseup', () => {
@@ -204,19 +173,12 @@ function renderDetail() {
         });
         div.addEventListener('mouseleave', () => { mouseDown = false; });
 
-        // Long press (para desmarcar)
         let longPressTimer = null;
         div.addEventListener('touchstart', () => {
-            longPressTimer = setTimeout(() => {
-                handleLongPress(it);
-            }, 500);
+            longPressTimer = setTimeout(() => handleLongPress(it), 500);
         }, { passive: true });
-        div.addEventListener('touchend', () => {
-            clearTimeout(longPressTimer);
-        }, { passive: true });
-        div.addEventListener('touchcancel', () => {
-            clearTimeout(longPressTimer);
-        }, { passive: true });
+        div.addEventListener('touchend', () => clearTimeout(longPressTimer), { passive: true });
+        div.addEventListener('touchcancel', () => clearTimeout(longPressTimer), { passive: true });
 
         grid.appendChild(div);
     }
@@ -258,9 +220,6 @@ function handleLongPress(it) {
     };
 }
 
-// ============================================================
-//  FILTROS
-// ============================================================
 document.querySelectorAll('.tab').forEach(el => {
     el.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
@@ -270,9 +229,6 @@ document.querySelectorAll('.tab').forEach(el => {
     });
 });
 
-// ============================================================
-//  CREAR COLECCIÓN
-// ============================================================
 function renderSpecialSections() {
     const container = document.getElementById('specialList');
     container.innerHTML = '';
@@ -345,7 +301,6 @@ function createCollection() {
     goMain();
     renderShelf();
 
-    // Limpiar formulario
     document.getElementById('createName').value = '';
     document.getElementById('shinyInput').value = '';
     specialSections = [];
@@ -355,9 +310,6 @@ function createCollection() {
     document.getElementById('coverClearBtn').style.display = 'none';
 }
 
-// ============================================================
-//  SECCIÓN ESPECIAL (MODAL)
-// ============================================================
 function openSpecialModal() {
     document.getElementById('specialModal').classList.remove('hidden');
     document.getElementById('specialName').value = '';
@@ -391,9 +343,6 @@ function addSpecialSection() {
     closeSpecialModal();
 }
 
-// ============================================================
-//  BACKUP
-// ============================================================
 function exportBackup() {
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
@@ -405,6 +354,7 @@ function exportBackup() {
     URL.revokeObjectURL(url);
     document.getElementById('lastExport').textContent = new Date().toLocaleString();
     document.getElementById('exportSize').textContent = (blob.size / 1024).toFixed(1) + ' KB';
+    goMain(); // ← redirige a la pantalla principal
 }
 
 function importBackup(file) {
@@ -419,19 +369,16 @@ function importBackup(file) {
             updateStats();
             document.getElementById('lastImport').textContent = new Date().toLocaleString();
             alert('Backup importado correctamente ✅');
+            goMain(); // ← redirige a la pantalla principal
         } catch { alert('Error al leer el archivo.'); }
     };
     reader.readAsText(file);
 }
 
-// ============================================================
-//  INICIALIZACIÓN
-// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
     load();
     updateStats();
 
-    // Navegación
     document.querySelectorAll('[data-view]').forEach(el => {
         el.addEventListener('click', () => {
             const v = el.getAttribute('data-view');
@@ -445,7 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Back button
     document.getElementById('backBtn').addEventListener('click', () => {
         const current = document.querySelector('.view.active');
         if (current) {
@@ -458,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Confirm modal
     document.getElementById('confirmNo').addEventListener('click', () => {
         document.getElementById('confirmModal').classList.add('hidden');
         confirmCallback = null;
@@ -467,10 +412,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirmCallback) confirmCallback();
     });
 
-    // Search
     document.getElementById('searchInput').addEventListener('input', renderShelf);
 
-    // Create: cover
     document.getElementById('coverPickBtn').addEventListener('click', () => {
         document.getElementById('coverInput').click();
     });
@@ -492,7 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('coverClearBtn').style.display = 'none';
     });
 
-    // Create: special sections
     document.getElementById('addSpecialBtn').addEventListener('click', openSpecialModal);
     document.getElementById('specialCancelBtn').addEventListener('click', closeSpecialModal);
     document.getElementById('specialAddBtn').addEventListener('click', addSpecialSection);
@@ -500,10 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === e.currentTarget) closeSpecialModal();
     });
 
-    // Create: save
     document.getElementById('createSaveBtn').addEventListener('click', createCollection);
 
-    // Backup
     document.getElementById('exportBtn').addEventListener('click', exportBackup);
     document.getElementById('importBtn').addEventListener('click', () => {
         document.getElementById('importInput').click();
@@ -513,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
-    // Restaurar última colección vista
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
