@@ -3,27 +3,8 @@ let currentId = null;
 let filter = 'all';
 let confirmCallback = null;
 
-// --- Desactiva el pull-to-refresh solo en la grilla ---
-document.addEventListener('DOMContentLoaded', function() {
-  const grid = document.getElementById('detail-grid');
-  if (grid) {
-    let startY = 0;
-
-    grid.addEventListener('touchstart', function(e) {
-      startY = e.touches[0].pageY;
-    }, { passive: true });
-
-    grid.addEventListener('touchmove', function(e) {
-      const scrollTop = grid.scrollTop;
-      const currentY = e.touches[0].pageY;
-
-      // Solo bloqueamos si estamos en el borde superior y tiramos hacia abajo (pull-to-refresh)
-      if (scrollTop === 0 && currentY > startY) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-  }
-});
+// --- Clave para guardar la colección actual ---
+const LAST_COLLECTION_KEY = 'ultima_coleccion_vista';
 
 function load() {
   try { data = JSON.parse(localStorage.getItem('coleccion_v2')) || { collections: [] }; }
@@ -107,6 +88,9 @@ function openDetail(id) {
   document.getElementById('detail-title').textContent = col.name;
   renderDetail();
   showView('detail');
+
+  // --- Guarda la colección actual en localStorage ---
+  localStorage.setItem(LAST_COLLECTION_KEY, id);
 }
 
 function renderDetail() {
@@ -310,11 +294,28 @@ document.addEventListener('DOMContentLoaded', () => {
   load();
   updateStats();
 
+  // --- Recuperar la última colección vista ---
+  const lastId = localStorage.getItem(LAST_COLLECTION_KEY);
+  if (lastId) {
+    const col = data.collections.find(c => c.id === lastId);
+    if (col) {
+      // Si la colección existe, abrirla directamente
+      openDetail(lastId);
+      return; // Salimos para no mostrar la pantalla principal
+    }
+  }
+
+  // Si no hay colección guardada o no existe, mostrar la pantalla principal
+  showView('main');
+
+  // --- Eventos de navegación ---
   document.querySelectorAll('[data-view]').forEach(el => {
     el.addEventListener('click', () => {
       const v = el.getAttribute('data-view');
-      if (v === 'main') showView('main');
-      else if (v === 'collections') showView('collections');
+      if (v === 'main') {
+        showView('main');
+        localStorage.removeItem(LAST_COLLECTION_KEY); // Limpia el guardado al ir a principal
+      } else if (v === 'collections') showView('collections');
       else if (v === 'manage') showView('manage');
       else if (v === 'backup') showView('backup');
       else if (v === 'create') {
@@ -386,8 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#view-create .back-btn').addEventListener('click', () => {
     showView('manage');
   });
-
-  showView('main');
 });
 
 function exportBackup() {
