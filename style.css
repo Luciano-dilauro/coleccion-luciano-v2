@@ -376,7 +376,7 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE (con portada más baja y info distribuida) ===== */
+/* ===== DETALLE (5 elementos distribuidos uniformemente) ===== */
 .detail-header {
     display: flex;
     gap: 15%;
@@ -406,14 +406,13 @@ header h1 {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     height: 100%;
 }
 .detail-stats {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    flex: 1;
+    gap: 0;
 }
 .detail-stats div {
     display: flex;
@@ -431,7 +430,7 @@ header h1 {
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 0;
 }
 .progress-fill {
     height: 100%;
