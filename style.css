@@ -160,27 +160,7 @@ header h1 {
     margin-top: 2px;
 }
 
-/* ===== BOTÓN ELIMINAR (rojo suave) ===== */
-.btn-soft-red {
-    background: #fca5a5;
-    color: #1f2937;
-    border: none;
-    border-radius: 14px;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    width: 100%;
-    text-align: center;
-}
-.btn-soft-red:active {
-    transform: scale(0.96);
-    background: #f87171;
-}
-
-/* ===== BOTONES GENERALES ===== */
+/* ===== BOTONES ===== */
 .btn-primary, .btn-secondary, .btn-danger {
     padding: 14px;
     border: none;
@@ -222,6 +202,42 @@ header h1 {
 }
 .btn-danger:active {
     background: #dc2626;
+}
+.btn-white {
+    background: #ffffff;
+    color: #1f2937;
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    text-align: center;
+}
+.btn-white:active {
+    transform: scale(0.96);
+    background: #f8fafc;
+}
+.btn-soft-red {
+    background: #fca5a5;
+    color: #1f2937;
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    text-align: center;
+}
+.btn-soft-red:active {
+    transform: scale(0.96);
+    background: #f87171;
 }
 
 /* ===== CAMPOS ===== */
