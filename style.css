@@ -354,7 +354,7 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE (NUEVA VERSIÓN, CON LA DISTRIBUCIÓN QUE QUIERES) ===== */
+/* ===== DETALLE (con tamaño fijo y contain) ===== */
 .detail-header {
     display: flex;
     gap: 15%;
@@ -365,21 +365,23 @@ header h1 {
 }
 
 .detail-cover {
-    width: 35%;
-    aspect-ratio: 4 / 5;
+    width: 110px;
+    height: 140px;
     border-radius: 12px;
     background: #e5e7eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
     overflow: hidden;
     flex-shrink: 0;
 }
 .detail-cover img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+}
+.detail-cover .emoji {
+    font-size: 40px;
 }
 
 .detail-stats-wrapper {
