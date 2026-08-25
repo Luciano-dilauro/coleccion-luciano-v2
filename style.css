@@ -405,9 +405,9 @@ header h1 {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #6b7280;
+    color: #ff0000 !important; /* ROJO para probar */
     align-items: center;
-    font-weight: 700 !important; /* ← negrita forzada */
+    font-weight: 700 !important;
 }
 .detail-stats strong {
     color: #1f2937;
