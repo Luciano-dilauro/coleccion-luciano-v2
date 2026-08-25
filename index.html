@@ -9,40 +9,154 @@
 <body>
 
     <div id="app">
-        <!-- BARRA SUPERIOR (HEADER FIJO CON TODO) -->
+        <!-- BARRA SUPERIOR -->
         <header id="appHeader">
-            <div class="header-top">
-                <button id="backBtn" class="hidden">←</button>
-                <h1 id="headerTitle">Principal</h1>
-            </div>
+            <button id="backBtn" class="hidden">←</button>
+            <h1 id="headerTitle">Principal</h1>
+        </header>
 
-            <!-- BLOQUE DE PORTADA + INFO + BARRA (DENTRO DEL HEADER) -->
-            <div class="detail-header">
-                <div id="detailCover" class="detail-cover">📘</div>
-                <div class="detail-stats-wrapper">
-                    <div class="detail-stats">
-                        <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
-                        <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
-                        <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
-                        <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
+        <!-- CONTENEDOR DE SCROLL -->
+        <main id="scrollContainer">
+
+            <!-- ===== VISTA PRINCIPAL ===== -->
+            <section id="view-main" class="view active">
+                <div class="main-grid">
+                    <button class="main-btn" data-view="collections">
+                        <span class="main-icon">📚</span>
+                        <span class="main-title">Mis colecciones</span>
+                        <span class="main-sub">Ver todos tus álbumes</span>
+                    </button>
+                    <button class="main-btn" data-view="manage">
+                        <span class="main-icon">⚙️</span>
+                        <span class="main-title">Gestión</span>
+                        <span class="main-sub">Crear, editar o eliminar</span>
+                    </button>
+                </div>
+                <button class="btn-primary btn-backup" data-view="backup">💾 Backup</button>
+
+                <div class="stats-box">
+                    <div class="stat-row"><span>📚 Colecciones</span> <span id="statTotal">0</span></div>
+                    <div class="stat-row"><span>✅ Completas</span> <span id="statComplete">0</span></div>
+                    <div class="stat-row"><span>⏳ Incompletas</span> <span id="statIncomplete">0</span></div>
+                </div>
+            </section>
+
+            <!-- ===== MIS COLECCIONES ===== -->
+            <section id="view-collections" class="view">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar colección..." />
+                <div id="shelf" class="shelf-3"></div>
+            </section>
+
+            <!-- ===== GESTIÓN ===== -->
+            <section id="view-manage" class="view">
+                <div class="manage-grid">
+                    <button class="manage-btn" data-view="create">
+                        <span class="manage-icon">✨</span>
+                        <span class="manage-title">Crear colección</span>
+                        <span class="manage-sub">Agregar un nuevo álbum</span>
+                    </button>
+                    <button class="manage-btn" data-view="edit">
+                        <span class="manage-icon">⚙️</span>
+                        <span class="manage-title">Editar colección</span>
+                        <span class="manage-sub">Modificar un álbum existente</span>
+                    </button>
+                </div>
+                <button class="btn-soft-red" data-view="delete">🗑️ Eliminar colección</button>
+            </section>
+
+            <!-- ===== CREAR COLECCIÓN ===== -->
+            <section id="view-create" class="view">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" id="createName" placeholder="Ej: Mundial 2026" />
+                </div>
+                <div class="field">
+                    <label>Portada (opcional)</label>
+                    <div class="cover-row">
+                        <button id="coverPickBtn" class="btn-secondary">📷 Subir imagen</button>
+                        <button id="coverClearBtn" class="btn-secondary" style="display:none">❌ Quitar</button>
+                        <input type="file" id="coverInput" accept="image/*" style="display:none" />
+                        <div id="coverPreview" class="cover-preview">📘</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                </div>
+                <div class="field">
+                    <label>Numeración</label>
+                    <div class="row-2">
+                        <div><label>Desde</label> <input type="number" id="numFrom" value="1" /></div>
+                        <div><label>Hasta</label> <input type="number" id="numTo" value="100" /></div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>⭐ Brillantes (opcional)</label>
+                    <input type="text" id="shinyInput" placeholder="Ej: 7, 12, 45" />
+                    <span class="hint">Números separados por comas</span>
+                </div>
+                <div class="field">
+                    <label>Secciones especiales</label>
+                    <div id="specialList"></div>
+                    <button id="addSpecialBtn" class="btn-secondary">➕ Agregar sección</button>
+                </div>
+                <div class="row-2" style="margin-top:12px;">
+                    <button id="createSaveBtn" class="btn-white">✨ Crear</button>
+                    <button class="btn-soft-red" data-view="manage">Cancelar</button>
+                </div>
+            </section>
+
+            <!-- ===== MODAL SECCIÓN ESPECIAL ===== -->
+            <div id="specialModal" class="modal hidden">
+                <div class="modal-box">
+                    <h3>Agregar sección especial</h3>
+                    <div class="field"><label>Nombre</label> <input type="text" id="specialName" placeholder="Ej: Equipo A" /></div>
+                    <div class="field"><label>Prefijo</label> <input type="text" id="specialPrefix" placeholder="Ej: RIA" /></div>
+                    <div class="row-2" style="gap: 16px;">
+                        <div class="field"><label>Desde</label> <input type="number" id="specialFrom" value="1" style="padding: 12px;" /></div>
+                        <div class="field"><label>Hasta</label> <input type="number" id="specialTo" value="20" style="padding: 12px;" /></div>
+                    </div>
+                    <div class="field"><label>⭐ Brillantes</label> <input type="text" id="specialShiny" placeholder="Ej: 3, 8, 15" /></div>
+                    <div class="row-2" style="margin-top:16px;">
+                        <button id="specialCancelBtn" class="btn-soft-red">Cancelar</button>
+                        <button id="specialAddBtn" class="btn-white">Añadir</button>
                     </div>
                 </div>
             </div>
 
-            <!-- FILTROS (DENTRO DEL HEADER) -->
-            <div class="tabs">
-                <button class="tab active btn-white" data-filter="all">Todas</button>
-                <button class="tab btn-white" data-filter="miss">Faltan</button>
-                <button class="tab btn-white" data-filter="rep">Repetidas</button>
-            </div>
-        </header>
+            <!-- ===== BACKUP ===== -->
+            <section id="view-backup" class="view">
+                <button id="exportBtn" class="btn-white">⬇️ Exportar backup</button>
+                <p class="info">Última exportación: <span id="lastExport">—</span></p>
+                <p class="info">Tamaño: <span id="exportSize">—</span></p>
+                <button id="importBtn" class="btn-white">📂 Importar backup</button>
+                <input type="file" id="importInput" accept=".json" style="display:none" />
+                <p class="info">Última importación: <span id="lastImport">—</span></p>
+                <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
+            </section>
 
-        <!-- CONTENEDOR DE SCROLL (SOLO LA GRILLA) -->
-        <main id="scrollContainer">
-            <div id="detailGrid" class="grid-4"></div>
+            <!-- ===== DETALLE DE COLECCIÓN ===== -->
+            <section id="view-detail" class="view">
+                <div class="detail-header">
+                    <div id="detailCover" class="detail-cover">📘</div>
+                    <div class="detail-stats-wrapper">
+                        <div class="detail-stats">
+                            <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
+                            <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
+                            <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
+                            <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active btn-white" data-filter="all">Todas</button>
+                    <button class="tab btn-white" data-filter="miss">Faltan</button>
+                    <button class="tab btn-white" data-filter="rep">Repetidas</button>
+                </div>
+
+                <div id="detailGrid" class="grid-4"></div>
+            </section>
+
         </main>
 
         <!-- MODAL CONFIRMAR -->
