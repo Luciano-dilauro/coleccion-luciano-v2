@@ -354,7 +354,7 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE (con altura fija para que la info se estire) ===== */
+/* ===== DETALLE ===== */
 .detail-header {
     display: flex;
     gap: 15%;
@@ -386,7 +386,7 @@ header h1 {
 
 .detail-stats-wrapper {
     flex: 1;
-    height: 140px; /* ← forzamos la misma altura que la portada */
+    height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -407,6 +407,7 @@ header h1 {
     font-size: 14px;
     color: #6b7280;
     align-items: center;
+    font-weight: 600; /* ← negrita para los textos */
 }
 .detail-stats strong {
     color: #1f2937;
