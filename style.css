@@ -34,7 +34,7 @@ header {
     flex-shrink: 0;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
 }
 header h1 {
     font-size: 22px;
@@ -60,7 +60,7 @@ header h1 {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 16px 20px 30px;
+    padding: 0 20px 30px;
 }
 
 /* ===== VISTAS ===== */
@@ -355,6 +355,14 @@ header h1 {
 }
 
 /* ===== DETALLE ===== */
+.detail-sticky {
+    position: sticky;
+    top: 60px; /* ← justo debajo del header (altura del header) */
+    z-index: 15;
+    background: #f2f4f8;
+    padding: 0 0 8px 0;
+}
+
 .detail-header {
     display: flex;
     gap: 15%;
@@ -405,7 +413,7 @@ header h1 {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #1f2937 !important; /* ← NEGRO */
+    color: #1f2937 !important;
     align-items: center;
     font-weight: 700 !important;
 }
@@ -430,10 +438,11 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS ===== */
+/* ===== FILTROS (dentro del bloque fijo) ===== */
 .tabs {
     display: flex;
     gap: 8px;
+    padding-top: 8px;
 }
 .tab {
     padding: 10px 0;
@@ -464,10 +473,11 @@ header h1 {
 }
 
 /* ===== GRILLA FIGURITAS ===== */
-.grid-4 {
+#detailGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
+    padding: 12px 0 30px;
 }
 .sticker {
     background: white;
