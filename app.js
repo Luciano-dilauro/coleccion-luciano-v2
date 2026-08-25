@@ -38,15 +38,17 @@ function showView(name) {
     const target = document.getElementById('view-' + name);
     if (target) target.classList.add('active');
 
-    const titles = {
-        main: 'Principal',
-        collections: 'Mis colecciones',
-        manage: 'Gestión',
-        create: 'Crear colección',
-        backup: 'Backup',
-        detail: 'Colección' // ← título genérico
-    };
-    document.getElementById('headerTitle').textContent = titles[name] || 'Colección';
+    // Solo actualizamos el título si NO es 'detail'
+    if (name !== 'detail') {
+        const titles = {
+            main: 'Principal',
+            collections: 'Mis colecciones',
+            manage: 'Gestión',
+            create: 'Crear colección',
+            backup: 'Backup',
+        };
+        document.getElementById('headerTitle').textContent = titles[name] || 'Colección';
+    }
 
     const backBtn = document.getElementById('backBtn');
     if (name === 'main') {
@@ -69,7 +71,7 @@ function goDetail(id) {
     currentId = id;
     const col = getCurrent();
     if (!col) return;
-    // ← Aquí está la clave: actualiza el título con el nombre de la colección
+    // Forzamos el título con el nombre de la colección
     document.getElementById('headerTitle').textContent = col.name;
     renderDetail();
     showView('detail');
