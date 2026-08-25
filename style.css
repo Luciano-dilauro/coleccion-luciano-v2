@@ -357,7 +357,7 @@ header h1 {
 /* ===== DETALLE ===== */
 .detail-sticky {
     position: sticky;
-    top: 60px; /* ← justo debajo del header (altura del header) */
+    top: 60px;
     z-index: 15;
     background: #f2f4f8;
     padding: 0 0 8px 0;
