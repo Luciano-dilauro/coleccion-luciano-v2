@@ -24,7 +24,7 @@ html, body {
     flex-direction: column;
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER FIJO ===== */
 header {
     background: #f2f4f8;
     padding: 16px 20px;
@@ -55,7 +55,7 @@ header h1 {
     visibility: hidden;
 }
 
-/* ===== SCROLL CONTAINER ===== */
+/* ===== CONTENEDOR DE SCROLL ===== */
 #scrollContainer {
     flex: 1;
     overflow-y: auto;
@@ -71,21 +71,6 @@ header h1 {
 }
 .view.active {
     display: flex;
-}
-
-/* ===== BÚSQUEDA ===== */
-#searchInput {
-    width: 100%;
-    padding: 16px 18px;
-    border-radius: 40px;
-    border: 1px solid #d1d5db;
-    font-size: 16px;
-    background: white;
-    box-sizing: border-box;
-    outline: none;
-}
-#searchInput:focus {
-    border-color: #4a6fa5;
 }
 
 /* ===== PANTALLA PRINCIPAL ===== */
@@ -296,6 +281,21 @@ header h1 {
     object-fit: cover;
 }
 
+/* ===== BÚSQUEDA ===== */
+#searchInput {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 40px;
+    border: 1px solid #d1d5db;
+    font-size: 16px;
+    background: white;
+    box-sizing: border-box;
+    outline: none;
+}
+#searchInput:focus {
+    border-color: #4a6fa5;
+}
+
 /* ===== ESTANTERÍA ===== */
 .shelf-3 {
     display: grid;
@@ -354,8 +354,8 @@ header h1 {
     width: 0%;
 }
 
-/* ===== DETALLE ===== */
-.detail-sticky {
+/* ===== BLOQUE FIJO (PORTADA + INFO + FILTROS) ===== */
+#detailSticky {
     position: sticky;
     top: 60px;
     z-index: 15;
