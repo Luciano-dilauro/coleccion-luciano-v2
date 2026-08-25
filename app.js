@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (current) {
             const id = current.id;
             if (id === 'view-detail') {
-                showView('collections'); // ← VOLVER A MIS COLECCIONES
+                showView('collections');
             } else {
                 goMain();
             }
