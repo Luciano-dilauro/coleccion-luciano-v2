@@ -44,7 +44,7 @@ function showView(name) {
         manage: 'Gestión',
         create: 'Crear colección',
         backup: 'Backup',
-        detail: 'Colección'
+        detail: 'Colección' // ← título genérico
     };
     document.getElementById('headerTitle').textContent = titles[name] || 'Colección';
 
@@ -69,6 +69,7 @@ function goDetail(id) {
     currentId = id;
     const col = getCurrent();
     if (!col) return;
+    // ← Aquí está la clave: actualiza el título con el nombre de la colección
     document.getElementById('headerTitle').textContent = col.name;
     renderDetail();
     showView('detail');
@@ -117,8 +118,6 @@ function renderDetail() {
     document.getElementById('dHave').textContent = have;
     document.getElementById('dMissing').textContent = total - have;
     document.getElementById('dPct').textContent = pct + '%';
-
-    // Actualizar barra de progreso
     document.getElementById('progressFill').style.width = pct + '%';
 
     const coverEl = document.getElementById('detailCover');
@@ -154,7 +153,6 @@ function renderDetail() {
             startY = touch.clientY;
             isSwiping = false;
             longPressFired = false;
-
             longPressTimer = setTimeout(() => {
                 longPressFired = true;
                 handleLongPress(it);
