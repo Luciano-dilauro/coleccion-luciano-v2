@@ -1,605 +1,177 @@
-/* ===== RESET Y BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    user-select: none;
-    -webkit-user-select: none;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mi Colección</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-html, body {
-    height: 100%;
-    overflow: hidden;
-    background: #f2f4f8;
-}
+    <div id="app">
+        <!-- BARRA SUPERIOR -->
+        <header id="appHeader">
+            <button id="backBtn" class="hidden">←</button>
+            <h1 id="headerTitle">Principal</h1>
+        </header>
 
-#app {
-    max-width: 480px;
-    width: 100%;
-    height: 100vh;
-    margin: 0 auto;
-    background: #f2f4f8;
-    display: flex;
-    flex-direction: column;
-}
+        <!-- CONTENEDOR DE SCROLL -->
+        <main id="scrollContainer">
 
-/* ===== HEADER ===== */
-header {
-    background: #f2f4f8;
-    padding: 16px 20px;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    flex: 1;
-    text-align: center;
-    color: #1f2937;
-}
-#backBtn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0 8px;
-    color: #1a2634;
-}
-#backBtn.hidden {
-    visibility: hidden;
-}
+            <!-- ===== VISTA PRINCIPAL ===== -->
+            <section id="view-main" class="view active">
+                <div class="main-grid">
+                    <button class="main-btn" data-view="collections">
+                        <span class="main-icon">📚</span>
+                        <span class="main-title">Mis colecciones</span>
+                        <span class="main-sub">Ver todos tus álbumes</span>
+                    </button>
+                    <button class="main-btn" data-view="manage">
+                        <span class="main-icon">⚙️</span>
+                        <span class="main-title">Gestión</span>
+                        <span class="main-sub">Crear, editar o eliminar</span>
+                    </button>
+                </div>
+                <button class="btn-primary btn-backup" data-view="backup">💾 Backup</button>
 
-/* ===== SCROLL CONTAINER ===== */
-#scrollContainer {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 16px 20px 30px;
-}
+                <div class="stats-box">
+                    <div class="stat-row"><span>📚 Colecciones</span> <span id="statTotal">0</span></div>
+                    <div class="stat-row"><span>✅ Completas</span> <span id="statComplete">0</span></div>
+                    <div class="stat-row"><span>⏳ Incompletas</span> <span id="statIncomplete">0</span></div>
+                </div>
+            </section>
 
-/* ===== VISTAS ===== */
-.view {
-    display: none;
-    flex-direction: column;
-    gap: 14px;
-}
-.view.active {
-    display: flex;
-}
+            <!-- ===== MIS COLECCIONES ===== -->
+            <section id="view-collections" class="view">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar colección..." />
+                <div id="shelf" class="shelf-3"></div>
+            </section>
 
-/* ===== PANTALLA PRINCIPAL ===== */
-.main-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-.main-btn {
-    background: #ffffff;
-    color: #1f2937;
-    border: none;
-    border-radius: 16px;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    min-height: 100px;
-    width: 100%;
-}
-.main-btn:active {
-    transform: scale(0.94);
-    background: #f8fafc;
-}
-.main-icon {
-    font-size: 28px;
-    margin-bottom: 6px;
-}
-.main-title {
-    font-size: 17px;
-    font-weight: 600;
-}
-.main-sub {
-    font-size: 13px;
-    font-weight: 400;
-    color: #6b7280;
-    margin-top: 2px;
-}
+            <!-- ===== GESTIÓN ===== -->
+            <section id="view-manage" class="view">
+                <div class="manage-grid">
+                    <button class="manage-btn" data-view="create">
+                        <span class="manage-icon">✨</span>
+                        <span class="manage-title">Crear colección</span>
+                        <span class="manage-sub">Agregar un nuevo álbum</span>
+                    </button>
+                    <button class="manage-btn" data-view="edit">
+                        <span class="manage-icon">⚙️</span>
+                        <span class="manage-title">Editar colección</span>
+                        <span class="manage-sub">Modificar un álbum existente</span>
+                    </button>
+                </div>
+                <button class="btn-soft-red" data-view="delete">🗑️ Eliminar colección</button>
+            </section>
 
-/* ===== PANTALLA DE GESTIÓN ===== */
-.manage-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-.manage-btn {
-    background: #ffffff;
-    color: #1f2937;
-    border: none;
-    border-radius: 16px;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    min-height: 100px;
-    width: 100%;
-}
-.manage-btn:active {
-    transform: scale(0.94);
-    background: #f8fafc;
-}
-.manage-icon {
-    font-size: 28px;
-    margin-bottom: 6px;
-}
-.manage-title {
-    font-size: 17px;
-    font-weight: 600;
-}
-.manage-sub {
-    font-size: 13px;
-    font-weight: 400;
-    color: #6b7280;
-    margin-top: 2px;
-}
+            <!-- ===== CREAR COLECCIÓN ===== -->
+            <section id="view-create" class="view">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" id="createName" placeholder="Ej: Mundial 2026" />
+                </div>
+                <div class="field">
+                    <label>Portada (opcional)</label>
+                    <div class="cover-row">
+                        <button id="coverPickBtn" class="btn-secondary">📷 Subir imagen</button>
+                        <button id="coverClearBtn" class="btn-secondary" style="display:none">❌ Quitar</button>
+                        <input type="file" id="coverInput" accept="image/*" style="display:none" />
+                        <div id="coverPreview" class="cover-preview">📘</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Numeración</label>
+                    <div class="row-2">
+                        <div><label>Desde</label> <input type="number" id="numFrom" value="1" /></div>
+                        <div><label>Hasta</label> <input type="number" id="numTo" value="100" /></div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>⭐ Brillantes (opcional)</label>
+                    <input type="text" id="shinyInput" placeholder="Ej: 7, 12, 45" />
+                    <span class="hint">Números separados por comas</span>
+                </div>
+                <div class="field">
+                    <label>Secciones especiales</label>
+                    <div id="specialList"></div>
+                    <button id="addSpecialBtn" class="btn-secondary">➕ Agregar sección</button>
+                </div>
+                <div class="row-2" style="margin-top:12px;">
+                    <button id="createSaveBtn" class="btn-white">✨ Crear</button>
+                    <button class="btn-soft-red" data-view="manage">Cancelar</button>
+                </div>
+            </section>
 
-/* ===== BOTONES ===== */
-.btn-primary, .btn-secondary, .btn-danger, .btn-white, .btn-soft-red {
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    text-align: center;
-    width: 100%;
-}
-.btn-primary:active, .btn-secondary:active, .btn-danger:active, .btn-white:active, .btn-soft-red:active {
-    transform: scale(0.96);
-}
-.btn-primary {
-    background: #4a6fa5;
-    color: white;
-    padding: 16px;
-}
-.btn-primary:active {
-    background: #3a5a86;
-}
-.btn-backup {
-    background: #1a2634;
-    color: white;
-    padding: 16px;
-}
-.btn-backup:active {
-    background: #2c3e50;
-}
-.btn-secondary {
-    background: #e5e7eb;
-    color: #1f2937;
-    padding: 16px;
-}
-.btn-secondary:active {
-    background: #d1d5db;
-}
-.btn-danger {
-    background: #ef4444;
-    color: white;
-    padding: 16px;
-}
-.btn-danger:active {
-    background: #dc2626;
-}
-.btn-white {
-    background: #ffffff;
-    color: #1f2937;
-    padding: 18px 16px;
-    font-size: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.btn-white:active {
-    background: #f8fafc;
-}
-.btn-soft-red {
-    background: #fca5a5;
-    color: #1f2937;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.btn-soft-red:active {
-    background: #f87171;
-}
+            <!-- ===== MODAL SECCIÓN ESPECIAL ===== -->
+            <div id="specialModal" class="modal hidden">
+                <div class="modal-box">
+                    <h3>Agregar sección especial</h3>
+                    <div class="field"><label>Nombre</label> <input type="text" id="specialName" placeholder="Ej: Equipo A" /></div>
+                    <div class="field"><label>Prefijo</label> <input type="text" id="specialPrefix" placeholder="Ej: RIA" /></div>
+                    <div class="row-2" style="gap: 16px;">
+                        <div class="field"><label>Desde</label> <input type="number" id="specialFrom" value="1" style="padding: 12px;" /></div>
+                        <div class="field"><label>Hasta</label> <input type="number" id="specialTo" value="20" style="padding: 12px;" /></div>
+                    </div>
+                    <div class="field"><label>⭐ Brillantes</label> <input type="text" id="specialShiny" placeholder="Ej: 3, 8, 15" /></div>
+                    <div class="row-2" style="margin-top:16px;">
+                        <button id="specialCancelBtn" class="btn-soft-red">Cancelar</button>
+                        <button id="specialAddBtn" class="btn-white">Añadir</button>
+                    </div>
+                </div>
+            </div>
 
-/* ===== CAMPOS ===== */
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.field label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-}
-.field input, .field select {
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    font-size: 16px;
-    background: white;
-    width: 100%;
-}
-.field input:focus {
-    outline: 2px solid #4a6fa5;
-    border-color: transparent;
-}
-.hint {
-    font-size: 12px;
-    color: #6b7280;
-}
-.row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
+            <!-- ===== BACKUP ===== -->
+            <section id="view-backup" class="view">
+                <button id="exportBtn" class="btn-white">⬇️ Exportar backup</button>
+                <p class="info">Última exportación: <span id="lastExport">—</span></p>
+                <p class="info">Tamaño: <span id="exportSize">—</span></p>
+                <button id="importBtn" class="btn-white">📂 Importar backup</button>
+                <input type="file" id="importInput" accept=".json" style="display:none" />
+                <p class="info">Última importación: <span id="lastImport">—</span></p>
+                <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
+            </section>
 
-/* ===== PORTADA (subir imagen) ===== */
-.cover-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.cover-preview {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    background: #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    overflow: hidden;
-    border: 1px solid #d1d5db;
-}
-.cover-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+            <!-- ===== DETALLE DE COLECCIÓN ===== -->
+            <section id="view-detail" class="view">
+                <div class="detail-header">
+                    <div id="detailCover" class="detail-cover">📘</div>
+                    <div class="detail-stats-wrapper">
+                        <div class="detail-stats">
+                            <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
+                            <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
+                            <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
+                            <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                        </div>
+                    </div>
+                </div>
 
-/* ===== BÚSQUEDA ===== */
-#searchInput {
-    width: 100%;
-    padding: 16px 18px;
-    border-radius: 40px;
-    border: 1px solid #d1d5db;
-    font-size: 16px;
-    background: white;
-    box-sizing: border-box;
-    outline: none;
-}
-#searchInput:focus {
-    border-color: #4a6fa5;
-}
+                <div class="tabs">
+                    <button class="tab active btn-white" data-filter="all">Todas</button>
+                    <button class="tab btn-white" data-filter="miss">Faltan</button>
+                    <button class="tab btn-white" data-filter="rep">Repetidas</button>
+                </div>
 
-/* ===== ESTANTERÍA ===== */
-.shelf-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-}
-.shelf-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    cursor: pointer;
-    transition: 0.15s;
-}
-.shelf-card:active {
-    transform: scale(0.95);
-}
-.shelf-card .cover {
-    height: 120px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 4px;
-}
-.shelf-card .cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.shelf-card .cover .emoji {
-    font-size: 40px;
-}
-.shelf-card .info {
-    padding: 8px 6px 10px;
-    text-align: center;
-}
-.shelf-card .name {
-    font-weight: 600;
-    font-size: 13px;
-    color: #1f2937;
-}
-.shelf-card .bar {
-    height: 4px;
-    background: #e5e7eb;
-    border-radius: 4px;
-    margin-top: 6px;
-    overflow: hidden;
-}
-.shelf-card .bar .fill {
-    height: 4px;
-    background: #22c55e;
-    border-radius: 4px;
-    width: 0%;
-}
+                <div id="detailGrid" class="grid-4"></div>
+            </section>
 
-/* ===== DETALLE ===== */
-.detail-header {
-    display: flex;
-    gap: 15%;
-    background: #f2f4f8;
-    padding: 14px 0;
-    border: none;
-    align-items: stretch;
-}
-.detail-cover {
-    width: 110px;
-    height: 140px;
-    border-radius: 12px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.detail-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.detail-cover .emoji {
-    font-size: 40px;
-}
-.detail-stats-wrapper {
-    flex: 1;
-    height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 0;
-}
-.detail-stats {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: space-between;
-    gap: 0;
-}
-.detail-stats div {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #1f2937 !important;
-    align-items: center;
-    font-weight: 700 !important;
-}
-.detail-stats strong {
-    color: #1f2937;
-}
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: #e5e7eb;
-    border-radius: 4px;
-    overflow: hidden;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-.progress-fill {
-    height: 100%;
-    background: #22c55e;
-    border-radius: 4px;
-    width: 0%;
-    transition: width 0.2s ease;
-}
+        </main>
 
-/* ===== FILTROS ===== */
-.tabs {
-    display: flex;
-    gap: 8px;
-}
-.tab {
-    padding: 10px 0;
-    border: none;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    flex: 1;
-    text-align: center;
-}
-.tab.active {
-    background: #4a6fa5;
-    color: white;
-}
-.tab:active {
-    transform: scale(0.94);
-}
-.tab.btn-white {
-    background: #ffffff;
-    color: #1f2937;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.tab.btn-white.active {
-    background: #4a6fa5;
-    color: white;
-}
+        <!-- MODAL CONFIRMAR -->
+        <div id="confirmModal" class="modal hidden">
+            <div class="modal-box">
+                <p id="confirmMsg">¿Estás seguro?</p>
+                <div class="row-2">
+                    <button id="confirmNo" class="btn-secondary">No</button>
+                    <button id="confirmYes" class="btn-primary">Sí</button>
+                </div>
+            </div>
+        </div>
 
-/* ===== GRILLA FIGURITAS ===== */
-.grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-}
-.sticker {
-    background: white;
-    border-radius: 12px;
-    padding: 10px 0;
-    text-align: center;
-    border: 2px solid #d1d5db;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.08s;
-    position: relative;
-}
-.sticker:active {
-    transform: scale(0.92);
-}
-.sticker.have {
-    background: #dcfce7;
-    border-color: #22c55e;
-}
-.sticker.rep {
-    background: #dcfce7;
-    border-color: #22c55e;
-}
-.sticker.rep::after {
-    content: attr(data-rep);
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: #f97316;
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    border-radius: 30px;
-    padding: 1px 6px;
-}
-.sticker.shiny {
-    border-color: #f1c40f !important;
-    background: #fef9e7 !important;
-}
-.sticker.shiny.have {
-    background: #dcfce7 !important;
-    border-color: #f1c40f !important;
-}
-.sticker.shiny.rep {
-    background: #dcfce7 !important;
-    border-color: #f1c40f !important;
-}
+    </div>
 
-/* ===== SECCIONES ESPECIALES ===== */
-.special-item {
-    background: #f8fafc;
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-}
-.special-item .remove {
-    background: none;
-    border: none;
-    color: #ef4444;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0 4px;
-}
-
-/* ===== MODAL ===== */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    backdrop-filter: blur(4px);
-}
-.modal:not(.hidden) {
-    display: flex;
-}
-.modal-box {
-    background: white;
-    border-radius: 24px;
-    padding: 24px;
-    max-width: 360px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-}
-.modal-box h3 {
-    margin-bottom: 16px;
-    text-align: center;
-}
-.modal-box .field input {
-    padding: 12px 14px;
-}
-.modal-box .row-2 {
-    gap: 16px;
-}
-
-/* ===== STATS ===== */
-.stats-box {
-    background: white;
-    border-radius: 14px;
-    padding: 14px 16px;
-    border: 1px solid #e5e7eb;
-}
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    font-size: 15px;
-}
-.stat-row:not(:last-child) {
-    border-bottom: 1px solid #f3f4f6;
-}
-
-/* ===== INFO ===== */
-.info {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 2px 0;
-}
-.warning {
-    font-size: 13px;
-    color: #92400e;
-    background: #fef3c7;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #fde68a;
-}
-
-/* ===== INPUT FILE ===== */
-#coverInput, #importInput {
-    display: none;
-}
+    <script src="app.js"></script>
+</body>
+</html>
