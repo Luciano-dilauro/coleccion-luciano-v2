@@ -407,7 +407,7 @@ header h1 {
     font-size: 14px;
     color: #6b7280;
     align-items: center;
-    font-weight: 600; /* ← negrita para los textos */
+    font-weight: 700 !important; /* ← negrita forzada */
 }
 .detail-stats strong {
     color: #1f2937;
