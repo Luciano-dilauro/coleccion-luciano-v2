@@ -9,7 +9,7 @@
 <body>
 
     <div id="app">
-        <!-- BARRA SUPERIOR -->
+        <!-- BARRA SUPERIOR (HEADER FIJO) -->
         <header id="appHeader">
             <button id="backBtn" class="hidden">←</button>
             <h1 id="headerTitle">Principal</h1>
@@ -131,8 +131,9 @@
                 <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
             </section>
 
-            <!-- ===== DETALLE DE COLECCIÓN ===== -->
-            <section id="view-detail" class="view">
+            <!-- ===== DETALLE DE COLECCIÓN (con bloque fijo) ===== -->
+            <!-- BLOQUE FIJO: PORTADA + INFO + BARRA + FILTROS -->
+            <div id="detailSticky">
                 <div class="detail-header">
                     <div id="detailCover" class="detail-cover">📘</div>
                     <div class="detail-stats-wrapper">
@@ -153,9 +154,10 @@
                     <button class="tab btn-white" data-filter="miss">Faltan</button>
                     <button class="tab btn-white" data-filter="rep">Repetidas</button>
                 </div>
+            </div>
 
-                <div id="detailGrid" class="grid-4"></div>
-            </section>
+            <!-- GRILLA DE FIGURITAS (scroll) -->
+            <div id="detailGrid" class="grid-4"></div>
 
         </main>
 
