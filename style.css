@@ -288,22 +288,24 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS Y BOTONES DE ACCIÓN (misma forma) ===== */
+/* ===== FILTROS Y BOTONES DE ACCIÓN (TODOS IGUALES) ===== */
 .tabs {
     display: flex;
     gap: 8px;
     padding: 0 8px;
 }
-.tab {
+.tabs .tab {
     flex: 1;
-    padding: 14px 0;
-    border: none;
-    border-radius: 14px !important; /* ← mismo radio que los filtros */
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    text-align: center;
+    padding: 14px 0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 14px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: 0.15s !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    min-height: 44px !important;
 }
 .tab.active {
     background: #4a6fa5;
@@ -327,21 +329,23 @@ header h1 {
     gap: 8px;
     padding: 8px 8px 4px 8px;
 }
-.action-btn {
+.detail-actions .action-btn {
     flex: 1;
-    padding: 14px 0;
-    border: none;
-    border-radius: 14px !important; /* ← mismo radio que los filtros */
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s;
-    text-align: center;
+    padding: 14px 0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 14px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: 0.15s !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    min-height: 44px !important;
     background: #4a6fa5;
     color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.action-btn:active {
+.detail-actions .action-btn:active {
     transform: scale(0.94);
     background: #3a5a86;
 }
