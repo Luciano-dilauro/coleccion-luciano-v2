@@ -288,14 +288,14 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS (más bajos) ===== */
+/* ===== FILTROS (mismo alto que los botones) ===== */
 .tabs {
     display: flex;
     gap: 8px;
     padding-top: 6px;
 }
 .tab {
-    padding: 6px 0;
+    padding: 8px 0;
     border: none;
     border-radius: 30px;
     font-size: 14px;
@@ -322,7 +322,7 @@ header h1 {
     color: white;
 }
 
-/* ===== BOTONES DE ACCIÓN (Exportar, Completar, Reiniciar) ===== */
+/* ===== BOTONES DE ACCIÓN (todos azules) ===== */
 .detail-actions {
     display: flex;
     gap: 8px;
@@ -339,34 +339,13 @@ header h1 {
     cursor: pointer;
     transition: 0.15s;
     text-align: center;
-    background: #ffffff;
-    color: #1f2937;
+    background: #4a6fa5;
+    color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .action-btn:active {
     transform: scale(0.94);
-    background: #f8fafc;
-}
-.action-btn#exportBtn {
-    background: #4a6fa5;
-    color: white;
-}
-.action-btn#exportBtn:active {
     background: #3a5a86;
-}
-.action-btn#completeBtn {
-    background: #22c55e;
-    color: white;
-}
-.action-btn#completeBtn:active {
-    background: #16a34a;
-}
-.action-btn#resetBtn {
-    background: #f97316;
-    color: white;
-}
-.action-btn#resetBtn:active {
-    background: #ea580c;
 }
 
 /* ===== GRILLA FIGURITAS ===== */
