@@ -288,7 +288,7 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS (mismo padding que los botones de acción) ===== */
+/* ===== FILTROS Y BOTONES DE ACCIÓN (misma forma) ===== */
 .tabs {
     display: flex;
     gap: 8px;
@@ -296,9 +296,9 @@ header h1 {
 }
 .tab {
     flex: 1;
-    padding: 14px 0 !important;
+    padding: 14px 0;
     border: none;
-    border-radius: 30px;
+    border-radius: 14px !important; /* ← mismo radio que los filtros */
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -322,7 +322,6 @@ header h1 {
     color: white;
 }
 
-/* ===== BOTONES DE ACCIÓN (mismo padding que los filtros) ===== */
 .detail-actions {
     display: flex;
     gap: 8px;
@@ -330,9 +329,9 @@ header h1 {
 }
 .action-btn {
     flex: 1;
-    padding: 14px 0 !important;
+    padding: 14px 0;
     border: none;
-    border-radius: 30px;
+    border-radius: 14px !important; /* ← mismo radio que los filtros */
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
