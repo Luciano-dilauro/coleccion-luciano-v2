@@ -288,14 +288,9 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS (mismo alto que los botones) ===== */
-.tabs {
-    display: flex;
-    gap: 8px;
-    padding-top: 6px;
-}
-.tab {
-    padding: 8px 0;
+/* ===== FILTROS (padding forzado a 8px) ===== */
+#detailSticky .tabs .tab {
+    padding: 8px 0 !important;
     border: none;
     border-radius: 30px;
     font-size: 14px;
