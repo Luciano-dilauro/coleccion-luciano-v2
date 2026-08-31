@@ -131,33 +131,35 @@
                 <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
             </section>
 
-            <!-- ===== DETALLE DE COLECCIÓN (con bloque fijo) ===== -->
-            <!-- BLOQUE FIJO: PORTADA + INFO + BARRA + FILTROS -->
-            <div id="detailSticky">
-                <div class="detail-header">
-                    <div id="detailCover" class="detail-cover">📘</div>
-                    <div class="detail-stats-wrapper">
-                        <div class="detail-stats">
-                            <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
-                            <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
-                            <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
-                            <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
+            <!-- ===== DETALLE DE COLECCIÓN ===== -->
+            <section id="view-detail" class="view">
+                <!-- BLOQUE FIJO: PORTADA + INFO + BARRA + FILTROS (dentro de la vista detail) -->
+                <div id="detailSticky">
+                    <div class="detail-header">
+                        <div id="detailCover" class="detail-cover">📘</div>
+                        <div class="detail-stats-wrapper">
+                            <div class="detail-stats">
+                                <div><span>📊 Total</span> <strong id="dTotal">0</strong></div>
+                                <div><span>✅ Tengo</span> <strong id="dHave">0</strong></div>
+                                <div><span>❌ Faltan</span> <strong id="dMissing">0</strong></div>
+                                <div><span>📈 Progreso</span> <strong id="dPct">0%</strong></div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                            </div>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill" style="width:0%;"></div>
-                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab active btn-white" data-filter="all">Todas</button>
+                        <button class="tab btn-white" data-filter="miss">Faltan</button>
+                        <button class="tab btn-white" data-filter="rep">Repetidas</button>
                     </div>
                 </div>
 
-                <div class="tabs">
-                    <button class="tab active btn-white" data-filter="all">Todas</button>
-                    <button class="tab btn-white" data-filter="miss">Faltan</button>
-                    <button class="tab btn-white" data-filter="rep">Repetidas</button>
-                </div>
-            </div>
-
-            <!-- GRILLA DE FIGURITAS (scroll) -->
-            <div id="detailGrid" class="grid-4"></div>
+                <!-- GRILLA DE FIGURITAS (scroll) -->
+                <div id="detailGrid" class="grid-4"></div>
+            </section>
 
         </main>
 
