@@ -204,10 +204,10 @@ header h1 {
     width: 0%;
 }
 
-/* ===== BLOQUE FIJO (PORTADA + INFO + FILTROS) ===== */
+/* ===== BLOQUE FIJO (PORTADA + INFO + FILTROS) - PEGADO AL HEADER ===== */
 #detailSticky {
     position: sticky;
-    top: 60px;
+    top: 0; /* ← Ahora pegado al header */
     z-index: 15;
     background: #f2f4f8;
     padding: 0 0 8px 0;
