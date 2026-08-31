@@ -288,16 +288,21 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS (padding forzado a 8px) ===== */
-#detailSticky .tabs .tab {
-    padding: 8px 0 !important;
+/* ===== FILTROS (ancho completo con padding lateral) ===== */
+.tabs {
+    display: flex;
+    gap: 8px;
+    padding: 0 8px;
+}
+.tab {
+    flex: 1;
+    padding: 8px 0;
     border: none;
     border-radius: 30px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.15s;
-    flex: 1;
     text-align: center;
 }
 .tab.active {
@@ -317,12 +322,11 @@ header h1 {
     color: white;
 }
 
-/* ===== BOTONES DE ACCIÓN (todos azules) ===== */
+/* ===== BOTONES DE ACCIÓN (ancho completo con padding lateral) ===== */
 .detail-actions {
     display: flex;
     gap: 8px;
-    padding-top: 8px;
-    padding-bottom: 4px;
+    padding: 8px 8px 4px 8px;
 }
 .action-btn {
     flex: 1;
