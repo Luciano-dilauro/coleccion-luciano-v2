@@ -288,13 +288,13 @@ header h1 {
     transition: width 0.2s ease;
 }
 
-/* ===== FILTROS Y BOTONES DE ACCIÓN (TODOS IGUALES) ===== */
+/* ===== FILTROS Y BOTONES DE ACCIÓN (todos iguales) ===== */
 .tabs {
     display: flex;
     gap: 8px;
     padding: 0 8px;
 }
-.tabs .tab {
+.tab {
     flex: 1;
     padding: 14px 0 !important;
     font-size: 14px !important;
@@ -329,7 +329,7 @@ header h1 {
     gap: 8px;
     padding: 8px 8px 4px 8px;
 }
-.detail-actions .action-btn {
+.action-btn {
     flex: 1;
     padding: 14px 0 !important;
     font-size: 14px !important;
@@ -345,9 +345,40 @@ header h1 {
     color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.detail-actions .action-btn:active {
+.action-btn:active {
     transform: scale(0.94);
     background: #3a5a86;
+}
+
+/* ===== MODAL EXPORTAR ===== */
+#exportModal .modal-box {
+    max-width: 320px;
+}
+#exportModal .modal-sub {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 4px 0 16px 0;
+    text-align: center;
+}
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.export-option {
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    text-align: center;
+}
+.export-option:active {
+    transform: scale(0.96);
+    background: #f8fafc;
 }
 
 /* ===== GRILLA FIGURITAS ===== */
@@ -591,7 +622,15 @@ header h1 {
     background: #f87171;
 }
 
-/* ===== MODAL ===== */
+/* ===== MODAL CONFIRMAR ===== */
+#confirmModal .modal-box {
+    max-width: 320px;
+}
+#confirmModal .modal-box p {
+    font-size: 16px;
+}
+
+/* ===== MODAL GENERAL ===== */
 .modal {
     position: fixed;
     inset: 0;
@@ -616,14 +655,21 @@ header h1 {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 .modal-box h3 {
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     text-align: center;
+    font-size: 20px;
 }
 .modal-box .field input {
     padding: 12px 14px;
 }
 .modal-box .row-2 {
     gap: 16px;
+}
+.row-2 {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
 }
 
 /* ===== INFO LÍNEAS ===== */
