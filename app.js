@@ -464,6 +464,90 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
+    // ============================================================
+    //  BOTÓN EXPORTAR LISTA (Faltantes / Repetidas)
+    // ============================================================
+    document.getElementById('exportListBtn').addEventListener('click', () => {
+        document.getElementById('exportModal').classList.remove('hidden');
+    });
+
+    document.getElementById('exportCancelBtn').addEventListener('click', () => {
+        document.getElementById('exportModal').classList.add('hidden');
+    });
+
+    document.getElementById('exportMissingBtn').addEventListener('click', () => {
+        document.getElementById('exportModal').classList.add('hidden');
+        const col = getCurrent();
+        if (!col) return;
+        const missing = col.items.filter(it => !it.have).map(it => it.label);
+        const text = `📋 ${col.name} - Faltantes (${missing.length})\n\n${missing.join(', ')}`;
+        shareText(text);
+    });
+
+    document.getElementById('exportRepsBtn').addEventListener('click', () => {
+        document.getElementById('exportModal').classList.add('hidden');
+        const col = getCurrent();
+        if (!col) return;
+        const reps = col.items.filter(it => it.rep > 0).map(it => `${it.label} (x${it.rep})`);
+        const text = `📋 ${col.name} - Repetidas (${reps.length})\n\n${reps.join(', ')}`;
+        shareText(text);
+    });
+
+    function shareText(text) {
+        if (navigator.share) {
+            navigator.share({ text: text }).catch(() => {});
+        } else {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Texto copiado al portapapeles ✅');
+            }).catch(() => {
+                alert('No se pudo copiar. El texto es:\n\n' + text);
+            });
+        }
+    }
+
+    // ============================================================
+    //  BOTÓN COMPLETAR ÁLBUM
+    // ============================================================
+    document.getElementById('completeBtn').addEventListener('click', () => {
+        const col = getCurrent();
+        if (!col) return;
+        document.getElementById('confirmMsg').textContent = `¿Marcar todas las figuritas de "${col.name}" como "Tengo"?`;
+        document.getElementById('confirmModal').classList.remove('hidden');
+        confirmCallback = () => {
+            for (const it of col.items) {
+                it.have = true;
+                it.rep = 0;
+            }
+            save();
+            renderDetail();
+            updateStats();
+            document.getElementById('confirmModal').classList.add('hidden');
+        };
+    });
+
+    // ============================================================
+    //  BOTÓN REINICIAR ÁLBUM
+    // ============================================================
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        const col = getCurrent();
+        if (!col) return;
+        document.getElementById('confirmMsg').textContent = `¿Desmarcar TODAS las figuritas de "${col.name}"?`;
+        document.getElementById('confirmModal').classList.remove('hidden');
+        confirmCallback = () => {
+            for (const it of col.items) {
+                it.have = false;
+                it.rep = 0;
+            }
+            save();
+            renderDetail();
+            updateStats();
+            document.getElementById('confirmModal').classList.add('hidden');
+        };
+    });
+
+    // ============================================================
+    //  RESTAURAR ÚLTIMA COLECCIÓN
+    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
