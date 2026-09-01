@@ -36,11 +36,7 @@ function updateStats() {
 function showView(name) {
     document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
     const target = document.getElementById('view-' + name);
-    if (target) {
-        target.classList.add('active');
-    } else {
-        console.warn('Vista no encontrada:', name);
-    }
+    if (target) target.classList.add('active');
 
     if (name !== 'detail') {
         const titles = {
@@ -76,10 +72,7 @@ function goDetail(id) {
     if (!col) return;
     document.getElementById('headerTitle').textContent = col.name;
     renderDetail();
-    // Forzar la vista detail
-    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-    const target = document.getElementById('view-detail');
-    if (target) target.classList.add('active');
+    showView('detail');
     localStorage.setItem(LAST_KEY, id);
 }
 
@@ -527,9 +520,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
-    // ============================================================
-    //  BOTÓN EXPORTAR LISTA
-    // ============================================================
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
     });
@@ -568,9 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ============================================================
-    //  BOTÓN COMPLETAR
-    // ============================================================
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -588,9 +575,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // ============================================================
-    //  BOTÓN REINICIAR
-    // ============================================================
     document.getElementById('resetBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -608,9 +592,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // ============================================================
-    //  RESTAURAR ÚLTIMA COLECCIÓN
-    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
