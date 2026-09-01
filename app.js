@@ -34,15 +34,9 @@ function updateStats() {
 }
 
 function showView(name) {
-    alert('🔹 showView llamado con: ' + name);
     document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
     const target = document.getElementById('view-' + name);
-    if (target) {
-        target.classList.add('active');
-        alert('🔹 Vista ' + name + ' activada correctamente');
-    } else {
-        alert('🔴 ERROR: No se encontró la vista: ' + name);
-    }
+    if (target) target.classList.add('active');
 
     if (name !== 'detail') {
         const titles = {
@@ -73,14 +67,9 @@ function goMain() {
 }
 
 function goDetail(id) {
-    alert('✅ goDetail ejecutado con ID: ' + id);
     currentId = id;
     const col = getCurrent();
-    if (!col) {
-        alert('🔴 ERROR: No se encontró la colección con ID: ' + id);
-        return;
-    }
-    alert('✅ Colección encontrada: ' + col.name);
+    if (!col) return;
     document.getElementById('headerTitle').textContent = col.name;
     renderDetail();
     showView('detail');
@@ -88,7 +77,6 @@ function goDetail(id) {
 }
 
 function renderShelf() {
-    alert('🔹 renderShelf ejecutado');
     const shelf = document.getElementById('shelf');
     const search = document.getElementById('searchInput').value.trim().toLowerCase();
     const filtered = data.collections.filter(c =>
@@ -113,23 +101,14 @@ function renderShelf() {
                 <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
             </div>
         `;
-        div.addEventListener('click', function() {
-            alert('👆 Click en tarjeta: ' + c.id);
-            goDetail(c.id);
-        });
+        div.addEventListener('click', () => goDetail(c.id));
         shelf.appendChild(div);
     }
 }
 
 function renderDetail() {
-    alert('🔄 renderDetail ejecutado');
     const col = getCurrent();
-    if (!col) {
-        alert('🔴 ERROR: renderDetail sin colección actual');
-        return;
-    }
-    alert('🔄 renderDetail - Colección: ' + col.name);
-
+    if (!col) return;
     const items = col.items;
     const have = items.filter(it => it.have).length;
     const total = items.length;
@@ -243,7 +222,6 @@ function renderDetail() {
 
         grid.appendChild(sectionGrid);
     }
-    alert('✅ renderDetail terminado correctamente');
 }
 
 function handleTap(it) {
