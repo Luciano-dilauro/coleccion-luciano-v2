@@ -58,7 +58,17 @@
                         <span class="manage-sub">Modificar un álbum existente</span>
                     </button>
                 </div>
-                <button class="btn-soft-red" data-view="delete">🗑️ Eliminar colección</button>
+
+                <!-- ELIMINAR COLECCIÓN -->
+                <button id="btnDeleteToggle" class="btn-soft-red">🗑️ Eliminar colección</button>
+
+                <div id="deletePicker" style="margin-top:12px; display:none;">
+                    <select id="deleteSelect" class="input">
+                        <option value="">Seleccionar colección...</option>
+                    </select>
+                    <button id="btnDeleteConfirm" class="btn-danger" style="margin-top:8px;">🗑️ Eliminar</button>
+                    <button id="btnDeleteCancel" class="btn-secondary" style="margin-top:8px;">Cancelar</button>
+                </div>
             </section>
 
             <!-- CREAR COLECCIÓN -->
@@ -128,7 +138,7 @@
                 <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
             </section>
 
-            <!-- DETALLE DE COLECCIÓN -->
+            <!-- DETALLE -->
             <section id="view-detail" class="view">
                 <div id="detailSticky">
                     <div class="detail-header">
