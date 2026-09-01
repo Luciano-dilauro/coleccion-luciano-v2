@@ -269,6 +269,52 @@ document.querySelectorAll('.tab').forEach(el => {
     });
 });
 
+// ============================================================
+//  FUNCIONES DE GESTIÓN
+// ============================================================
+
+function renderDeletePicker() {
+    const select = document.getElementById('deleteSelect');
+    if (!select) return;
+    const currentValue = select.value;
+    select.innerHTML = '<option value="">Seleccionar colección...</option>';
+    for (const c of data.collections) {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name;
+        select.appendChild(opt);
+    }
+    select.value = currentValue;
+}
+
+function deleteSelectedCollection() {
+    const select = document.getElementById('deleteSelect');
+    const id = select.value;
+    if (!id) {
+        alert('Seleccioná una colección primero.');
+        return;
+    }
+    const col = data.collections.find(c => c.id === id);
+    if (!col) return;
+
+    document.getElementById('confirmMsg').textContent = `¿Eliminar "${col.name}"? Esta acción no se puede deshacer.`;
+    document.getElementById('confirmModal').classList.remove('hidden');
+    confirmCallback = () => {
+        data.collections = data.collections.filter(c => c.id !== id);
+        if (currentId === id) {
+            currentId = null;
+            localStorage.removeItem(LAST_KEY);
+        }
+        save();
+        updateStats();
+        renderShelf();
+        renderDeletePicker();
+        showView('manage');
+        document.getElementById('confirmModal').classList.add('hidden');
+        alert('Colección eliminada ✅');
+    };
+}
+
 function renderSpecialSections() {
     const container = document.getElementById('specialList');
     container.innerHTML = '';
@@ -442,9 +488,6 @@ function importBackup(file) {
     reader.readAsText(file);
 }
 
-// ============================================================
-//  FUNCIÓN PARA GENERAR EL TEXTO DE EXPORTACIÓN CON SECCIONES
-// ============================================================
 function buildExportText(mode) {
     const col = getCurrent();
     if (!col) return '';
@@ -493,14 +536,17 @@ function buildExportText(mode) {
 document.addEventListener('DOMContentLoaded', () => {
     load();
     updateStats();
+    renderDeletePicker();
 
     document.querySelectorAll('[data-view]').forEach(el => {
         el.addEventListener('click', () => {
             const v = el.getAttribute('data-view');
             if (v === 'main') goMain();
             else if (v === 'collections') showView('collections');
-            else if (v === 'manage') showView('manage');
-            else if (v === 'backup') showView('backup');
+            else if (v === 'manage') {
+                showView('manage');
+                renderDeletePicker();
+            } else if (v === 'backup') showView('backup');
             else if (v === 'create') showView('create');
             else if (v === 'edit') alert('Función en desarrollo.');
             else if (v === 'delete') alert('Función en desarrollo.');
@@ -568,20 +614,18 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
+    // Exportar lista
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
     });
-
     document.getElementById('exportCancelBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.add('hidden');
     });
-
     document.getElementById('exportMissingBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.add('hidden');
         const text = buildExportText('missing');
         shareText(text);
     });
-
     document.getElementById('exportRepsBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.add('hidden');
         const text = buildExportText('reps');
@@ -600,6 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Completar y Reiniciar
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -616,7 +661,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('confirmModal').classList.add('hidden');
         };
     });
-
     document.getElementById('resetBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -634,6 +678,31 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
+    // ============================================================
+    //  ELIMINAR COLECCIÓN
+    // ============================================================
+    const deleteToggle = document.getElementById('btnDeleteToggle');
+    const deletePicker = document.getElementById('deletePicker');
+    const deleteCancel = document.getElementById('btnDeleteCancel');
+
+    deleteToggle.addEventListener('click', () => {
+        if (deletePicker.style.display === 'none') {
+            deletePicker.style.display = 'block';
+            renderDeletePicker();
+        } else {
+            deletePicker.style.display = 'none';
+        }
+    });
+
+    deleteCancel.addEventListener('click', () => {
+        deletePicker.style.display = 'none';
+    });
+
+    document.getElementById('btnDeleteConfirm').addEventListener('click', deleteSelectedCollection);
+
+    // ============================================================
+    //  RESTAURAR ÚLTIMA COLECCIÓN
+    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
