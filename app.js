@@ -127,71 +127,108 @@ function renderDetail() {
         coverEl.textContent = '📘';
     }
 
+    // ============================================================
+    //  AGRUPAR FIGURITAS POR SECCIÓN
+    // ============================================================
     const grid = document.getElementById('detailGrid');
     grid.innerHTML = '';
-    let filtered = items;
-    if (filter === 'miss') filtered = items.filter(it => !it.have);
-    if (filter === 'rep') filtered = items.filter(it => it.rep > 0);
-    for (const it of filtered) {
-        const div = document.createElement('div');
-        div.className = 'sticker';
-        if (it.have) div.classList.add('have');
-        if (it.rep > 0) {
-            div.classList.add('rep');
-            div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
+
+    // Obtener lista de secciones con sus items
+    const sectionsMap = new Map();
+    for (const it of items) {
+        const sectionId = it.sectionId || 'default';
+        if (!sectionsMap.has(sectionId)) {
+            const section = col.sections.find(s => s.id === sectionId);
+            sectionsMap.set(sectionId, {
+                name: section ? section.name : 'General',
+                items: []
+            });
         }
-        if (it.shiny) div.classList.add('shiny');
-        div.textContent = it.label;
+        sectionsMap.get(sectionId).items.push(it);
+    }
 
-        let startX = 0, startY = 0, isSwiping = false;
-        let longPressTimer = null;
-        let longPressFired = false;
+    // Filtrar y renderizar cada sección
+    for (const [sectionId, sectionData] of sectionsMap) {
+        let filteredItems = sectionData.items;
+        if (filter === 'miss') filteredItems = filteredItems.filter(it => !it.have);
+        if (filter === 'rep') filteredItems = filteredItems.filter(it => it.rep > 0);
 
-        const onTouchStart = (e) => {
-            const touch = e.touches[0];
-            startX = touch.clientX;
-            startY = touch.clientY;
-            isSwiping = false;
-            longPressFired = false;
-            longPressTimer = setTimeout(() => {
-                longPressFired = true;
-                handleLongPress(it);
-            }, 500);
-        };
+        if (filteredItems.length === 0) continue;
 
-        const onTouchMove = (e) => {
-            if (!startX || !startY) return;
-            const touch = e.touches[0];
-            const deltaX = Math.abs(touch.clientX - startX);
-            const deltaY = Math.abs(touch.clientY - startY);
-            if (deltaX > 10 || deltaY > 10) {
-                isSwiping = true;
+        // Título de la sección
+        const sectionTitle = document.createElement('div');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = sectionData.name;
+        grid.appendChild(sectionTitle);
+
+        // Grilla de figuritas de la sección
+        const sectionGrid = document.createElement('div');
+        sectionGrid.className = 'grid-4';
+
+        for (const it of filteredItems) {
+            const div = document.createElement('div');
+            div.className = 'sticker';
+            if (it.have) div.classList.add('have');
+            if (it.rep > 0) {
+                div.classList.add('rep');
+                div.setAttribute('data-rep', it.rep > 99 ? '99+' : it.rep);
+            }
+            if (it.shiny) div.classList.add('shiny');
+            div.textContent = it.label;
+
+            // Eventos táctiles
+            let startX = 0, startY = 0, isSwiping = false;
+            let longPressTimer = null;
+            let longPressFired = false;
+
+            const onTouchStart = (e) => {
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                isSwiping = false;
+                longPressFired = false;
+                longPressTimer = setTimeout(() => {
+                    longPressFired = true;
+                    handleLongPress(it);
+                }, 500);
+            };
+
+            const onTouchMove = (e) => {
+                if (!startX || !startY) return;
+                const touch = e.touches[0];
+                const deltaX = Math.abs(touch.clientX - startX);
+                const deltaY = Math.abs(touch.clientY - startY);
+                if (deltaX > 10 || deltaY > 10) {
+                    isSwiping = true;
+                    clearTimeout(longPressTimer);
+                }
+            };
+
+            const onTouchEnd = () => {
                 clearTimeout(longPressTimer);
-            }
-        };
+                if (!isSwiping && !longPressFired) {
+                    handleTap(it);
+                }
+            };
 
-        const onTouchEnd = () => {
-            clearTimeout(longPressTimer);
-            if (!isSwiping && !longPressFired) {
-                handleTap(it);
-            }
-        };
+            div.addEventListener('touchstart', onTouchStart, { passive: true });
+            div.addEventListener('touchmove', onTouchMove, { passive: true });
+            div.addEventListener('touchend', onTouchEnd, { passive: true });
 
-        div.addEventListener('touchstart', onTouchStart, { passive: true });
-        div.addEventListener('touchmove', onTouchMove, { passive: true });
-        div.addEventListener('touchend', onTouchEnd, { passive: true });
+            let mouseDown = false;
+            div.addEventListener('mousedown', () => { mouseDown = true; });
+            div.addEventListener('mouseup', () => {
+                if (mouseDown) {
+                    mouseDown = false;
+                    handleTap(it);
+                }
+            });
+            div.addEventListener('mouseleave', () => { mouseDown = false; });
 
-        let mouseDown = false;
-        div.addEventListener('mousedown', () => { mouseDown = true; });
-        div.addEventListener('mouseup', () => {
-            if (mouseDown) {
-                mouseDown = false;
-                handleTap(it);
-            }
-        });
-        div.addEventListener('mouseleave', () => { mouseDown = false; });
+            sectionGrid.appendChild(div);
+        }
 
-        grid.appendChild(div);
+        grid.appendChild(sectionGrid);
     }
 }
 
@@ -278,30 +315,59 @@ function createCollection() {
         id: uid(),
         name: name,
         cover: coverDataUrl || null,
-        items: []
+        items: [],
+        sections: []
     };
+
+    // Sección general (numérica)
+    const generalSection = {
+        id: uid('sec'),
+        name: 'General',
+        format: 'num',
+        prefix: '',
+        ownNumbering: false,
+        specials: []
+    };
+    col.sections.push(generalSection);
 
     const shinySet = new Set(shinyNumbers);
     for (let i = from; i <= to; i++) {
         col.items.push({
+            id: uid('it'),
+            sectionId: generalSection.id,
             label: String(i),
             have: false,
             rep: 0,
             special: false,
-            shiny: shinySet.has(i)
+            shiny: shinySet.has(i),
+            key: `num:${i}`
         });
     }
 
+    // Secciones especiales
     for (const sec of specialSections) {
+        const section = {
+            id: uid('sec'),
+            name: sec.name,
+            format: 'alfa',
+            prefix: sec.prefix,
+            ownNumbering: true,
+            specials: []
+        };
+        col.sections.push(section);
+
         const shinySetSpecial = new Set(sec.shinyNumbers || []);
         for (let i = sec.from; i <= sec.to; i++) {
             col.items.push({
+                id: uid('it'),
+                sectionId: section.id,
                 label: `${sec.prefix}${i}`,
                 have: false,
                 rep: 0,
                 special: true,
                 section: sec.name,
-                shiny: shinySetSpecial.has(i)
+                shiny: shinySetSpecial.has(i),
+                key: `alfa:${sec.prefix}:${i}`
             });
         }
     }
