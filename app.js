@@ -442,6 +442,55 @@ function importBackup(file) {
     reader.readAsText(file);
 }
 
+// ============================================================
+//  FUNCIÓN PARA GENERAR EL TEXTO DE EXPORTACIÓN CON SECCIONES
+// ============================================================
+function buildExportText(mode) {
+    const col = getCurrent();
+    if (!col) return '';
+
+    const items = col.items;
+    const sectionsMap = new Map();
+
+    // Agrupar por sección
+    for (const it of items) {
+        const sectionId = it.sectionId || 'default';
+        if (!sectionsMap.has(sectionId)) {
+            const section = col.sections.find(s => s.id === sectionId);
+            sectionsMap.set(sectionId, {
+                name: section ? section.name : 'General',
+                items: []
+            });
+        }
+        sectionsMap.get(sectionId).items.push(it);
+    }
+
+    let lines = [];
+    let totalCount = 0;
+
+    for (const [sectionId, sectionData] of sectionsMap) {
+        let filteredItems = [];
+        if (mode === 'missing') {
+            filteredItems = sectionData.items.filter(it => !it.have);
+        } else {
+            filteredItems = sectionData.items.filter(it => it.rep > 0);
+        }
+
+        if (filteredItems.length === 0) continue;
+
+        totalCount += filteredItems.length;
+        const labels = filteredItems.map(it => it.label).join(', ');
+        lines.push(`${sectionData.name}\n${labels}`);
+    }
+
+    if (lines.length === 0) {
+        return mode === 'missing' ? '✅ No hay faltantes' : '✅ No hay repetidas';
+    }
+
+    const title = mode === 'missing' ? 'Faltantes' : 'Repetidas';
+    return `📋 ${col.name} - ${title} (${totalCount})\n\n${lines.join('\n\n')}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     load();
     updateStats();
@@ -520,6 +569,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
+    // ============================================================
+    //  BOTÓN EXPORTAR LISTA (con secciones)
+    // ============================================================
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
     });
@@ -530,19 +582,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('exportMissingBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.add('hidden');
-        const col = getCurrent();
-        if (!col) return;
-        const missing = col.items.filter(it => !it.have).map(it => it.label);
-        const text = `📋 ${col.name} - Faltantes (${missing.length})\n\n${missing.join(', ')}`;
+        const text = buildExportText('missing');
         shareText(text);
     });
 
     document.getElementById('exportRepsBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.add('hidden');
-        const col = getCurrent();
-        if (!col) return;
-        const reps = col.items.filter(it => it.rep > 0).map(it => `${it.label} (x${it.rep})`);
-        const text = `📋 ${col.name} - Repetidas (${reps.length})\n\n${reps.join(', ')}`;
+        const text = buildExportText('reps');
         shareText(text);
     });
 
@@ -558,6 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ============================================================
+    //  BOTÓN COMPLETAR
+    // ============================================================
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -575,6 +624,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
+    // ============================================================
+    //  BOTÓN REINICIAR
+    // ============================================================
     document.getElementById('resetBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -592,6 +644,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
+    // ============================================================
+    //  RESTAURAR ÚLTIMA COLECCIÓN
+    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
