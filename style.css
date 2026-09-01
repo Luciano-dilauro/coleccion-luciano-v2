@@ -691,3 +691,14 @@ header h1 {
 #coverInput, #importInput {
     display: none;
 }
+/* ===== TÍTULOS DE SECCIÓN ===== */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 12px 0 6px 0;
+    padding: 0 4px;
+}
+.section-title:first-of-type {
+    margin-top: 0;
+}
