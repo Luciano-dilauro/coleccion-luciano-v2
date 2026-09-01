@@ -452,7 +452,6 @@ function buildExportText(mode) {
     const items = col.items;
     const sectionsMap = new Map();
 
-    // Agrupar por sección
     for (const it of items) {
         const sectionId = it.sectionId || 'default';
         if (!sectionsMap.has(sectionId)) {
@@ -480,7 +479,7 @@ function buildExportText(mode) {
 
         totalCount += filteredItems.length;
         const labels = filteredItems.map(it => it.label).join(', ');
-        lines.push(`${sectionData.name}\n${labels}`);
+        lines.push(`*${sectionData.name}*\n${labels}`);
     }
 
     if (lines.length === 0) {
@@ -569,9 +568,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
-    // ============================================================
-    //  BOTÓN EXPORTAR LISTA (con secciones)
-    // ============================================================
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
     });
@@ -604,9 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ============================================================
-    //  BOTÓN COMPLETAR
-    // ============================================================
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -624,9 +617,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // ============================================================
-    //  BOTÓN REINICIAR
-    // ============================================================
     document.getElementById('resetBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -644,9 +634,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // ============================================================
-    //  RESTAURAR ÚLTIMA COLECCIÓN
-    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
