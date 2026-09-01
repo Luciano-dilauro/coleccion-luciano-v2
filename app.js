@@ -36,7 +36,11 @@ function updateStats() {
 function showView(name) {
     document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
     const target = document.getElementById('view-' + name);
-    if (target) target.classList.add('active');
+    if (target) {
+        target.classList.add('active');
+    } else {
+        console.warn('Vista no encontrada:', name);
+    }
 
     if (name !== 'detail') {
         const titles = {
@@ -72,7 +76,10 @@ function goDetail(id) {
     if (!col) return;
     document.getElementById('headerTitle').textContent = col.name;
     renderDetail();
-    showView('detail');
+    // Forzar la vista detail
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById('view-detail');
+    if (target) target.classList.add('active');
     localStorage.setItem(LAST_KEY, id);
 }
 
@@ -127,13 +134,9 @@ function renderDetail() {
         coverEl.textContent = '📘';
     }
 
-    // ============================================================
-    //  AGRUPAR FIGURITAS POR SECCIÓN
-    // ============================================================
     const grid = document.getElementById('detailGrid');
     grid.innerHTML = '';
 
-    // Obtener lista de secciones con sus items
     const sectionsMap = new Map();
     for (const it of items) {
         const sectionId = it.sectionId || 'default';
@@ -147,7 +150,6 @@ function renderDetail() {
         sectionsMap.get(sectionId).items.push(it);
     }
 
-    // Filtrar y renderizar cada sección
     for (const [sectionId, sectionData] of sectionsMap) {
         let filteredItems = sectionData.items;
         if (filter === 'miss') filteredItems = filteredItems.filter(it => !it.have);
@@ -155,13 +157,11 @@ function renderDetail() {
 
         if (filteredItems.length === 0) continue;
 
-        // Título de la sección
         const sectionTitle = document.createElement('div');
         sectionTitle.className = 'section-title';
         sectionTitle.textContent = sectionData.name;
         grid.appendChild(sectionTitle);
 
-        // Grilla de figuritas de la sección
         const sectionGrid = document.createElement('div');
         sectionGrid.className = 'grid-4';
 
@@ -176,7 +176,6 @@ function renderDetail() {
             if (it.shiny) div.classList.add('shiny');
             div.textContent = it.label;
 
-            // Eventos táctiles
             let startX = 0, startY = 0, isSwiping = false;
             let longPressTimer = null;
             let longPressFired = false;
@@ -319,7 +318,6 @@ function createCollection() {
         sections: []
     };
 
-    // Sección general (numérica)
     const generalSection = {
         id: uid('sec'),
         name: 'General',
@@ -344,7 +342,6 @@ function createCollection() {
         });
     }
 
-    // Secciones especiales
     for (const sec of specialSections) {
         const section = {
             id: uid('sec'),
@@ -531,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================================
-    //  BOTÓN EXPORTAR LISTA (Faltantes / Repetidas)
+    //  BOTÓN EXPORTAR LISTA
     // ============================================================
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
@@ -572,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================================
-    //  BOTÓN COMPLETAR ÁLBUM
+    //  BOTÓN COMPLETAR
     // ============================================================
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
@@ -592,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================================
-    //  BOTÓN REINICIAR ÁLBUM
+    //  BOTÓN REINICIAR
     // ============================================================
     document.getElementById('resetBtn').addEventListener('click', () => {
         const col = getCurrent();
