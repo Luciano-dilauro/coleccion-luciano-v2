@@ -58,17 +58,17 @@
                         <span class="manage-sub">Modificar un álbum existente</span>
                     </button>
                 </div>
+                <button class="btn-soft-red" data-view="delete">🗑️ Eliminar colección</button>
+            </section>
 
-                <!-- ELIMINAR COLECCIÓN -->
-                <button id="btnDeleteToggle" class="btn-soft-red">🗑️ Eliminar colección</button>
-
-                <div id="deletePicker" style="margin-top:12px; display:none;">
-                    <select id="deleteSelect" class="input">
-                        <option value="">Seleccionar colección...</option>
-                    </select>
-                    <button id="btnDeleteConfirm" class="btn-danger" style="margin-top:8px;">🗑️ Eliminar</button>
-                    <button id="btnDeleteCancel" class="btn-secondary" style="margin-top:8px;">Cancelar</button>
+            <!-- ELIMINAR COLECCIÓN (NUEVA VISTA) -->
+            <section id="view-delete" class="view">
+                <div class="delete-header">
+                    <button class="back-btn" data-view="manage">←</button>
+                    <h2>Eliminar colección</h2>
                 </div>
+                <p class="delete-sub">Tocá una colección para eliminarla</p>
+                <div id="deleteShelf" class="shelf-3"></div>
             </section>
 
             <!-- CREAR COLECCIÓN -->
