@@ -9,16 +9,13 @@
 <body>
 
     <div id="app">
-        <!-- BARRA SUPERIOR (HEADER FIJO) -->
         <header id="appHeader">
             <button id="backBtn" class="hidden">←</button>
             <h1 id="headerTitle">Principal</h1>
         </header>
 
-        <!-- CONTENEDOR DE SCROLL -->
         <main id="scrollContainer">
 
-            <!-- ===== VISTA PRINCIPAL ===== -->
             <section id="view-main" class="view active">
                 <div class="main-grid">
                     <button class="main-btn" data-view="collections">
@@ -33,7 +30,6 @@
                     </button>
                 </div>
                 <button class="btn-primary btn-backup" data-view="backup">💾 Backup</button>
-
                 <div class="stats-box">
                     <div class="stat-row"><span>📚 Colecciones</span> <span id="statTotal">0</span></div>
                     <div class="stat-row"><span>✅ Completas</span> <span id="statComplete">0</span></div>
@@ -41,13 +37,11 @@
                 </div>
             </section>
 
-            <!-- ===== MIS COLECCIONES ===== -->
             <section id="view-collections" class="view">
                 <input type="text" id="searchInput" placeholder="🔍 Buscar colección..." />
                 <div id="shelf" class="shelf-3"></div>
             </section>
 
-            <!-- ===== GESTIÓN ===== -->
             <section id="view-manage" class="view">
                 <div class="manage-grid">
                     <button class="manage-btn" data-view="create">
@@ -64,7 +58,6 @@
                 <button class="btn-soft-red" data-view="delete">🗑️ Eliminar colección</button>
             </section>
 
-            <!-- ===== CREAR COLECCIÓN ===== -->
             <section id="view-create" class="view">
                 <div class="field">
                     <label>Nombre</label>
@@ -102,7 +95,6 @@
                 </div>
             </section>
 
-            <!-- ===== MODAL SECCIÓN ESPECIAL ===== -->
             <div id="specialModal" class="modal hidden">
                 <div class="modal-box">
                     <h3>Agregar sección especial</h3>
@@ -120,7 +112,6 @@
                 </div>
             </div>
 
-            <!-- ===== BACKUP ===== -->
             <section id="view-backup" class="view">
                 <button id="exportBtn" class="btn-white">⬇️ Exportar backup</button>
                 <p class="info">Última exportación: <span id="lastExport">—</span></p>
@@ -131,7 +122,7 @@
                 <p class="warning">⚠️ Al importar se reemplazan todos los datos actuales.</p>
             </section>
 
-            <!-- ===== DETALLE DE COLECCIÓN (dentro de la vista) ===== -->
+            <!-- DETALLE (ahora con todo dentro) -->
             <section id="view-detail" class="view">
                 <div id="detailSticky">
                     <div class="detail-header">
@@ -167,7 +158,6 @@
 
         </main>
 
-        <!-- MODAL EXPORTAR -->
         <div id="exportModal" class="modal hidden">
             <div class="modal-box">
                 <h3>Exportar</h3>
@@ -180,7 +170,6 @@
             </div>
         </div>
 
-        <!-- MODAL CONFIRMAR -->
         <div id="confirmModal" class="modal hidden">
             <div class="modal-box">
                 <p id="confirmMsg">¿Estás seguro?</p>
