@@ -43,6 +43,7 @@ function showView(name) {
             main: 'Principal',
             collections: 'Mis colecciones',
             manage: 'Gestión',
+            delete: 'Eliminar colección',
             create: 'Crear colección',
             backup: 'Backup',
         };
@@ -58,6 +59,7 @@ function showView(name) {
 
     if (name === 'main') updateStats();
     if (name === 'collections') renderShelf();
+    if (name === 'delete') renderDeleteShelf();
 }
 
 function goMain() {
@@ -104,6 +106,55 @@ function renderShelf() {
         div.addEventListener('click', () => goDetail(c.id));
         shelf.appendChild(div);
     }
+}
+
+function renderDeleteShelf() {
+    const shelf = document.getElementById('deleteShelf');
+    shelf.innerHTML = '';
+    if (data.collections.length === 0) {
+        shelf.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#6b7280;padding:20px 0;">No hay colecciones para eliminar</p>';
+        return;
+    }
+    for (const c of data.collections) {
+        const have = c.items.filter(it => it.have).length;
+        const pct = c.items.length ? Math.round(have / c.items.length * 100) : 0;
+        const div = document.createElement('div');
+        div.className = 'shelf-card delete-card';
+        let coverHtml = '📘';
+        if (c.cover) coverHtml = `<img src="${c.cover}" alt="Tapa" />`;
+        div.innerHTML = `
+            <div class="cover">${coverHtml}</div>
+            <div class="info">
+                <div class="name">${c.name}</div>
+                <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+            </div>
+        `;
+        div.addEventListener('click', () => confirmDeleteCollection(c.id));
+        shelf.appendChild(div);
+    }
+}
+
+function confirmDeleteCollection(id) {
+    const col = data.collections.find(c => c.id === id);
+    if (!col) return;
+    document.getElementById('confirmMsg').textContent = `¿Eliminar "${col.name}"? Esta acción no se puede deshacer.`;
+    document.getElementById('confirmModal').classList.remove('hidden');
+    confirmCallback = () => {
+        data.collections = data.collections.filter(c => c.id !== id);
+        if (currentId === id) {
+            currentId = null;
+            localStorage.removeItem(LAST_KEY);
+        }
+        save();
+        updateStats();
+        renderShelf();
+        renderDeleteShelf();
+        document.getElementById('confirmModal').classList.add('hidden');
+        // Si la vista de eliminar está activa, recargar
+        if (document.getElementById('view-delete').classList.contains('active')) {
+            renderDeleteShelf();
+        }
+    };
 }
 
 function renderDetail() {
@@ -268,52 +319,6 @@ document.querySelectorAll('.tab').forEach(el => {
         renderDetail();
     });
 });
-
-// ============================================================
-//  FUNCIONES DE GESTIÓN
-// ============================================================
-
-function renderDeletePicker() {
-    const select = document.getElementById('deleteSelect');
-    if (!select) return;
-    const currentValue = select.value;
-    select.innerHTML = '<option value="">Seleccionar colección...</option>';
-    for (const c of data.collections) {
-        const opt = document.createElement('option');
-        opt.value = c.id;
-        opt.textContent = c.name;
-        select.appendChild(opt);
-    }
-    select.value = currentValue;
-}
-
-function deleteSelectedCollection() {
-    const select = document.getElementById('deleteSelect');
-    const id = select.value;
-    if (!id) {
-        alert('Seleccioná una colección primero.');
-        return;
-    }
-    const col = data.collections.find(c => c.id === id);
-    if (!col) return;
-
-    document.getElementById('confirmMsg').textContent = `¿Eliminar "${col.name}"? Esta acción no se puede deshacer.`;
-    document.getElementById('confirmModal').classList.remove('hidden');
-    confirmCallback = () => {
-        data.collections = data.collections.filter(c => c.id !== id);
-        if (currentId === id) {
-            currentId = null;
-            localStorage.removeItem(LAST_KEY);
-        }
-        save();
-        updateStats();
-        renderShelf();
-        renderDeletePicker();
-        showView('manage');
-        document.getElementById('confirmModal').classList.add('hidden');
-        alert('Colección eliminada ✅');
-    };
-}
 
 function renderSpecialSections() {
     const container = document.getElementById('specialList');
@@ -536,20 +541,19 @@ function buildExportText(mode) {
 document.addEventListener('DOMContentLoaded', () => {
     load();
     updateStats();
-    renderDeletePicker();
 
     document.querySelectorAll('[data-view]').forEach(el => {
         el.addEventListener('click', () => {
             const v = el.getAttribute('data-view');
             if (v === 'main') goMain();
             else if (v === 'collections') showView('collections');
-            else if (v === 'manage') {
-                showView('manage');
-                renderDeletePicker();
+            else if (v === 'manage') showView('manage');
+            else if (v === 'delete') {
+                showView('delete');
+                renderDeleteShelf();
             } else if (v === 'backup') showView('backup');
             else if (v === 'create') showView('create');
             else if (v === 'edit') alert('Función en desarrollo.');
-            else if (v === 'delete') alert('Función en desarrollo.');
         });
     });
 
@@ -559,6 +563,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = current.id;
             if (id === 'view-detail') {
                 showView('collections');
+            } else if (id === 'view-delete') {
+                showView('manage');
             } else {
                 goMain();
             }
@@ -614,7 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
-    // Exportar lista
     document.getElementById('exportListBtn').addEventListener('click', () => {
         document.getElementById('exportModal').classList.remove('hidden');
     });
@@ -644,7 +649,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Completar y Reiniciar
     document.getElementById('completeBtn').addEventListener('click', () => {
         const col = getCurrent();
         if (!col) return;
@@ -678,31 +682,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // ============================================================
-    //  ELIMINAR COLECCIÓN
-    // ============================================================
-    const deleteToggle = document.getElementById('btnDeleteToggle');
-    const deletePicker = document.getElementById('deletePicker');
-    const deleteCancel = document.getElementById('btnDeleteCancel');
-
-    deleteToggle.addEventListener('click', () => {
-        if (deletePicker.style.display === 'none') {
-            deletePicker.style.display = 'block';
-            renderDeletePicker();
-        } else {
-            deletePicker.style.display = 'none';
-        }
-    });
-
-    deleteCancel.addEventListener('click', () => {
-        deletePicker.style.display = 'none';
-    });
-
-    document.getElementById('btnDeleteConfirm').addEventListener('click', deleteSelectedCollection);
-
-    // ============================================================
-    //  RESTAURAR ÚLTIMA COLECCIÓN
-    // ============================================================
     const lastId = localStorage.getItem(LAST_KEY);
     if (lastId) {
         const col = data.collections.find(c => c.id === lastId);
