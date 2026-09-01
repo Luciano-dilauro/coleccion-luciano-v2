@@ -67,6 +67,7 @@ function goMain() {
 }
 
 function goDetail(id) {
+    alert('✅ goDetail ejecutado, ID: ' + id);
     currentId = id;
     const col = getCurrent();
     if (!col) return;
@@ -101,12 +102,16 @@ function renderShelf() {
                 <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
             </div>
         `;
-        div.addEventListener('click', () => goDetail(c.id));
+        div.addEventListener('click', function() {
+            alert('👆 Click en tarjeta: ' + c.id);
+            goDetail(c.id);
+        });
         shelf.appendChild(div);
     }
 }
 
 function renderDetail() {
+    alert('🔄 renderDetail ejecutado');
     const col = getCurrent();
     if (!col) return;
     const items = col.items;
